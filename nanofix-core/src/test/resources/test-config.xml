@@ -1,0 +1,28 @@
+<Application id="NanoServer">
+    <Sessions>
+        <Session version="FIX.4.4" senderCompID="BROKER" heartbeatInterval="60">
+            <Connectors>
+                <ServerSocket port="9001"
+                            tcpNoDelay="true" receiveBufferSize="-1" sendBufferSize="-1"
+                            allowedAddresses="" ignoredAddresses=""/>
+            </Connectors>
+            <AllowedCounterParties/>
+            <IgnoredCounterParties/>
+            <MessageFactory class="net.nanofix.message.DefaultFIXMessageFactory"/>
+            <MessageProcessor class="net.nanofix.processor.BaseMessageProcessor"/>
+            <Schedule>
+                <Start time="hh:mm:ss" days="" timezone="" />
+                <Stop time="hh:mm:ss" days="" timezone="" />
+                <Reset time="hh:mm:ss" days="" timezone="" />
+            </Schedule>
+        </Session>
+
+        <Session version="FIX.4.1" senderCompID="CLIENT" targetCompID="BROKER" heartbeatInterval="30">
+            <Connectors>
+                <ClientSocket hostname="localhost" port="9001"
+                            tcpNoDelay="false" receiveBufferSize="65536" sendBufferSize="2048"
+                            allowedAddresses="" ignoredAddresses=""/>
+            </Connectors>
+        </Session>
+    </Sessions>
+</Application>
