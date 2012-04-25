@@ -6,5 +6,5 @@ package net.nanofix.message;
  * Time: 07:52
  */
 public interface FIXMessageDecoder {
-    FIXMessage decodeMessage(byte[] bytes) throws MessageException, MissingFieldException;
+    FIXMessage decode(byte[] bytes) throws MessageException, MissingFieldException;
 }

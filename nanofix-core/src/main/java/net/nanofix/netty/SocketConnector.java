@@ -1,6 +1,7 @@
 package net.nanofix.netty;
 
 import net.nanofix.app.Component;
+import net.nanofix.session.Session;
 
 /**
  * User: Mark
@@ -8,6 +9,7 @@ import net.nanofix.app.Component;
  * Time: 18:36
  */
 public interface SocketConnector extends Component {
-    int getPort();
     String getBindAddress();
+    void setSession(Session session);
+    Session getSession();
 }

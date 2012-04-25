@@ -17,7 +17,7 @@ public class StandardFIXMessageDecoderTest {
 
     @Before
     public void setup() {
-        decoder = new StandardFIXMessageDecoder();
+        decoder = new StandardFIXMessageDecoder(new DefaultFIXMessageFactory());
     }
 
     @Test
@@ -26,8 +26,7 @@ public class StandardFIXMessageDecoderTest {
 
     @Test
     public void testDecodeMessage() throws Exception {
-        decoder = new StandardFIXMessageDecoder();
-        FIXMessage msg = decoder.decodeMessage(M1.getBytes());
+        FIXMessage msg = decoder.decode(M1.getBytes());
         assertThat("null msg", msg, is(not(nullValue())));
         assertThat("incorrect msgType", msg.getMsgType(), is(MsgTypes.Logon));
         assertThat("incorrect seqNum", msg.getMsgSeqNum(), is(1L));

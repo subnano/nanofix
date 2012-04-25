@@ -1,17 +1,15 @@
 package net.nanofix.netty;
 
-import net.nanofix.app.AbstractComponent;
+import net.nanofix.message.MsgTypes;
+import net.nanofix.message.Tags;
+import net.nanofix.session.Session;
 import net.nanofix.config.ClientSocketConfig;
-import net.nanofix.config.ConnectionConfig;
 import net.nanofix.message.FIXMessage;
 import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
-import org.jboss.netty.channel.socket.ServerSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
-import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
@@ -21,19 +19,17 @@ import java.util.concurrent.Executors;
  * Date: 24/04/12
  * Time: 06:11
  */
-public class ClientSocketConnector extends AbstractComponent implements SocketConnector {
+public class ClientSocketConnector extends AbstractSocketConnector implements SocketConnector {
 
     private int port;
-    private String bindAddress;
     private String hostname;
     private Channel channel;
+    private final Session session;
 
-    public ClientSocketConnector(ClientSocketConfig connectorConfig) {
+    public ClientSocketConnector(ClientSocketConfig connectorConfig, Session session) {
+        super(connectorConfig);
+        this.session = session;
         this.port = connectorConfig.getPort();
-        this.bindAddress = connectorConfig.getBindAddress();
-        if (bindAddress == null || bindAddress.isEmpty()) {
-            bindAddress = "localhost";
-        }
         this.hostname = connectorConfig.getHostname();
     }
 
@@ -77,21 +73,24 @@ public class ClientSocketConnector extends AbstractComponent implements SocketCo
     }
 
     private FIXMessage createLogonMessage() {
-        msg = fixMessageFactory.???
-        return null;
+        FIXMessage msg = session.getFIXMessageFactory().createMessage(MsgTypes.Logon);
+        // TOD this should be somewhere common
+        // msg.setX(Tags.BeginString, session.getVersion());
+        addSessionIdentifiers(msg);
+        msg.setFieldValue(Tags.HeartBtInt, session.getSessionID());
+        return msg;
     }
 
-    @Override
-    public int getPort() {
-        return port;
-    }
-
-    @Override
-    public String getBindAddress() {
-        return bindAddress;
+    private void addSessionIdentifiers(FIXMessage msg) {
+        msg.setFieldValue(Tags.TargetCompID, session.getSessionID());
     }
 
     public String getHostname() {
         return hostname;
     }
+
+    public int getPort() {
+        return port;
+    }
+
 }

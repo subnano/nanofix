@@ -1,7 +1,5 @@
 package net.nanofix.netty;
 
-import net.nanofix.app.AbstractComponent;
-import net.nanofix.config.ConnectionConfig;
 import net.nanofix.config.ServerSocketConfig;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.ServerSocketChannelFactory;
@@ -15,17 +13,13 @@ import java.util.concurrent.Executors;
  * Date: 24/04/12
  * Time: 06:11
  */
-public class ServerSocketConnector extends AbstractComponent implements SocketConnector {
+public class ServerSocketConnector extends AbstractSocketConnector implements SocketConnector {
 
     private int port;
-    private String bindAddress;
 
     public ServerSocketConnector(ServerSocketConfig connectorConfig) {
+        super(connectorConfig);
         this.port = connectorConfig.getPort();
-        this.bindAddress = connectorConfig.getBindAddress();
-        if (bindAddress == null || bindAddress.isEmpty()) {
-            bindAddress = "localhost";
-        }
     }
 
     @Override
@@ -41,17 +35,12 @@ public class ServerSocketConnector extends AbstractComponent implements SocketCo
         final ServerBootstrap server = new ServerBootstrap(cf);
         server.setPipelineFactory(new FIXServerPipelineFactory());
 
-        LOG.info("binding to {} port {}", bindAddress, port);
-        server.bind(new InetSocketAddress(bindAddress, port));
+        LOG.info("binding to {} port {}", getBindAddress(), getPort());
+        server.bind(new InetSocketAddress(getBindAddress(), getPort()));
     }
 
-    @Override
     public int getPort() {
         return port;
     }
 
-    @Override
-    public String getBindAddress() {
-        return bindAddress;
-    }
 }

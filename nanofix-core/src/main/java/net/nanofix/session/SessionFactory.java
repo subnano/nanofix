@@ -1,4 +1,4 @@
-package net.nanofix.app.session;
+package net.nanofix.session;
 
 import net.nanofix.config.SessionConfig;
 

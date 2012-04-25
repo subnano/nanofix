@@ -1,6 +1,6 @@
 package net.nanofix.app;
 
-import net.nanofix.app.session.Session;
+import net.nanofix.session.Session;
 import org.junit.Test;
 
 import java.util.List;

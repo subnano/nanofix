@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * User: Mark
@@ -59,7 +58,19 @@ public class XmlConfigFactory implements ApplicationConfigFactory {
     }
 
     public ApplicationConfig load(InputStream stream) {
-//        InputStreamReader reader = new InputStreamReader(stream);
-        return (ApplicationConfig) xstream.fromXML(stream);
+        ApplicationConfig config = (ApplicationConfig) xstream.fromXML(stream);
+        validate(config);
+        return config;
+    }
+
+    private void validate(ApplicationConfig config) {
+        validateConnectors(config);
+    }
+
+    private void validateConnectors(ApplicationConfig config) {
+        for (SessionConfig sessionConfig : config.getSessionConfigs()) {
+            for (ConnectionConfig connector : sessionConfig.getConnectors()) {
+            }
+        }
     }
 }

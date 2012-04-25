@@ -3,6 +3,10 @@ package net.nanofix.message;
 import net.nanofix.field.RawField;
 import net.nanofix.util.ByteArrayUtil;
 import net.nanofix.util.FIXMessageUtil;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.channel.Channel;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.handler.codec.frame.FrameDecoder;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -14,7 +18,7 @@ import static net.nanofix.message.FIXConstants.*;
  * Date: 11/10/11
  * Time: 07:52
  */
-public class StandardFIXMessageDecoder implements FIXMessageDecoder {
+public class StandardFIXMessageDecoder extends FrameDecoder implements FIXMessageDecoder {
 
     private byte[] checksumBytes = new byte[FIXConstants.CHECKSUM_SIZE];
     private final FixMessageUnmarshaller unmarshaller = new FixMessageUnmarshaller();
@@ -30,7 +34,13 @@ public class StandardFIXMessageDecoder implements FIXMessageDecoder {
         this.fixMessageFactory = messageFactory;
     }
 
-    public FIXMessage decodeMessage(byte[] bytes) throws MessageException, MissingFieldException {
+    @Override
+    protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
+        return decode(buffer.array());
+    }
+
+    @Override
+    public FIXMessage decode(byte[] bytes) throws MessageException, MissingFieldException {
         FIXMessage target = fixMessageFactory.createMessage();
         target.setRawBytes(bytes);
         decodeMessageHeader(bytes, target);

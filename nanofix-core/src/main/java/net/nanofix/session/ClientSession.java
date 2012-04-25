@@ -1,4 +1,4 @@
-package net.nanofix.app.session;
+package net.nanofix.session;
 
 import net.nanofix.config.SessionConfig;
 
@@ -7,9 +7,9 @@ import net.nanofix.config.SessionConfig;
  * Date: 03/04/12
  * Time: 16:37
  */
-public class ServerSession extends AbstractSession {
+public class ClientSession extends AbstractSession{
 
-    public ServerSession(SessionConfig config) {
+    public ClientSession(SessionConfig config) {
         super(config);
     }
 }

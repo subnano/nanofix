@@ -1,6 +1,8 @@
 package net.nanofix.netty;
 
+import net.nanofix.message.DefaultFIXMessageFactory;
 import net.nanofix.message.FIXMessageDecoder;
+import net.nanofix.message.StandardFIXMessageDecoder;
 import net.nanofix.session.DefaultFIXLogonManager;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -12,6 +14,12 @@ import org.jboss.netty.channel.Channels;
  * Time: 06:26
  */
 public class FIXClientPipelineFactory implements ChannelPipelineFactory {
+
+    private final DefaultFIXMessageFactory fixMessageFactory;
+
+    public FIXClientPipelineFactory() {
+        fixMessageFactory = new DefaultFIXMessageFactory();
+    }
 
     @Override
     public ChannelPipeline getPipeline() throws Exception {
@@ -26,7 +34,8 @@ public class FIXClientPipelineFactory implements ChannelPipelineFactory {
 //        };
 
         ChannelPipeline pipeline = Channels.pipeline(
-                new FIXFrameDecoder()
+                new FIXFrameDecoder(),
+                new StandardFIXMessageDecoder(fixMessageFactory)
         );
         return pipeline;
     }

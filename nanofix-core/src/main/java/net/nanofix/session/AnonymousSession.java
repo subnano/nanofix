@@ -1,4 +1,4 @@
-package net.nanofix.app.session;
+package net.nanofix.session;
 
 /**
  * User: Mark

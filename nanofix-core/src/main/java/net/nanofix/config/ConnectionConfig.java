@@ -7,7 +7,6 @@ package net.nanofix.config;
  */
 public interface ConnectionConfig {
 
-
     int getPort();
 
     String getBindAddress();

@@ -8,4 +8,5 @@ package net.nanofix.message;
  */
 public interface FIXMessageFactory {
     FIXMessage createMessage();
+    FIXMessage createMessage(String msgType);
 }

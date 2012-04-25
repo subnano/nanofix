@@ -1,5 +1,6 @@
 package net.nanofix.app;
 
+import net.nanofix.config.ServerSocketConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,7 @@ public abstract class AbstractComponent implements Component {
         this.state = ComponentState.Unknown;
         LOG = LoggerFactory.getLogger(this.getClass());
     }
+
 
     @Override
     public void open() {
