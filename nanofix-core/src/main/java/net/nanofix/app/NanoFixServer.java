@@ -51,18 +51,11 @@ public class NanoFixServer extends AbstractComponent implements  Application {
     private ApplicationConfig loadConfig(InputStream inputStream) {
         XmlConfigFactory configFactory = new XmlConfigFactory();
         ApplicationConfig config = configFactory.load(inputStream);
-        config.validate();
-        createSessions(config.getSessionConfigs());
-        createConnectors(sessions);
         return config;
     }
 
     public ApplicationConfig getConfig() {
         return config;
-    }
-
-    public List<Session> getSessions() {
-        return sessions;
     }
 
     @Override
@@ -100,43 +93,43 @@ public class NanoFixServer extends AbstractComponent implements  Application {
     }
 
     private void openSessions() {
-        for (Session session : getSessions()) {
+        for (Session session : config.getSessions()) {
             session.open();
         }
     }
 
     private void openConnectors() {
-        for (SocketConnector connector : socketConnectors) {
+        for (SocketConnector connector : config.getSocketConnectors()) {
             connector.open();
         }
     }
 
     private void startSessions() {
-        for (Session session : getSessions()) {
+        for (Session session : config.getSessions()) {
             session.start();
         }
     }
 
     private void startConnectors() {
-        for (SocketConnector connector : socketConnectors) {
+        for (SocketConnector connector : config.getSocketConnectors()) {
             connector.start();
         }
     }
 
     private void stopConnectors() {
-        for (SocketConnector connector : socketConnectors) {
+        for (SocketConnector connector : config.getSocketConnectors()) {
             connector.stop();
         }
     }
 
     private void stopSessions() {
-        for (Session session : getSessions()) {
+        for (Session session : config.getSessions()) {
             session.stop();
         }
     }
 
     private void closeSessions() {
-        for (Session session : getSessions()) {
+        for (Session session : config.getSessions()) {
             session.close();
         }
     }

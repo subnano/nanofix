@@ -4,7 +4,10 @@ import net.nanofix.app.AbstractComponent;
 import net.nanofix.config.SessionConfig;
 import net.nanofix.message.FIXMessage;
 import net.nanofix.message.FIXMessageFactory;
+import net.nanofix.message.Tags;
 import net.nanofix.netty.SocketConnector;
+import net.nanofix.util.DateTimeGenerator;
+import net.nanofix.util.DefaultTimeGenerator;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -18,6 +21,7 @@ public abstract class AbstractSession extends AbstractComponent implements Sessi
     private final SessionConfig config;
     private FIXMessageFactory fixMessageFactory;
     private SocketConnector connector;
+    private DateTimeGenerator timeGenerator = new DefaultTimeGenerator();
     private final AtomicInteger lastSeqNumIn = new AtomicInteger(-1);
     private final AtomicInteger lastSeqNumOut = new AtomicInteger(-1);
 
@@ -47,6 +51,10 @@ public abstract class AbstractSession extends AbstractComponent implements Sessi
         this.connector = connector;
     }
 
+    protected DateTimeGenerator getTimeGenerator() {
+        return timeGenerator;
+    }
+
     protected int getNextSeqNumOut() {
         return lastSeqNumOut.getAndIncrement();
     }
@@ -65,4 +73,33 @@ public abstract class AbstractSession extends AbstractComponent implements Sessi
         // TODO write message to log file
         getConnector().send(msg);
     }
+
+    protected void addHeader(FIXMessage msg) {
+        addCounterParties(msg);
+        addSeqNum(msg, getNextSeqNumOut());
+        addSessionIdentifiers(msg);
+        addSendingTime(msg);
+    }
+
+    private void addSeqNum(FIXMessage msg, int seqNum) {
+        msg.setFieldValue(Tags.MsgSeqNum, seqNum);
+    }
+
+    protected void addSendingTime(FIXMessage msg) {
+        msg.setFieldValue(Tags.SendingTime, getTimeGenerator().getUtcTime(isUseMillisInTimeStamp()));
+    }
+
+    protected boolean isUseMillisInTimeStamp() {
+        // TODO check for FIX version 4.2+ here
+        return getConfig().isUseMillisInTimeStamp();
+    }
+
+    private void addCounterParties(FIXMessage msg) {
+        msg.setFieldValue(Tags.SenderCompID, getConfig().getSenderCompID());
+        msg.setFieldValue(Tags.TargetCompID, getConfig().getTargetCompID());
+    }
+
+    private void addSessionIdentifiers(FIXMessage msg) {
+    }
+
 }

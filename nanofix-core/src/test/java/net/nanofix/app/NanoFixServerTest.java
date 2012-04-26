@@ -20,7 +20,7 @@ public class NanoFixServerTest {
         NanoFixServer server = new NanoFixServer("test-config.xml");
         assertThat("server", server.getConfig(), notNullValue());
 
-        List<Session> sessions = server.getSessions();
+        List<Session> sessions = server.getConfig().getSessions();
         assertThat("sessions", sessions.size(), is(2));
 
         // open

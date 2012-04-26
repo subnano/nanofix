@@ -50,29 +50,4 @@ public class ClientSession extends AbstractSession{
         return msg;
     }
 
-    private void addHeader(FIXMessage msg) {
-        addCounterParties(msg);
-        addSeqNum(msg, getNextSeqNumOut());
-        addSessionIdentifiers(msg);
-        addSendingTime(msg);
-    }
-
-    private static void addSeqNum(FIXMessage msg, int seqNum) {
-        msg.setFieldValue(Tags.MsgSeqNum, seqNum);
-    }
-
-    private static void addSendingTime(FIXMessage msg) {
-        msg.setFieldValue(Tags.SendingTime, DefaultTimeGenerator.getUtcTime());
-    }
-
-    private void addCounterParties(FIXMessage msg) {
-        msg.setFieldValue(Tags.SenderCompID, getConfig().getSenderCompID());
-        msg.setFieldValue(Tags.TargetCompID, getConfig().getTargetCompID());
-    }
-
-    private void addSessionIdentifiers(FIXMessage msg) {
-        msg.setFieldValue(Tags.TargetCompID, session.getSessionID());
-    }
-
-
 }

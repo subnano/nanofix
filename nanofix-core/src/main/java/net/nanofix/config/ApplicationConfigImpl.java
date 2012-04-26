@@ -125,4 +125,14 @@ public class ApplicationConfigImpl implements ApplicationConfig {
             }
         }
     }
+
+    @Override
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    @Override
+    public List<SocketConnector> getSocketConnectors() {
+        return socketConnectors;
+    }
 }
