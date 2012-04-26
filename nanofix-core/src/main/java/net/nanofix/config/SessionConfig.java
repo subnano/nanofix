@@ -44,4 +44,8 @@ public interface SessionConfig {
     void setHeartbeatInterval(int heartbeat);
 
     List<ConnectionConfig> getConnectors();
+
+    boolean isResetSeqNum();
+
+    boolean isUseMillisInTimeStamp();
 }

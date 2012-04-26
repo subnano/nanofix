@@ -91,7 +91,7 @@
     <build>
 
         <filters>
-            <filter>src/main/filters/${filter.name}.filter</filter>
+            <filter>src/main/filters/${filter.name}.properties</filter>
         </filters>
 
         <resources>
@@ -148,14 +148,7 @@
                     <useDefaultDelimiters>false</useDefaultDelimiters>
                     <delimiters>
                         <delimiter>${*}</delimiter>
-                        <!--<delimiter>@</delimiter>-->
                     </delimiters>
-                    <nonFilteredFileExtensions>
-                        <nonFilteredFileExtension>dll</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>exe</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>jar</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>jks</nonFilteredFileExtension>
-                    </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
 

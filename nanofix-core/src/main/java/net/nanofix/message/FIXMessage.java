@@ -25,4 +25,7 @@ public interface FIXMessage {
     int getIntegerFieldValue(int tag) throws MissingFieldException;
     long getLongFieldValue(int tag) throws MissingFieldException;
 
+    void setFieldValue(int tag, boolean value);
+    void setFieldValue(int tag, int value);
+    void setFieldValue(int tag, String value);
 }

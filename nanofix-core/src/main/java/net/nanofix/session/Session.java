@@ -2,7 +2,9 @@ package net.nanofix.session;
 
 import net.nanofix.app.Component;
 import net.nanofix.config.SessionConfig;
+import net.nanofix.message.FIXMessage;
 import net.nanofix.message.FIXMessageFactory;
+import net.nanofix.netty.SocketConnector;
 
 /**
  * User: Mark
@@ -10,8 +12,19 @@ import net.nanofix.message.FIXMessageFactory;
  * Time: 16:36
  */
 public interface Session extends Component {
+
     SessionConfig getConfig();
+
     FIXMessageFactory getFIXMessageFactory();
 
-    String getVersion();
+    SocketConnector getConnector();
+
+    void setConnector(SocketConnector connector);
+
+    int getLastSeqNumIn();
+
+    int getLastSeqNumOut();
+
+    void send(FIXMessage msg);
+
 }

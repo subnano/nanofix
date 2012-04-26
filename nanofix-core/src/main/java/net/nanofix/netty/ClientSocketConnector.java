@@ -23,7 +23,6 @@ public class ClientSocketConnector extends AbstractSocketConnector implements So
 
     private int port;
     private String hostname;
-    private Channel channel;
     private final Session session;
 
     public ClientSocketConnector(ClientSocketConfig connectorConfig, Session session) {
@@ -31,6 +30,7 @@ public class ClientSocketConnector extends AbstractSocketConnector implements So
         this.session = session;
         this.port = connectorConfig.getPort();
         this.hostname = connectorConfig.getHostname();
+        session.setConnector(this);
     }
 
     @Override
@@ -53,36 +53,10 @@ public class ClientSocketConnector extends AbstractSocketConnector implements So
             public void operationComplete(ChannelFuture future) throws Exception {
                 LOG.info("Connection status:" + future);
                 // TODO did it connect/fail?
-                channel = future.getChannel();
-                sendLogonMessage();
+                setChannel(future.getChannel());
+                session.start();
             }
         });
-    }
-
-    private void sendLogonMessage() {
-        LOG.info("sending Logon message..");
-        ChannelFuture channelFuture = channel.write(createLogonMessage());
-        channelFuture.addListener(new ChannelFutureListener() {
-
-            @Override
-            public void operationComplete(ChannelFuture future) throws Exception {
-                LOG.info("Write future:" + future);
-            }
-        });
-
-    }
-
-    private FIXMessage createLogonMessage() {
-        FIXMessage msg = session.getFIXMessageFactory().createMessage(MsgTypes.Logon);
-        // TOD this should be somewhere common
-        // msg.setX(Tags.BeginString, session.getVersion());
-        addSessionIdentifiers(msg);
-        msg.setFieldValue(Tags.HeartBtInt, session.getSessionID());
-        return msg;
-    }
-
-    private void addSessionIdentifiers(FIXMessage msg) {
-        msg.setFieldValue(Tags.TargetCompID, session.getSessionID());
     }
 
     public String getHostname() {

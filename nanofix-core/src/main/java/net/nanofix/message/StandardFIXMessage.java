@@ -1,6 +1,9 @@
 package net.nanofix.message;
 
+import net.nanofix.field.BooleanField;
 import net.nanofix.field.Field;
+import net.nanofix.field.IntegerField;
+import net.nanofix.field.StringField;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -111,6 +114,21 @@ public class StandardFIXMessage implements FIXMessage {
             throw new MissingFieldException(tag, "Field " + tag + " missing");
         return -1L;
 //        return field.getLongValue();
+    }
+
+    @Override
+    public void setFieldValue(int tag, boolean value) {
+        addField(new BooleanField(tag, value));
+    }
+
+    @Override
+    public void setFieldValue(int tag, int value) {
+        addField(new IntegerField(tag, value));
+    }
+
+    @Override
+    public void setFieldValue(int tag, String value) {
+        addField(new StringField(tag, value));
     }
 
     @Override

@@ -14,6 +14,9 @@ public class ClientSocketConfig extends AbstractSocketConfig implements Connecti
     @XStreamAsAttribute
     private String hostname;
 
+    @XStreamAsAttribute
+    private boolean resetSeqNum;
+
     private String[] allowedAddresses;
     private String ignoredAddresses;
 
@@ -21,4 +24,7 @@ public class ClientSocketConfig extends AbstractSocketConfig implements Connecti
         return hostname;
     }
 
+    public boolean isResetSeqNum() {
+        return resetSeqNum;
+    }
 }

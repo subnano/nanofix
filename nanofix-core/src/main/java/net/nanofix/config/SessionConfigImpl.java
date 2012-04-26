@@ -40,6 +40,12 @@ public class SessionConfigImpl implements SessionConfig {
     @XStreamAsAttribute
     private int heartbeatInterval;
 
+    @XStreamAsAttribute
+    private boolean resetSeqNum;
+
+    @XStreamAsAttribute
+    private boolean useMillisInTimeStamp;
+
     @XStreamAlias("Connectors")
     private List<ConnectionConfig> connectionConfig;
 
@@ -128,6 +134,14 @@ public class SessionConfigImpl implements SessionConfig {
     @Override
     public List<ConnectionConfig> getConnectors() {
         return connectionConfig;
+    }
+
+    public boolean isResetSeqNum() {
+        return resetSeqNum;
+    }
+
+    public boolean isUseMillisInTimeStamp() {
+        return useMillisInTimeStamp;
     }
 
     @Override

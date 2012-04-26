@@ -10,12 +10,14 @@ public class DefaultFIXMessageFactory implements FIXMessageFactory {
 
     private static final boolean recordTimestamps = true;
 
+    @Override
     public FIXMessage createMessage(String msgType) {
         FIXMessage msg = new StandardFIXMessage();
         msg.setMsgType(msgType);
         return msg;
     }
 
+    @Override
     public FIXMessage createMessage() {
         FIXMessage msg = new StandardFIXMessage();
         if (recordTimestamps) {
@@ -23,4 +25,5 @@ public class DefaultFIXMessageFactory implements FIXMessageFactory {
         }
         return msg; 
     }
+
 }

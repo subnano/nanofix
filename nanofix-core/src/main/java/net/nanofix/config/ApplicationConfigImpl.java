@@ -122,7 +122,6 @@ public class ApplicationConfigImpl implements ApplicationConfig {
                 }
 
                 socketConnectors.add(socketConnector);
-                socketConnector.setSession(session);
             }
         }
     }
