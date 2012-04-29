@@ -21,10 +21,7 @@ public class ByteArrayUtilTest {
 
     @Test
     public void testToInteger() throws Exception {
-        Assert.assertEquals(123, ByteArrayUtil.toInteger(toBytes(123)));
+        Assert.assertEquals(123, ByteArrayUtil.toInteger(new byte[] { 49, 50, 51 }));
     }
 
-    private static byte[] toBytes(int value) {
-        return BigInteger.valueOf(value).toByteArray();
-    }
 }

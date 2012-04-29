@@ -1,7 +1,6 @@
 package net.nanofix.netty;
 
 import net.nanofix.message.FIXConstants;
-import net.nanofix.message.FIXMessageDecoder;
 import net.nanofix.message.MessageException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
@@ -22,7 +21,7 @@ import java.util.Arrays;
  */
 public class FIXFrameDecoder extends FrameDecoder {
 
-    private final static Logger logger = LoggerFactory.getLogger(FIXFrameDecoder.class);
+    private final static Logger LOG = LoggerFactory.getLogger(FIXFrameDecoder.class);
 
     private static final byte[] beginStringByteArray = new byte[FIXConstants.BEGIN_STRING_PREFIX_FIXT.length()];
 
@@ -73,8 +72,8 @@ public class FIXFrameDecoder extends FrameDecoder {
             }
         }
         catch (Exception e) {
-            logger.warn("Error in decoder: " + e.toString());
-            logger.info("Above error caused by message: " + buffer.toString(Charset.defaultCharset()));
+            LOG.warn("Error in decoder: " + e.toString());
+            LOG.info("Above error caused by message: " + buffer.toString(Charset.defaultCharset()));
             throw e;
         }
         return null;
@@ -88,16 +87,24 @@ public class FIXFrameDecoder extends FrameDecoder {
      */
     private void validateBeginString(ChannelBuffer buffer) throws CorruptedFrameException {
 
+        // clear the array first
+        Arrays.fill(beginStringByteArray, (byte) 0);
+
         // test for normal FIX first
         buffer.getBytes(buffer.readerIndex(), beginStringByteArray, 0, FIXConstants.BEGIN_STRING_PREFIX.length());
         if (Arrays.equals((FIXConstants.BEGIN_STRING_PREFIX + "\u0000").getBytes(), beginStringByteArray))
             return;
 
+        LOG.debug("expected=[{}] actual=[{}]",
+            FIXConstants.BEGIN_STRING_PREFIX + "\u0000",
+            new String(beginStringByteArray)
+        );
+
         // now test for FIXT
         buffer.getBytes(buffer.readerIndex(), beginStringByteArray, 0, FIXConstants.BEGIN_STRING_PREFIX_FIXT.length());
         if (Arrays.equals(FIXConstants.BEGIN_STRING_PREFIX_FIXT.getBytes(), beginStringByteArray))
             return;
-
+        System.out.println();
         throw new CorruptedFrameException("FIX message should begin with \"8=FIX.\" or \"8=FIXT.\"");
     }
 

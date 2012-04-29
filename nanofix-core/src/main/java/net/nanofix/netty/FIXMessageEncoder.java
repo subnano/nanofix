@@ -89,7 +89,6 @@ public class FIXMessageEncoder extends OneToOneEncoder {
 
     private void encodeMessageFields(FIXMessage msg, ChannelBuffer buffer) {
         for (int tag : msg.getTags()) {
-            LOG.debug("> tag={}, value={}", tag, msg.getFieldValue(tag));
             writeField(buffer, tag, msg.getFieldValue(tag));
         }
     }

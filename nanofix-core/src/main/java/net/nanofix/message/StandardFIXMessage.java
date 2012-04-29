@@ -1,9 +1,6 @@
 package net.nanofix.message;
 
-import net.nanofix.field.BooleanField;
 import net.nanofix.field.Field;
-import net.nanofix.field.IntegerField;
-import net.nanofix.field.StringField;
 import net.nanofix.util.FieldValueConverter;
 
 import java.util.LinkedHashMap;
@@ -54,11 +51,6 @@ public class StandardFIXMessage implements FIXMessage {
     @Override
     public byte[] getRawBytes() {
         return rawBytes;
-    }
-
-    @Override
-    public void setField(Field field) {
-        fields.put(field.getTag(), field);
     }
 
     @Override
@@ -140,18 +132,27 @@ public class StandardFIXMessage implements FIXMessage {
     }
 
     @Override
-    public void setFieldValue(int tag, boolean value) {
+    public byte[] setFieldValue(int tag, byte[] value) {
         fields.put(tag, value);
+        return value;
     }
 
     @Override
-    public void setFieldValue(int tag, int value) {
+    public boolean setFieldValue(int tag, boolean value) {
         fields.put(tag, value);
+        return value;
     }
 
     @Override
-    public void setFieldValue(int tag, String value) {
+    public int setFieldValue(int tag, int value) {
         fields.put(tag, value);
+        return value;
+    }
+
+    @Override
+    public String setFieldValue(int tag, String value) {
+        fields.put(tag, value);
+        return value;
     }
 
     public Set<Integer> getTags() {

@@ -7,6 +7,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.when;
+
 /**
  * User: Mark
  * Date: 02/04/12
@@ -22,6 +24,7 @@ public class FieldSelectorTest {
     @Test
     public void testIsSelected() throws Exception {
         FIXMessage msg = mock(FIXMessage.class);
+        when(msg.getFieldValue(11)).thenReturn("abc");
         assertThat(new FieldSelector(new StringField(11, "abc")).isSelected(msg), is(true));
     }
 }

@@ -20,7 +20,6 @@ import java.util.Arrays;
 public class StandardFIXMessageDecoder extends FrameDecoder implements FIXMessageDecoder {
 
     private byte[] checksumBytes = new byte[FIXConstants.CHECKSUM_SIZE];
-    private final FixMessageUnmarshaller unmarshaller = new FixMessageUnmarshaller();
     private final Charset charset;
     private final FIXMessageFactory fixMessageFactory;
 
@@ -48,12 +47,6 @@ public class StandardFIXMessageDecoder extends FrameDecoder implements FIXMessag
 
     private void decodeMessageHeader(byte[] bytes, FIXMessage msg) throws MissingFieldException {
         decodeBytes(bytes, msg, true);
-
-        // get the msgType
-        msg.setMsgType(msg.getStringFieldValue(Tags.MsgType));
-
-        // get the msgSeqNum
-        msg.setMsgSeqNum(msg.getLongFieldValue(Tags.MsgSeqNum));
 
         // get the CompIDs
     }
@@ -84,7 +77,15 @@ public class StandardFIXMessageDecoder extends FrameDecoder implements FIXMessag
             int delimiterPos = getDelimiterPos(bytes, equalPos + 1);
 
             // extract the tag value
-            target.setField(new RawField(tag, Arrays.copyOfRange(bytes, equalPos + 1, delimiterPos)));
+            byte[] tagValue = target.setFieldValue(tag, Arrays.copyOfRange(bytes, equalPos + 1, delimiterPos));
+
+            // set these additional values
+            if (tag == Tags.MsgType) {
+                target.setMsgType(new String(tagValue));
+            }
+            else if (tag == Tags.MsgSeqNum) {
+                target.setMsgSeqNum(ByteArrayUtil.toLong(tagValue));
+            }
 
             offset = delimiterPos + 1;
         }

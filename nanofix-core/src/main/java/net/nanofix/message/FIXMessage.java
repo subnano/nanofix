@@ -15,7 +15,6 @@ public interface FIXMessage {
     public String getMsgType();
     public void setRawBytes(byte[] bytes);
     public byte[] getRawBytes();
-    void setField(Field rawField);
     boolean hasField(int tag);
     void setTimestamp(long timestamp);
     long getTimestamp();
@@ -26,13 +25,15 @@ public interface FIXMessage {
     int getIntegerFieldValue(int tag) throws MissingFieldException;
     long getLongFieldValue(int tag) throws MissingFieldException;
 
-    void setFieldValue(int tag, boolean value);
-    void setFieldValue(int tag, int value);
-    void setFieldValue(int tag, String value);
+    byte[] setFieldValue(int tag, byte[] value);
+    boolean setFieldValue(int tag, boolean value);
+    int setFieldValue(int tag, int value);
+    String setFieldValue(int tag, String value);
 
     boolean getBooleanFieldValue(int tag) throws MissingFieldException;
 
     Object getFieldValue(int tag);
 
     Set<Integer> getTags();
+
 }

@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 public class StandardFIXMessageDecoderTest {
 
     private StandardFIXMessageDecoder decoder;
-    private static final String M1 = "8=FIX.4.4\u00019=74\u000135=A\u000149=FIXLDNMD1\u000156=COBAFXMD\u000134=1\u000152=20111012-16:30:59\u0001108=30\u000198=0\u0001141=Y\u000110=043\u0001";
+    private static final String M1 = "8=FIX.4.0\u00019=61\u000135=A\u000134=1\u000149=BANZAI\u000152=20120331-10:25:15\u000156=EXEC\u000198=0\u0001108=30\u000110=255\u0001";
 
     @Before
     public void setup() {

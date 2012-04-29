@@ -17,7 +17,7 @@ public class NanoFixServerTest {
 
     @Test
     public void testNanofixServer() throws Exception {
-        NanoFixServer server = new NanoFixServer("test-config.xml");
+        NanoFixServer server = new NanoFixServer("/test-config.xml");
         assertThat("server", server.getConfig(), notNullValue());
 
         List<Session> sessions = server.getConfig().getSessions();
