@@ -2,6 +2,7 @@ package net.nanofix.session;
 
 import net.nanofix.app.AbstractComponent;
 import net.nanofix.config.SessionConfig;
+import net.nanofix.message.DefaultFIXMessageFactory;
 import net.nanofix.message.FIXMessage;
 import net.nanofix.message.FIXMessageFactory;
 import net.nanofix.message.Tags;
@@ -21,12 +22,14 @@ public abstract class AbstractSession extends AbstractComponent implements Sessi
     private final SessionConfig config;
     private FIXMessageFactory fixMessageFactory;
     private SocketConnector connector;
-    private DateTimeGenerator timeGenerator = new DefaultTimeGenerator();
+    private DateTimeGenerator timeGenerator;
     private final AtomicInteger lastSeqNumIn = new AtomicInteger(-1);
     private final AtomicInteger lastSeqNumOut = new AtomicInteger(-1);
 
     public AbstractSession(SessionConfig config) {
         this.config = config;
+        fixMessageFactory = new DefaultFIXMessageFactory();
+        timeGenerator = new DefaultTimeGenerator();
     }
 
     public SessionConfig getConfig() {
@@ -51,6 +54,11 @@ public abstract class AbstractSession extends AbstractComponent implements Sessi
         this.connector = connector;
     }
 
+    @Override
+    public String getVersion() {
+        return config.getVersion();
+    }
+
     protected DateTimeGenerator getTimeGenerator() {
         return timeGenerator;
     }
@@ -71,6 +79,8 @@ public abstract class AbstractSession extends AbstractComponent implements Sessi
     public void send(FIXMessage msg) {
         // TODO persist message
         // TODO write message to log file
+
+        // send message to connector
         getConnector().send(msg);
     }
 
@@ -101,5 +111,8 @@ public abstract class AbstractSession extends AbstractComponent implements Sessi
 
     private void addSessionIdentifiers(FIXMessage msg) {
     }
+
+    @Override
+    public abstract void onConnectorStatus(SocketConnector connector, boolean success);
 
 }

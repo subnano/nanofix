@@ -27,9 +27,9 @@ public class FieldSelector implements MessageSelector {
 
     @Override
     public boolean isSelected(FIXMessage msg) {
-        Field foundField = msg.getField(field.getTag());
+        Object value = msg.getFieldValue(field.getTag());
         return ANY_FIELD_VALUE == field.getValue()
-                || foundField != null && field.equals(foundField);
+                || value != null && field.getValue().equals(value);
     }
 
     public static Field getTagOnlyField(int tag) {

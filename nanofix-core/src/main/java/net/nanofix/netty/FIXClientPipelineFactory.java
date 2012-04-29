@@ -1,9 +1,7 @@
 package net.nanofix.netty;
 
 import net.nanofix.message.DefaultFIXMessageFactory;
-import net.nanofix.message.FIXMessageDecoder;
-import net.nanofix.message.StandardFIXMessageDecoder;
-import net.nanofix.session.DefaultFIXLogonManager;
+import net.nanofix.session.Session;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
@@ -16,8 +14,10 @@ import org.jboss.netty.channel.Channels;
 public class FIXClientPipelineFactory implements ChannelPipelineFactory {
 
     private final DefaultFIXMessageFactory fixMessageFactory;
+    private final Session session;
 
-    public FIXClientPipelineFactory() {
+    public FIXClientPipelineFactory(Session session) {
+        this.session = session;
         fixMessageFactory = new DefaultFIXMessageFactory();
     }
 
@@ -35,7 +35,9 @@ public class FIXClientPipelineFactory implements ChannelPipelineFactory {
 
         ChannelPipeline pipeline = Channels.pipeline(
                 new FIXFrameDecoder(),
-                new StandardFIXMessageDecoder(fixMessageFactory)
+                new StandardFIXMessageDecoder(fixMessageFactory),
+                new FIXMessageEncoder(session.getVersion()),
+                new NanoFixChannelHandler(null, session)
         );
         return pipeline;
     }

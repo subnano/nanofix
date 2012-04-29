@@ -23,7 +23,7 @@ public abstract class AbstractComponent implements Component {
     @Override
     public void open() {
         if (state != ComponentState.Unknown) {
-            throw new ComponentStateException("component is already open");
+            throw new ComponentStateException(this.getClass().getSimpleName() + " is already open");
         }
         if (LOG.isDebugEnabled()) {
             LOG.debug("open()");

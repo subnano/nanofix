@@ -1,5 +1,6 @@
 package net.nanofix.app;
 
+import net.nanofix.netty.ServerSocketConnector;
 import net.nanofix.session.Session;
 import net.nanofix.config.*;
 import net.nanofix.netty.SocketConnector;
@@ -9,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * User: Mark
@@ -64,14 +64,14 @@ public class NanoFixServer extends AbstractComponent implements  Application {
         // open other components?
         super.open();
         openSessions();
-        openConnectors();
+        openServerConnectors();
     }
 
     @Override
     public void start() {
         super.start();
         startSessions();
-        startConnectors();
+        startServerConnectors();
     }
 
     @Override
@@ -98,9 +98,11 @@ public class NanoFixServer extends AbstractComponent implements  Application {
         }
     }
 
-    private void openConnectors() {
+    private void openServerConnectors() {
         for (SocketConnector connector : config.getSocketConnectors()) {
-            connector.open();
+            if (connector instanceof ServerSocketConnector) {
+                connector.open();
+            }
         }
     }
 
@@ -110,9 +112,11 @@ public class NanoFixServer extends AbstractComponent implements  Application {
         }
     }
 
-    private void startConnectors() {
+    private void startServerConnectors() {
         for (SocketConnector connector : config.getSocketConnectors()) {
-            connector.start();
+            if (connector instanceof ServerSocketConnector) {
+                connector.start();
+            }
         }
     }
 

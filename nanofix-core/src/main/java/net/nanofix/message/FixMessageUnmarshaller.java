@@ -36,7 +36,7 @@ public class FixMessageUnmarshaller {
                 return target;
             }
             int delimiterPos = getDelimiterPos(bytes, equalPos + 1);
-            target.addField(new RawField(tag, Arrays.copyOfRange(bytes, equalPos + 1, delimiterPos)));
+            target.setField(new RawField(tag, Arrays.copyOfRange(bytes, equalPos + 1, delimiterPos)));
 
             offset = delimiterPos + 1;
         }

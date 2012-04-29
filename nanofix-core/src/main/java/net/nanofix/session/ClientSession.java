@@ -4,27 +4,47 @@ import net.nanofix.config.SessionConfig;
 import net.nanofix.message.FIXMessage;
 import net.nanofix.message.MsgTypes;
 import net.nanofix.message.Tags;
-import net.nanofix.util.DefaultTimeGenerator;
+import net.nanofix.netty.SocketConnector;
 
 /**
  * User: Mark
  * Date: 03/04/12
  * Time: 16:37
  */
-public class ClientSession extends AbstractSession{
+public class ClientSession extends AbstractSession {
 
     public ClientSession(SessionConfig config) {
         super(config);
     }
 
     @Override
+    public void open() {
+        super.open();
+        getConnector().addListener(this);
+        getConnector().open();
+    }
+
+    @Override
     public void start() {
         super.start();
+        getConnector().start();
     }
 
     private void sendLogonMessage() {
         LOG.info("sending Logon message..");
         send(createLogonMessage());
+    }
+
+    @Override
+    public void stop() {
+        getConnector().stop();
+        super.stop();
+    }
+
+    @Override
+    public void close() {
+        getConnector().removeListener(this);
+        super.close();
     }
 
     private FIXMessage createLogonMessage() {
@@ -50,4 +70,14 @@ public class ClientSession extends AbstractSession{
         return msg;
     }
 
+    @Override
+    public void onConnectorStatus(SocketConnector connector, boolean success) {
+        if (success) {
+            LOG.info("session {} is connected", "?");
+            sendLogonMessage();
+        }
+        else {
+            LOG.warn("session {} is disconnected", "?");
+        }
+    }
 }

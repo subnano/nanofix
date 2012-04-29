@@ -11,7 +11,7 @@ import net.nanofix.netty.SocketConnector;
  * Date: 03/04/12
  * Time: 16:36
  */
-public interface Session extends Component {
+public interface Session extends Component, ConnectorListener  {
 
     SessionConfig getConfig();
 
@@ -20,6 +20,8 @@ public interface Session extends Component {
     SocketConnector getConnector();
 
     void setConnector(SocketConnector connector);
+
+    String getVersion();
 
     int getLastSeqNumIn();
 

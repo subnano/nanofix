@@ -4,9 +4,11 @@ import net.nanofix.field.BooleanField;
 import net.nanofix.field.Field;
 import net.nanofix.field.IntegerField;
 import net.nanofix.field.StringField;
+import net.nanofix.util.FieldValueConverter;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * TODO
@@ -23,7 +25,7 @@ public class StandardFIXMessage implements FIXMessage {
     private String msgType;
     private byte[] rawBytes;
     //private List<Field> fields = new ArrayList<Field>();
-    private Map<Integer,Field> fields = new LinkedHashMap<Integer,Field>();
+    private Map<Integer,Object> fields = new LinkedHashMap<Integer,Object>();
     private FIXMessageFormatter stringFormatter = new MessageToStringFormatter();
     private long timestamp = -1L;
     private long msgSeqNum = -1L;
@@ -55,18 +57,13 @@ public class StandardFIXMessage implements FIXMessage {
     }
 
     @Override
-    public void addField(Field field) {
+    public void setField(Field field) {
         fields.put(field.getTag(), field);
     }
 
     @Override
     public boolean hasField(int tag) {
         return fields.containsKey(tag);
-    }
-
-    @Override
-    public Field getField(int tag) {
-        return fields.get(tag);
     }
 
     @Override
@@ -91,44 +88,74 @@ public class StandardFIXMessage implements FIXMessage {
 
     @Override
     public String getStringFieldValue(int tag) throws MissingFieldException {
-        Field field = getField(tag);
-        if (field == null)
+        Object value = fields.get(tag);
+        if (value == null) {
             throw new MissingFieldException(tag, "Field " + tag + " missing");
-        return "";
-//        return field.getStringValue();
+        }
+        if (value instanceof String) {
+            return (String) value;
+        }
+        return FieldValueConverter.convertToString(value);
     }
 
     @Override
     public int getIntegerFieldValue(int tag) throws MissingFieldException {
-        Field field = getField(tag);
-        if (field == null)
+        Object value = fields.get(tag);
+        if (value == null) {
             throw new MissingFieldException(tag, "Field " + tag + " missing");
-        return -1;
-//        return field.getIntValue();
+        }
+        if (value instanceof Integer) {
+            return (Integer) value;
+        }
+        return FieldValueConverter.convertToInt(value);
     }
 
     @Override
     public long getLongFieldValue(int tag) throws MissingFieldException {
-        Field field = getField(tag);
-        if (field == null)
+        Object value = fields.get(tag);
+        if (value == null) {
             throw new MissingFieldException(tag, "Field " + tag + " missing");
-        return -1L;
-//        return field.getLongValue();
+        }
+        if (value instanceof Long) {
+            return (Long) value;
+        }
+        return FieldValueConverter.convertToLong(value);
+    }
+
+    @Override
+    public boolean getBooleanFieldValue(int tag) throws MissingFieldException {
+        Object value = fields.get(tag);
+        if (value == null) {
+            throw new MissingFieldException(tag, "Field " + tag + " missing");
+        }
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+        return FieldValueConverter.convertToBoolean(value);
+    }
+
+    @Override
+    public Object getFieldValue(int tag) {
+        return fields.get(tag);
     }
 
     @Override
     public void setFieldValue(int tag, boolean value) {
-        addField(new BooleanField(tag, value));
+        fields.put(tag, value);
     }
 
     @Override
     public void setFieldValue(int tag, int value) {
-        addField(new IntegerField(tag, value));
+        fields.put(tag, value);
     }
 
     @Override
     public void setFieldValue(int tag, String value) {
-        addField(new StringField(tag, value));
+        fields.put(tag, value);
+    }
+
+    public Set<Integer> getTags() {
+        return fields.keySet();
     }
 
     @Override

@@ -2,6 +2,8 @@ package net.nanofix.message;
 
 import net.nanofix.field.Field;
 
+import java.util.Set;
+
 /**
  * User: Mark Wardell
  * Date: 11/10/11
@@ -13,9 +15,8 @@ public interface FIXMessage {
     public String getMsgType();
     public void setRawBytes(byte[] bytes);
     public byte[] getRawBytes();
-    void addField(Field rawField);
+    void setField(Field rawField);
     boolean hasField(int tag);
-    Field getField(int tag);
     void setTimestamp(long timestamp);
     long getTimestamp();
     void setMsgSeqNum(long seqNum);
@@ -28,4 +29,10 @@ public interface FIXMessage {
     void setFieldValue(int tag, boolean value);
     void setFieldValue(int tag, int value);
     void setFieldValue(int tag, String value);
+
+    boolean getBooleanFieldValue(int tag) throws MissingFieldException;
+
+    Object getFieldValue(int tag);
+
+    Set<Integer> getTags();
 }

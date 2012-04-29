@@ -22,7 +22,7 @@ import java.util.List;
 @XStreamAlias("Application")
 public class ApplicationConfigImpl implements ApplicationConfig {
 
-    private final Logger LOG = LoggerFactory.getLogger(ApplicationConfigImpl.class);
+    private transient Logger LOG;
 
     @XStreamAsAttribute
     private String id;
@@ -33,11 +33,22 @@ public class ApplicationConfigImpl implements ApplicationConfig {
     @XStreamAlias("Sessions")
     private final List<SessionConfig> sessionConfigs;
 
-    private final transient List<Session> sessions = new ArrayList<Session>();
-    private final transient List<SocketConnector> socketConnectors = new ArrayList<SocketConnector>();
+    private transient List<Session> sessions;
+    private transient List<SocketConnector> socketConnectors;
 
     public ApplicationConfigImpl() {
         sessionConfigs = new ArrayList<SessionConfig>();
+    }
+
+    private void init() {
+        LOG = LoggerFactory.getLogger(ApplicationConfigImpl.class);
+        sessions = new ArrayList<Session>();
+        socketConnectors = new ArrayList<SocketConnector>();
+
+        // set any defaults that haven't created created
+        if (sessionFactory == null) {
+            sessionFactory = new DefaultSessionFactory();
+        }
     }
 
     public String getId() {
@@ -78,6 +89,10 @@ public class ApplicationConfigImpl implements ApplicationConfig {
      * @return the newly created object
      */
     public ApplicationConfigImpl readResolve() {
+
+        // set defaults for this instance
+        init();
+
         createSessions();
         createConnectors();
         return this;

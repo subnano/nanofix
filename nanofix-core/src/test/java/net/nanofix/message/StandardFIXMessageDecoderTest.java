@@ -1,5 +1,6 @@
 package net.nanofix.message;
 
+import net.nanofix.netty.StandardFIXMessageDecoder;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

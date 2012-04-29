@@ -1,6 +1,7 @@
-package net.nanofix.message;
+package net.nanofix.netty;
 
 import net.nanofix.field.RawField;
+import net.nanofix.message.*;
 import net.nanofix.util.ByteArrayUtil;
 import net.nanofix.util.FIXMessageUtil;
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -10,8 +11,6 @@ import org.jboss.netty.handler.codec.frame.FrameDecoder;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
-
-import static net.nanofix.message.FIXConstants.*;
 
 /**
  * User: Mark Wardell
@@ -74,6 +73,8 @@ public class StandardFIXMessageDecoder extends FrameDecoder implements FIXMessag
         int offset = 0;
         while (offset < bytes.length) {
             int equalPos = getEqualPos(bytes, offset);
+
+            // extract the tag number
             int tag = ByteArrayUtil.toInteger(bytes, offset, equalPos - offset);
 
             // return now if this isn't a header field and that's all we want
@@ -81,7 +82,9 @@ public class StandardFIXMessageDecoder extends FrameDecoder implements FIXMessag
                 break;
             }
             int delimiterPos = getDelimiterPos(bytes, equalPos + 1);
-            target.addField(new RawField(tag, Arrays.copyOfRange(bytes, equalPos + 1, delimiterPos)));
+
+            // extract the tag value
+            target.setField(new RawField(tag, Arrays.copyOfRange(bytes, equalPos + 1, delimiterPos)));
 
             offset = delimiterPos + 1;
         }

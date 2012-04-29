@@ -7,7 +7,7 @@ package net.nanofix.message;
  */
 public class MessageToStringFormatter implements FIXMessageFormatter {
 
-    public String toString(FIXMessage message) {
-        return new String(message.getRawBytes());
+    public String toString(FIXMessage msg) {
+        return "FIXMessage(" + msg.getMsgType() + ")";
     }
 }
