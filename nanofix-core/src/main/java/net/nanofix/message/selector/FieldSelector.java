@@ -3,10 +3,6 @@ package net.nanofix.message.selector;
 import net.nanofix.field.RawField;
 import net.nanofix.message.FIXMessage;
 import net.nanofix.field.Field;
-import sun.plugin2.liveconnect.ArgumentHelper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * User: Mark
