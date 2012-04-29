@@ -1,12 +1,10 @@
 package net.nanofix.util;
 
-import net.nanofix.message.FIXConstants.Tags;
-import org.hamcrest.number.IsGreaterThan;
+import net.nanofix.message.Tags;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static net.nanofix.message.FIXConstants.*;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.Matchers.*;
