@@ -1,6 +1,7 @@
 package net.nanofix.util;
 
 import net.nanofix.message.FIXConstants.*;
+import net.nanofix.message.Tags;
 
 /**
  * Created by IntelliJ IDEA.
