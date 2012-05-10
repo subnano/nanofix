@@ -8,5 +8,6 @@ import net.nanofix.message.FIXMessage;
  * Time: 16:21
  */
 public interface FIXLogonManager {
-    boolean isLogonPermitted(FIXMessage logonMessage);
+
+    boolean logonValid(FIXMessage msg, Session session);
 }

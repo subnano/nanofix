@@ -1,5 +1,6 @@
 package net.nanofix.util;
 
+import com.google.common.base.Stopwatch;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,7 +22,27 @@ public class ByteArrayUtilTest {
 
     @Test
     public void testToInteger() throws Exception {
+        Assert.assertEquals(12, ByteArrayUtil.toInteger(new byte[] { 49, 50 }));
         Assert.assertEquals(123, ByteArrayUtil.toInteger(new byte[] { 49, 50, 51 }));
+        Assert.assertEquals(1234, ByteArrayUtil.toInteger(new byte[] { 49, 50, 51, 52 }));
+        Assert.assertEquals(-1234, ByteArrayUtil.toInteger(new byte[] { 45, 49, 50, 51, 52 }));
     }
 
+    @Test
+    public void testBenchmark() {
+        final int TEST_LOOPS = 1000 * 1000 * 1000;
+
+        Stopwatch stopwatch = new Stopwatch().start();
+        for (int i=0; i<=TEST_LOOPS; i++) {
+            long result = 0 - 12345L;
+        }
+        TestHelper.printResults("subtract", TEST_LOOPS, stopwatch.elapsedMillis());
+        stopwatch.stop();
+
+        stopwatch.start();
+        for (int i=0; i<=TEST_LOOPS; i++) {
+            long result = 12345L * -1;
+        }
+        TestHelper.printResults("multiply", TEST_LOOPS, stopwatch.elapsedMillis());
+    }
 }

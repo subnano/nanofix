@@ -19,35 +19,46 @@ public class ByteArrayUtil {
         if (length <= 0) {
             throw new IllegalArgumentException("Positive length expected");
         }
-        int sign = 1;
+        boolean positive = true;
         int number = 0;
         for (int i=offset; i<offset+length; i++) {
-            if (bytes[i] == '+') {
-                sign = 1;
+            if (i==offset && bytes[i] == '+') {
+                positive = true;
             }
-            else if (bytes[i] == '-') {
-                sign = -1;
+            else if (i==offset && bytes[i] == '-') {
+                positive = false;
             }
-            if (!isDigit(bytes[i])) {
+            else if (!isDigit(bytes[i])) {
                 throw new NumberFormatException("Integer number expected (" + new String(bytes, offset, length) + ")");
             }
-            number = (number * 10) + bytes[i] - '0';
+            else {
+                number = (number * 10) + bytes[i] - '0';
+            }
         }
-        return sign * number;
+        return positive ? number : 0-number;
     }
 
     public static long toLong(byte bytes[], int offset, int length) throws NumberFormatException {
         if (length <= 0) {
             throw new IllegalArgumentException("Positive length expected");
         }
+        boolean positive = true;
         long number = 0L;
         for (int i=offset; i<offset+length; i++) {
-            if (!isDigit(bytes[i])) {
+            if (i==offset && bytes[i] == '+') {
+                positive = true;
+            }
+            else if (i==offset && bytes[i] == '-') {
+                positive = false;
+            }
+            else if (!isDigit(bytes[i])) {
                 throw new NumberFormatException("Long number expected (" + new String(bytes, offset, length) + ")");
             }
-            number = (number * 10) + bytes[i] - '0';
+            else {
+                number = (number * 10) + bytes[i] - '0';
+            }
         }
-        return number;
+        return positive ? number : 0-number;
     }
 
     public static long toLong(byte[] bytes) throws NumberFormatException {

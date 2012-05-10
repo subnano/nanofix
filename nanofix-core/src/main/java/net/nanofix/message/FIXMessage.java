@@ -28,6 +28,7 @@ public interface FIXMessage {
     byte[] setFieldValue(int tag, byte[] value);
     boolean setFieldValue(int tag, boolean value);
     int setFieldValue(int tag, int value);
+    long setFieldValue(int tag, long value);
     String setFieldValue(int tag, String value);
 
     boolean getBooleanFieldValue(int tag) throws MissingFieldException;

@@ -1,6 +1,5 @@
 package net.nanofix.message;
 
-import net.nanofix.field.Field;
 import net.nanofix.util.FieldValueConverter;
 
 import java.util.LinkedHashMap;
@@ -23,9 +22,16 @@ public class StandardFIXMessage implements FIXMessage {
     private byte[] rawBytes;
     //private List<Field> fields = new ArrayList<Field>();
     private Map<Integer,Object> fields = new LinkedHashMap<Integer,Object>();
-    private FIXMessageFormatter stringFormatter = new MessageToStringFormatter();
+    private FIXMessageFormatter stringFormatter = new SummeryMessageToStringFormatter();
     private long timestamp = -1L;
     private long msgSeqNum = -1L;
+
+    public StandardFIXMessage() {
+    }
+
+    public StandardFIXMessage(String msgType) {
+        this.msgType = msgType;
+    }
 
     @Override
     public void clear() {
@@ -145,6 +151,12 @@ public class StandardFIXMessage implements FIXMessage {
 
     @Override
     public int setFieldValue(int tag, int value) {
+        fields.put(tag, value);
+        return value;
+    }
+
+    @Override
+    public long setFieldValue(int tag, long value) {
         fields.put(tag, value);
         return value;
     }

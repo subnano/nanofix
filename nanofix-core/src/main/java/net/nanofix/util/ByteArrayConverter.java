@@ -7,7 +7,7 @@ import java.util.Arrays;
  * Date: 28/04/12
  * Time: 14:44
  */
-public class IntegerUtil {
+public class ByteArrayConverter {
 
     private static final byte ZERO = (byte) '0';
 
@@ -86,4 +86,16 @@ public class IntegerUtil {
     public static byte[] convertToBytesAsString(int value) {
         return Integer.toString(value).getBytes();
     }
+
+    public static byte[] convertToBytesAsString(long value) {
+        return Long.toString(value).getBytes();
+    }
+
+    public static byte[] asByteArray(long value) {
+        if (value >= 0 && value <= Integer.MAX_VALUE) {
+            return asByteArray((int)value);
+        }
+        return convertToBytesAsString(value);
+    }
+
 }

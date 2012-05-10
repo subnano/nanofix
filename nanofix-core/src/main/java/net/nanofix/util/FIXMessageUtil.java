@@ -1,6 +1,8 @@
 package net.nanofix.util;
 
 import net.nanofix.message.FIXConstants.*;
+import net.nanofix.message.FIXMessage;
+import net.nanofix.message.MissingFieldException;
 import net.nanofix.message.Tags;
 
 /**
@@ -17,8 +19,8 @@ public class FIXMessageUtil {
         return msgType.length() == 1 && ADMIN_MSG_TYPES.contains(msgType);
     }
 
-    public static boolean isHeaderField(int field) {
-        switch (field) {
+    public static boolean isHeaderField(int tag) {
+        switch (tag) {
             case Tags.BeginString:
             case Tags.BodyLength:
             case Tags.MsgType:
@@ -54,8 +56,8 @@ public class FIXMessageUtil {
         }
     }
 
-    public static boolean isTrailerField(int field) {
-        switch (field) {
+    public static boolean isTrailerField(int tag) {
+        switch (tag) {
             case Tags.SignatureLength:
             case Tags.Signature:
             case Tags.CheckSum:
@@ -63,5 +65,55 @@ public class FIXMessageUtil {
             default:
                 return false;
         }
+    }
+
+    /**
+     * Returns the field value from the message for the given field if the field exists.
+     * Or null if it doesn't exist.
+     *
+     * @param msg The given FIX message
+     * @param tag The field number to extract the value for
+     * @return The field value or null
+     */
+    public static String getStringFieldValue(FIXMessage msg, int tag) {
+        return getStringFieldValue(msg, tag, null);
+    }
+
+    /**
+     * Returns the field value as a String from the message for the given field if the field exists.
+     * Or the default value if it doesn't exist.
+     *
+     * @param msg The given FIX message
+     * @param tag The field number to extract the value for
+     * @param defaultValue The default value to return if the field does not exist
+     * @return The field value or default value
+     */
+    public static String getStringFieldValue(FIXMessage msg, int tag, String defaultValue) {
+        String value;
+        try {
+            value = msg.hasField(tag) ? msg.getStringFieldValue(tag) : defaultValue;
+        } catch (MissingFieldException e) {
+            value = defaultValue;
+        }
+        return value;
+    }
+
+    /**
+     * Returns the field value as a boolean from the message for the given field if the field exists.
+     * Or the default value if it doesn't exist.
+     *
+     * @param msg The given FIX message
+     * @param tag The field number to extract the value for
+     * @param defaultValue The default value to return if the field does not exist
+     * @return The field value or default value
+     */
+    public static boolean getBooleanFieldValue(FIXMessage msg, int tag, boolean defaultValue) {
+        boolean value;
+        try {
+            value = msg.hasField(tag) ? msg.getBooleanFieldValue(tag) : defaultValue;
+        } catch (MissingFieldException e) {
+            value = defaultValue;
+        }
+        return value;
     }
 }

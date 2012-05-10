@@ -13,43 +13,53 @@ public class SessionConfigBuilder {
         config = new SessionConfigImpl();
     }
 
-    public SessionConfigBuilder setVersion(String version) {
+    public SessionConfigBuilder version(String version) {
         config.setVersion(version);
         return this;
     }
 
-    public SessionConfigBuilder setSenderCompID(String compID) {
+    public SessionConfigBuilder senderCompID(String compID) {
         config.setSenderCompID(compID);
         return this;
     }
 
-    public SessionConfigBuilder setSenderSubID(String subID) {
+    public SessionConfigBuilder senderSubID(String subID) {
         config.setSenderSubID(subID);
         return this;
     }
 
-    public SessionConfigBuilder setSenderLocationID(String locationID) {
+    public SessionConfigBuilder senderLocationID(String locationID) {
         config.setSenderLocationID(locationID);
         return this;
     }
 
-    public SessionConfigBuilder setTargetCompID(String compID) {
+    public SessionConfigBuilder targetCompID(String compID) {
         config.setTargetCompID(compID);
         return this;
     }
 
-    public SessionConfigBuilder setTargetSubID(String subID) {
+    public SessionConfigBuilder targetSubID(String subID) {
         config.setTargetSubID(subID);
         return this;
     }
 
-    public SessionConfigBuilder setTargetLocationID(String locationID) {
+    public SessionConfigBuilder targetLocationID(String locationID) {
         config.setTargetLocationID(locationID);
         return this;
     }
 
-    public SessionConfigBuilder setHeartbeatInterval(int interval) {
+    public SessionConfigBuilder heartbeatInterval(int interval) {
         config.setHeartbeatInterval(interval);
+        return this;
+    }
+
+    public SessionConfigBuilder resetSeqNum(boolean resetSeqNum) {
+        config.setResetSeqNum(resetSeqNum);
+        return this;
+    }
+
+    public SessionConfigBuilder useMillisInTimeStamp(boolean useMillisInTimeStamp) {
+        config.setUseMillisInTimeStamp(useMillisInTimeStamp);
         return this;
     }
 

@@ -157,26 +157,35 @@
                 </configuration>
             </plugin>
 
-<!--
+            <!--
+                        <plugin>
+                            <artifactId>maven-assembly-plugin</artifactId>
+                            <version>2.3</version>
+                            <configuration>
+                                <attach>false</attach>
+                                <appendAssemblyId>false</appendAssemblyId>
+                                <descriptor>src/main/assembly/assembly.xml</descriptor>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>make-assembly</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>single</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+            -->
+
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.3</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>2.7.1</version>
                 <configuration>
-                    <attach>false</attach>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    <targetJdk>1.6</targetJdk>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
--->
 
         </plugins>
 
@@ -185,16 +194,17 @@
     <reporting>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>2.4.0</version>
-                <configuration>
-                    <xmlOutput>true</xmlOutput>
-                    <!-- Optional directory to put findbugs xdoc xml report -->
-                    <xmlOutputDirectory>target/site</xmlOutputDirectory>
-                </configuration>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>2.7.1</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>pmd</report>
+                            <report>cpd</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
-
 </project>

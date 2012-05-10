@@ -1,6 +1,6 @@
 <Application id="NanoServer">
     <Sessions>
-        <Session version="FIX.4.4" senderCompID="CLIENT" targetCompID="BROKER" heartbeatInterval="30">
+        <Session version="FIX.4.4" senderCompID="CLIENT" targetCompID="BROKER" heartbeatInterval="5">
             <Connectors>
                 <ClientSocket hostname="localhost" port="9001"
                             tcpNoDelay="false" receiveBufferSize="65536" sendBufferSize="2048"

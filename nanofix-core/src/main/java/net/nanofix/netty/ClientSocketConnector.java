@@ -1,13 +1,9 @@
 package net.nanofix.netty;
 
-import net.nanofix.message.MsgTypes;
-import net.nanofix.message.Tags;
-import net.nanofix.session.ConnectorListener;
+import net.nanofix.app.Application;
 import net.nanofix.session.Session;
 import net.nanofix.config.ClientSocketConfig;
-import net.nanofix.message.FIXMessage;
 import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
@@ -26,8 +22,8 @@ public class ClientSocketConnector extends AbstractSocketConnector implements So
     private String hostname;
     private final Session session;
 
-    public ClientSocketConnector(ClientSocketConfig connectorConfig, Session session) {
-        super(connectorConfig);
+    public ClientSocketConnector(Application application, ClientSocketConfig connectorConfig, Session session) {
+        super(application, connectorConfig);
         this.session = session;
         this.port = connectorConfig.getPort();
         this.hostname = connectorConfig.getHostname();
@@ -45,12 +41,7 @@ public class ClientSocketConnector extends AbstractSocketConnector implements So
         final NioClientSocketChannelFactory cf = new NioClientSocketChannelFactory(
                 Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
         final ClientBootstrap client = new ClientBootstrap(cf);
-        FIXClientPipelineFactory pipelineFactory = new FIXClientPipelineFactory(session);
-//        try {
-//            pipelineFactory.getPipeline().addLast("handler", new NanoFixChannelHandler(this, (ConnectorListener)session));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        FIXClientPipelineFactory pipelineFactory = new FIXClientPipelineFactory(application, session, this);
         client.setPipelineFactory(pipelineFactory);
 
         final ChannelFuture channelFut = client.connect(new InetSocketAddress(getHostname(), getPort()));

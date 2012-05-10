@@ -1,6 +1,10 @@
-package net.nanofix.message;
+package net.nanofix.netty;
 
+import net.nanofix.message.DefaultFIXMessageFactory;
+import net.nanofix.message.FIXMessage;
+import net.nanofix.message.MsgTypes;
 import net.nanofix.netty.StandardFIXMessageDecoder;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -29,7 +33,7 @@ public class StandardFIXMessageDecoderTest {
     public void testDecodeMessage() throws Exception {
         FIXMessage msg = decoder.decode(M1.getBytes());
         assertThat("null msg", msg, is(not(nullValue())));
-        assertThat("incorrect msgType", msg.getMsgType(), is(MsgTypes.Logon));
+        assertThat("incorrect msgType", msg.getMsgType(), Matchers.is(MsgTypes.Logon));
         assertThat("incorrect seqNum", msg.getMsgSeqNum(), is(1L));
     }
 

@@ -1,7 +1,7 @@
 package net.nanofix.netty;
 
 import net.nanofix.message.FIXConstants;
-import net.nanofix.message.MessageException;
+import net.nanofix.util.ByteArrayUtil;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -42,6 +42,9 @@ public class FIXFrameDecoder extends FrameDecoder {
     protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
 
         try {
+
+            LOG.debug("decode: {}", new String(buffer.array()));
+
             // Make sure if the bodyLength field was received.
             if (buffer.readableBytes() <= MIN_LENGTH_TAG_OFFSET + 1) {
                 // The bodyLength field was not received yet - return null.
@@ -52,12 +55,50 @@ public class FIXFrameDecoder extends FrameDecoder {
 
             validateBeginString(buffer);
 
-            final int messageLength = getMessageLength(buffer);
+            // find the second field (i.e. after the first delimiter)
+            int startOfLength = buffer.bytesBefore(FIXConstants.SOH) + 1;
+            if (startOfLength == NOT_FOUND) {
+                throw new ProtocolException("Field delimiter SOH not found in message");
+            }
+
+            // make sure '9=' comes next
+            if (buffer.getByte(buffer.readerIndex()+startOfLength) != (byte)'9'
+                    || buffer.getByte(buffer.readerIndex()+startOfLength+1) != (byte)'=') {
+                throw new ProtocolException("BodyLength(9) should be the second field in the message");
+            }
+
+            // make sure there's enough data in the buffer
+            final int lengthOfLength = buffer.bytesBefore(buffer.readerIndex() + startOfLength + 2,
+                    MAX_LENGTH_BYTES+1, FIXConstants.SOH);
+            if (lengthOfLength == NOT_FOUND) {
+                if (buffer.readableBytes() > MAX_LENGTH_BYTES) {
+                    // too many characters read, but no BodyLength field found
+                    throw new TooLongFrameException("End of BodyLength field not found within "
+                            + (MAX_LENGTH_BYTES + MIN_LENGTH_TAG_OFFSET) + " bytes");
+                }
+
+                // end of BodyLength field not found
+                return null;
+            }
+
+            int bodyLength = NOT_FOUND;
+            try {
+            bodyLength = ByteArrayUtil.toInteger(buffer.array(),
+                    buffer.readerIndex() + startOfLength + 2, lengthOfLength);
+            } catch (NumberFormatException e) {
+                bodyLength = NOT_FOUND;
+            }
+            if (bodyLength <= 0) {
+                final String lengthStr = toString(buffer.slice(buffer.readerIndex() + startOfLength + 2, lengthOfLength));
+                throw new CorruptedFrameException("Invalid BodyLength(" + lengthStr + ")");
+            }
+            final int messageLength = (startOfLength + 2 + lengthOfLength + 1) + bodyLength + LENGTH_OF_TRAILER_BYTES;
+
 //            logger.trace("readableBytes={} BodyLength={} TotalLength={} Buffer[{}]",
 //                    new Object[] { buffer.readableBytes(), lengthStr, totalLength, toString(buffer.slice()) });
 
             if (messageLength > maxFrameLength) {
-                throw new TooLongFrameException("Frame bodyLength may not be greater than " + maxFrameLength + " bytes");
+                throw new TooLongFrameException("BodyLength may not be greater than " + maxFrameLength + " bytes");
             }
 
             // There are enough bytes in the buffer. Read it.
@@ -69,6 +110,11 @@ public class FIXFrameDecoder extends FrameDecoder {
 
                 // pass this up the pipeline
                 return newFrame;
+            }
+
+            // if not make sure BodyLength isn't wrong
+            else if (isChecksumPresent(buffer)) {
+                throw new CorruptedFrameException("Invalid BodyLength(" + bodyLength + ")");
             }
         }
         catch (Exception e) {
@@ -95,42 +141,11 @@ public class FIXFrameDecoder extends FrameDecoder {
         if (Arrays.equals((FIXConstants.BEGIN_STRING_PREFIX + "\u0000").getBytes(), beginStringByteArray))
             return;
 
-        LOG.debug("expected=[{}] actual=[{}]",
-            FIXConstants.BEGIN_STRING_PREFIX + "\u0000",
-            new String(beginStringByteArray)
-        );
-
         // now test for FIXT
         buffer.getBytes(buffer.readerIndex(), beginStringByteArray, 0, FIXConstants.BEGIN_STRING_PREFIX_FIXT.length());
         if (Arrays.equals(FIXConstants.BEGIN_STRING_PREFIX_FIXT.getBytes(), beginStringByteArray))
             return;
-        System.out.println();
         throw new CorruptedFrameException("FIX message should begin with \"8=FIX.\" or \"8=FIXT.\"");
-    }
-
-    private int getMessageLength(ChannelBuffer buffer) throws CorruptedFrameException, TooLongFrameException {
-
-        // find the delimiter after the first tag + 3 (skip delimiter + '9=')
-        final int startOfLength = buffer.bytesBefore(FIXConstants.SOH) + 3;
-        if (startOfLength == NOT_FOUND)
-            throw new CorruptedFrameException("BodyLength(9) should be the second field in the message");
-
-        final int lengthOfLength = buffer.bytesBefore(buffer.readerIndex() + startOfLength,
-                MAX_LENGTH_BYTES, FIXConstants.SOH);
-        if (lengthOfLength == NOT_FOUND) {
-            if (buffer.readableBytes() > MAX_LENGTH_BYTES) {
-                // too many characters read, but no BodyLength field found
-                throw new TooLongFrameException("End of BodyLength field not found within "
-                        + (MAX_LENGTH_BYTES + MIN_LENGTH_TAG_OFFSET) + " bytes");
-            }
-
-            // end of BodyLength field not found
-            return NOT_FOUND;
-        }
-
-        final String lengthStr = toString(buffer.slice(buffer.readerIndex() + startOfLength, lengthOfLength));
-        final int bodyLength = Integer.parseInt(lengthStr);
-        return (startOfLength + lengthOfLength + 1) + bodyLength + LENGTH_OF_TRAILER_BYTES;
     }
 
     private String toString(ChannelBuffer buf) {
@@ -144,39 +159,48 @@ public class FIXFrameDecoder extends FrameDecoder {
      * @param bytes
      * @throws net.nanofix.message.MessageException
      */
-    protected static void validateChecksum(byte[] bytes) throws MessageException {
+    protected static void validateChecksum(byte[] bytes) throws ProtocolException {
 
         // make sure checksum is there
-        validateChecksumPresent(bytes);
+        if (!Arrays.equals(
+                FIXConstants.CHECKSUM_PREFIX.getBytes(),
+                Arrays.copyOfRange(bytes, bytes.length-7, bytes.length-4))) {
+            throw new ProtocolException("Missing checksum field [" + FIXConstants.CHECKSUM_PREFIX
+                    + "] at end of message");
+        }
 
         // confirm that end of message has the checksum - i.e. 10=xxx<SOH>
-        int computedChecksum = calcChecksumAsInt(bytes);
+        int computedChecksum = calcChecksum(bytes);
         int receivedChecksum = 0;
         try {
             receivedChecksum = Integer.parseInt(new String(bytes, bytes.length - 4, 3));
         } catch (NumberFormatException e) {
-            throw new MessageException("Checksum failure");
+            throw new ProtocolException("Checksum failure (" + receivedChecksum + ")");
         }
 
         if (receivedChecksum != computedChecksum)
-            throw new MessageException("Checksum failure");
+            throw new ProtocolException("Checksum failure (" + receivedChecksum + ")");
     }
 
-    private static void validateChecksumPresent(byte[] bytes) throws MessageException {
-        if (!Arrays.equals(FIXConstants.CHECKSUM_PREFIX.getBytes(),
-                Arrays.copyOfRange(bytes, bytes.length-7, bytes.length-4))) {
-            throw new MessageException("Missing checksum field [" + FIXConstants.CHECKSUM_PREFIX
-                    + "] at end of message");
-
+    private static boolean isChecksumPresent(ChannelBuffer buffer) throws ProtocolException {
+        for (int i=buffer.readerIndex(); i<buffer.capacity(); i++) {
+            if (buffer.getByte(i) == FIXConstants.SOH
+                    && buffer.getByte(i+1) == (byte) '1'
+                    && buffer.getByte(i+2) == (byte) '0'
+                    && buffer.getByte(i+3) == (byte) '=')
+                    return true;
         }
+        return false;
     }
 
-    protected static int calcChecksumAsInt(byte[] bytes) throws MessageException {
+    protected static int calcChecksum(byte[] bytes) {
         int checksum = 0;
-        for (int i = 0; i < bytes.length - FIXConstants.CHECKSUM_SIZE - 1; i++) {
-            checksum += (char) bytes[i];    // cast to unsigned char
+        int count = 0;
+        for (int i = 0; i < bytes.length - FIXConstants.CHECKSUM_SIZE; i++) {
+            checksum += bytes[i];
+            count++;
         }
-        return (checksum + 1) % 256;
+        return checksum % 256;
     }
 
     /**

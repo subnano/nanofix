@@ -8,6 +8,9 @@ package net.nanofix.util;
 public class FieldValueConverter {
 
     public static String convertToString(Object value) {
+        if (value instanceof byte[]) {
+            return new String((byte[]) value);
+        }
         return null;
     }
 

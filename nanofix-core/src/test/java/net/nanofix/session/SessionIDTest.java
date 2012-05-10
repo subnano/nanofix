@@ -1,27 +1,22 @@
 package net.nanofix.session;
 
+import net.nanofix.message.*;
+import net.nanofix.util.TestHelper;
 import net.nanofix.util.TimeUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.*;
 /**
  * User: Mark
  * Date: 27/03/12
  * Time: 06:12
  */
-public class SessionIDTest {
+public class SessionIDTest extends TestHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(SessionIDTest.class);
-
-    private static final String BEGIN_STRING = "FIX.4.2";
-    private static final String SENDER_COMP_ID = "SENDER_COMP_ID";
-    private static final String SENDER_SUB_ID = "SENDER_SUB_ID";
-    private static final String SENDER_LOCATION_ID = "SENDER_LOCATION_ID";
-    private static final String TARGET_COMP_ID = "TARGET_COMP_ID";
-    private static final String TARGET_SUB_ID = "TARGET_SUB_ID";
-    private static final String TARGET_LOCATION_ID = "TARGET_LOCATION_ID";
 
     static final int LOOP_COUNT = 10000000;
 
@@ -38,16 +33,21 @@ public class SessionIDTest {
                 TARGET_COMP_ID, TARGET_SUB_ID, TARGET_LOCATION_ID);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorWithNulls() throws Exception {
+        new SessionID(null, null, null);
+    }
+
     @Test
     public void testShortConstructor() throws Exception {
         SessionID sessionID = getShortSessionID();
         Assert.assertEquals(BEGIN_STRING, sessionID.getBeginString());
         Assert.assertEquals(SENDER_COMP_ID, sessionID.getSenderCompID());
-        Assert.assertEquals(SessionID.UNDEFINED, sessionID.getSenderSubID());
-        Assert.assertEquals(SessionID.UNDEFINED, sessionID.getSenderLocationID());
+        Assert.assertNull("senderSubID", sessionID.getSenderSubID());
+        Assert.assertNull("senderLocationID", sessionID.getSenderLocationID());
         Assert.assertEquals(TARGET_COMP_ID, sessionID.getTargetCompID());
-        Assert.assertEquals(SessionID.UNDEFINED, sessionID.getTargetSubID());
-        Assert.assertEquals(SessionID.UNDEFINED, sessionID.getTargetLocationID());
+        Assert.assertNull("targetSubID", sessionID.getTargetSubID());
+        Assert.assertNull("targetLocationID", sessionID.getTargetLocationID());
         Assert.assertEquals(BEGIN_STRING + ":" + SENDER_COMP_ID + "~" + TARGET_COMP_ID,
                 sessionID.toString());
     }
@@ -58,10 +58,10 @@ public class SessionIDTest {
         Assert.assertEquals(BEGIN_STRING, sessionID.getBeginString());
         Assert.assertEquals(SENDER_COMP_ID, sessionID.getSenderCompID());
         Assert.assertEquals(SENDER_SUB_ID, sessionID.getSenderSubID());
-        Assert.assertEquals(SessionID.UNDEFINED, sessionID.getSenderLocationID());
+        Assert.assertNull("senderLocationID", sessionID.getSenderLocationID());
         Assert.assertEquals(TARGET_COMP_ID, sessionID.getTargetCompID());
         Assert.assertEquals(TARGET_SUB_ID, sessionID.getTargetSubID());
-        Assert.assertEquals(SessionID.UNDEFINED, sessionID.getTargetLocationID());
+        Assert.assertNull("targetLocationID", sessionID.getTargetLocationID());
         Assert.assertEquals(BEGIN_STRING + ":" + SENDER_COMP_ID + "." + SENDER_SUB_ID
                 + "~" + TARGET_COMP_ID + "." + TARGET_SUB_ID,
                 sessionID.toString());
@@ -97,11 +97,51 @@ public class SessionIDTest {
                 sb.append(".").append(sessionId.getTargetLocationID());
         return sb.toString();
     }
-    
-    public void benchMarkComparisonTest() {
-        Assert.assertTrue(benchmarkTest1() > benchmarkTest2());
+
+    @Test
+    public void testParseMessage() {
+        FIXMessage msg = new StandardFIXMessage(MsgTypes.Logon);
+        msg.setFieldValue(Tags.BeginString, FIXVersion.FIX42);
+        msg.setFieldValue(Tags.SenderCompID, SENDER_COMP_ID);
+        msg.setFieldValue(Tags.TargetCompID, TARGET_COMP_ID);
+
+        SessionID sessionID = SessionID.parse(msg);
+        assertEquals("senderCompID", SENDER_COMP_ID, sessionID.getSenderCompID());
+        assertEquals("targetCompID", TARGET_COMP_ID, sessionID.getTargetCompID());
+        assertEquals("toString",
+                BEGIN_STRING + ":" + SENDER_COMP_ID + "~" + TARGET_COMP_ID,
+                sessionID.toString());
+
+        // try other fields too
+        msg.setFieldValue(Tags.SenderSubID, SENDER_SUB_ID);
+        msg.setFieldValue(Tags.SenderLocationID, SENDER_LOCATION_ID);
+        msg.setFieldValue(Tags.TargetSubID, TARGET_SUB_ID);
+        msg.setFieldValue(Tags.TargetLocationID, TARGET_LOCATION_ID);
+
+        sessionID = SessionID.parse(msg);
+        assertEquals("senderCompID", SENDER_COMP_ID, sessionID.getSenderCompID());
+        assertEquals("senderSubID", SENDER_SUB_ID, sessionID.getSenderSubID());
+        assertEquals("senderLocationID", SENDER_LOCATION_ID, sessionID.getSenderLocationID());
+        assertEquals("targetCompID", TARGET_COMP_ID, sessionID.getTargetCompID());
+        assertEquals("targetSubID", TARGET_SUB_ID, sessionID.getTargetSubID());
+        assertEquals("targetLocationID", TARGET_LOCATION_ID, sessionID.getTargetLocationID());
+        Assert.assertEquals(BEGIN_STRING + ":" + SENDER_COMP_ID + "." + SENDER_SUB_ID + "." + SENDER_LOCATION_ID
+                + "~" + TARGET_COMP_ID + "." + TARGET_SUB_ID + "." + TARGET_LOCATION_ID,
+                sessionID.toString());
     }
-    
+
+    @Test
+    public void testReverse() {
+        SessionID sessionID = getLongSessionID();
+        SessionID reverseSessionID = sessionID.reverse();
+        assertEquals("senderCompID", TARGET_COMP_ID, reverseSessionID.getSenderCompID());
+        assertEquals("senderSubID", TARGET_SUB_ID, reverseSessionID.getSenderSubID());
+        assertEquals("senderLocationID", TARGET_LOCATION_ID, reverseSessionID.getSenderLocationID());
+        assertEquals("targetCompID", SENDER_COMP_ID, reverseSessionID.getTargetCompID());
+        assertEquals("targetSubID", SENDER_SUB_ID, reverseSessionID.getTargetSubID());
+        assertEquals("targetLocationID", SENDER_LOCATION_ID, reverseSessionID.getTargetLocationID());
+    }
+
     private long benchmarkTest1() {
         long start = System.nanoTime();
         for (int i=0;i< LOOP_COUNT;i++) {

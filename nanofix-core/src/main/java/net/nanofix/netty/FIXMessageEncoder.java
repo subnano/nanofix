@@ -1,11 +1,10 @@
 package net.nanofix.netty;
 
-import com.google.common.base.Strings;
 import net.nanofix.message.FIXConstants;
 import net.nanofix.message.FIXMessage;
-import net.nanofix.message.MessageException;
+import net.nanofix.message.MsgNames;
 import net.nanofix.message.Tags;
-import net.nanofix.util.IntegerUtil;
+import net.nanofix.util.ByteArrayConverter;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
@@ -25,7 +24,9 @@ public class FIXMessageEncoder extends OneToOneEncoder {
 
     protected Logger LOG = LoggerFactory.getLogger(FIXMessageEncoder.class);
 
-    private final AtomicReference<ChannelBuffer> channelBuffer = new AtomicReference<ChannelBuffer>();
+//    private final AtomicReference<ChannelBuffer> channelBuffer = new AtomicReference<ChannelBuffer>();
+    private final AtomicReference<ChannelBuffer> headerChannelBuffer = new AtomicReference<ChannelBuffer>();
+    private final AtomicReference<ChannelBuffer> bodyChannelBuffer = new AtomicReference<ChannelBuffer>();
     private final String beginString;
     private final byte[] beginStringBytes;
 
@@ -37,54 +38,71 @@ public class FIXMessageEncoder extends OneToOneEncoder {
     @Override
     protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception {
         if (msg instanceof FIXMessage) {
-            return encodeMessage((FIXMessage) msg, getChannelBuffer(channel));
+            return encodeMessage((FIXMessage) msg, channel);
         }
         return null;
     }
 
-    private Object encodeMessage(FIXMessage msg, ChannelBuffer buffer) {
+    protected Object encodeMessage(FIXMessage msg, Channel channel) {
+
+        // get the header buffer
+        ChannelBuffer headerBuffer = getHeaderChannelBuffer(channel);
+        headerBuffer.clear();
 
         // BeginString
-        writeField(buffer, Tags.BeginString, beginStringBytes);
+        writeField(headerBuffer, Tags.BeginString, beginStringBytes);
 
-        // BodyLength
-        buffer.writeBytes(IntegerUtil.asByteArray(Tags.BodyLength));
-        buffer.writeByte(FIXConstants.EQUALS);
-        int bodyLengthIndex = buffer.writerIndex();
-        writeFieldValue(buffer, 0);  // will update BodyLength later
-        buffer.writeByte(FIXConstants.SOH);
-        int bodyIndex = buffer.writerIndex();
+        // get the body buffer
+        ChannelBuffer bodyBuffer = getBodyChannelBuffer(channel);
+        bodyBuffer.clear();
 
         // MsgType
-        writeField(buffer, Tags.MsgType, msg.getMsgType());
+        writeField(bodyBuffer, Tags.MsgType, msg.getMsgType());
 
         // fields
-        encodeMessageFields(msg, buffer);
-
-        // CheckSum
-        buffer.writeBytes(IntegerUtil.asByteArray(Tags.CheckSum));
-        buffer.writeByte(FIXConstants.EQUALS);
-        buffer.writeBytes(IntegerUtil.as3ByteArray(
-                calcChecksumAsInt(buffer, bodyIndex, buffer.writerIndex())));
-        buffer.writeByte(FIXConstants.SOH);
+        encodeMessageFields(msg, bodyBuffer);
 
         // go back and update BodyLength
-        //buffer.setInt(bodyLengthIndex, calcBodyLength(buffer, bodyIndex));
+        writeField(headerBuffer, Tags.BodyLength, calcBodyLength(bodyBuffer));
 
-        LOG.debug("encode({})", new String(buffer.array()));
-        return buffer;
+        // CheckSum
+        int checkSum = calcChecksum(headerBuffer, bodyBuffer);
+        bodyBuffer.writeBytes(ByteArrayConverter.asByteArray(Tags.CheckSum));
+        bodyBuffer.writeByte(FIXConstants.EQUALS);
+        bodyBuffer.writeBytes(ByteArrayConverter.as3ByteArray(checkSum));
+        bodyBuffer.writeByte(FIXConstants.SOH);
+
+        // log the message being written
+        logBufferContents(headerBuffer, bodyBuffer);
+
+        // return the composite of the two buffers
+        return ChannelBuffers.wrappedBuffer(headerBuffer, bodyBuffer);
     }
 
-    private int calcBodyLength(ChannelBuffer buffer, int bodyIndex) {
-        return 123;
+    private void logBufferContents(ChannelBuffer headerBuffer, ChannelBuffer bodyBuffer) {
+        byte[] bytes = new byte[headerBuffer.readableBytes() + bodyBuffer.readableBytes()];
+        headerBuffer.getBytes(headerBuffer.readerIndex(), bytes);
+        bodyBuffer.getBytes(bodyBuffer.readerIndex(), bytes, headerBuffer.readableBytes(), bodyBuffer.readableBytes());
+
+        LOG.debug("> {}", new String(bytes));
     }
 
-    protected static int calcChecksumAsInt(ChannelBuffer buffer, int startIndex, int endIndex) {
+    private int calcBodyLength(ChannelBuffer buffer) {
+        return buffer.readableBytes();
+    }
+
+    protected static int calcChecksum(ChannelBuffer headerBuffer, ChannelBuffer bodyBuffer) {
         int checksum = 0;
-        for (int i = startIndex; i < endIndex; i++) {
-            checksum += buffer.getChar(i);
+        int count = 0;
+        for (int i = headerBuffer.readerIndex(); i < headerBuffer.readerIndex() + headerBuffer.readableBytes(); i++) {
+            checksum += headerBuffer.getByte(i);
+            count++;
         }
-        return (checksum + 1) % 256;
+        for (int i = bodyBuffer.readerIndex(); i < bodyBuffer.readerIndex() + bodyBuffer.readableBytes(); i++) {
+            checksum += bodyBuffer.getByte(i);
+            count++;
+        }
+        return checksum % 256;
     }
 
     private void encodeMessageFields(FIXMessage msg, ChannelBuffer buffer) {
@@ -115,7 +133,7 @@ public class FIXMessageEncoder extends OneToOneEncoder {
     }
 
     private void writeField(ChannelBuffer buffer, int tag, Object value) {
-        buffer.writeBytes(IntegerUtil.asByteArray(tag));
+        buffer.writeBytes(ByteArrayConverter.asByteArray(tag));
         buffer.writeByte(FIXConstants.EQUALS);
         writeFieldValue(buffer, value);
         buffer.writeByte(FIXConstants.SOH);
@@ -126,11 +144,11 @@ public class FIXMessageEncoder extends OneToOneEncoder {
     }
 
     private void writeFieldValue(ChannelBuffer buffer, Integer value) {
-        buffer.writeBytes(IntegerUtil.asByteArray(value));
+        buffer.writeBytes(ByteArrayConverter.asByteArray(value));
     }
 
     private void writeFieldValue(ChannelBuffer buffer, Long value) {
-        buffer.writeLong(value);
+        buffer.writeBytes(ByteArrayConverter.asByteArray(value));
     }
 
     private void writeFieldValue(ChannelBuffer buffer, Boolean value) {
@@ -159,14 +177,26 @@ public class FIXMessageEncoder extends OneToOneEncoder {
         return new String(new byte[]{ FIXConstants.SOH });
     }
 
-    private ChannelBuffer getChannelBuffer(Channel channel) throws Exception {
-        ChannelBuffer buffer = channelBuffer.get();
+    private ChannelBuffer getHeaderChannelBuffer(Channel channel) {
+        ChannelBuffer buffer = headerChannelBuffer.get();
         if (buffer == null) {
             buffer = ChannelBuffers.dynamicBuffer(channel.getConfig().getBufferFactory());
-            if (!channelBuffer.compareAndSet(null, buffer)) {
-                buffer = channelBuffer.get();
+            if (!headerChannelBuffer.compareAndSet(null, buffer)) {
+                buffer = headerChannelBuffer.get();
             }
         }
         return buffer;
     }
+
+    private ChannelBuffer getBodyChannelBuffer(Channel channel) {
+        ChannelBuffer buffer = bodyChannelBuffer.get();
+        if (buffer == null) {
+            buffer = ChannelBuffers.dynamicBuffer(channel.getConfig().getBufferFactory());
+            if (!bodyChannelBuffer.compareAndSet(null, buffer)) {
+                buffer = bodyChannelBuffer.get();
+            }
+        }
+        return buffer;
+    }
+
 }

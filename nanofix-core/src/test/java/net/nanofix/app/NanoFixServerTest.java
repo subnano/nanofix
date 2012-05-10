@@ -17,10 +17,10 @@ public class NanoFixServerTest {
 
     @Test
     public void testNanofixServer() throws Exception {
-        NanoFixServer server = new NanoFixServer("/test-config.xml");
+        NanoServer server = new NanoServer("/test-config.xml");
         assertThat("server", server.getConfig(), notNullValue());
 
-        List<Session> sessions = server.getConfig().getSessions();
+        List<Session> sessions = server.getSessions();
         assertThat("sessions", sessions.size(), is(2));
 
         // open

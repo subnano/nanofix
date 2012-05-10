@@ -6,5 +6,5 @@ package net.nanofix.app;
  * Time: 06:33
  */
 public enum ComponentState {
-    Unknown, Open, Started, Stopped, Closed;
+    New, Open, Started, Stopped, Closed;
 }

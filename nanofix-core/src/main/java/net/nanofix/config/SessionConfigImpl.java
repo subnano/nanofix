@@ -136,8 +136,18 @@ public class SessionConfigImpl implements SessionConfig {
         return connectionConfig;
     }
 
+    @Override
+    public void setResetSeqNum(boolean resetSeqNum) {
+        this.resetSeqNum = resetSeqNum;
+    }
+
     public boolean isResetSeqNum() {
         return resetSeqNum;
+    }
+
+    @Override
+    public void setUseMillisInTimeStamp(boolean useMillisInTimeStamp) {
+        this.useMillisInTimeStamp = useMillisInTimeStamp;
     }
 
     public boolean isUseMillisInTimeStamp() {

@@ -45,7 +45,12 @@ public interface SessionConfig {
 
     List<ConnectionConfig> getConnectors();
 
+    void setResetSeqNum(boolean resetSeqNum);
+
     boolean isResetSeqNum();
 
+    void setUseMillisInTimeStamp(boolean useMillisInTimeStamp);
+
     boolean isUseMillisInTimeStamp();
+
 }

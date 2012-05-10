@@ -8,16 +8,20 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
 /**
- * User: Mark Wardell
+ * User: Mark
  * Date: 11/10/11
  * Time: 07:52
  */
 public class StandardFIXMessageDecoder extends FrameDecoder implements FIXMessageDecoder {
+
+    protected Logger LOG = LoggerFactory.getLogger(StandardFIXMessageDecoder.class);
 
     private byte[] checksumBytes = new byte[FIXConstants.CHECKSUM_SIZE];
     private final Charset charset;
@@ -34,15 +38,21 @@ public class StandardFIXMessageDecoder extends FrameDecoder implements FIXMessag
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
-        return decode(buffer.array());
+        return decode(buffer.readBytes(buffer.readableBytes()).array());
     }
 
     @Override
     public FIXMessage decode(byte[] bytes) throws MessageException, MissingFieldException {
+        logIncomingMessage(bytes);
         FIXMessage target = fixMessageFactory.createMessage();
         target.setRawBytes(bytes);
         decodeMessageHeader(bytes, target);
+        LOG.debug("decoded message: {}", target);
         return target;
+    }
+
+    private void logIncomingMessage(byte[] bytes) {
+        LOG.debug("< {}", new String(bytes));
     }
 
     private void decodeMessageHeader(byte[] bytes, FIXMessage msg) throws MissingFieldException {

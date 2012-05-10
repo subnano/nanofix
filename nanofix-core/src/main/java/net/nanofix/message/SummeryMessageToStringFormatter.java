@@ -5,9 +5,9 @@ package net.nanofix.message;
  * Date: 18/10/11
  * Time: 10:44
  */
-public class MessageToStringFormatter implements FIXMessageFormatter {
+public class SummeryMessageToStringFormatter implements FIXMessageFormatter {
 
     public String toString(FIXMessage msg) {
-        return "FIXMessage(" + msg.getMsgType() + ")";
+        return MsgNames.get(msg.getMsgType()) + "(" + msg.getMsgType() + ")";
     }
 }

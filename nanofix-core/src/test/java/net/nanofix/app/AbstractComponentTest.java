@@ -1,6 +1,5 @@
 package net.nanofix.app;
 
-import org.jboss.netty.handler.codec.compression.CompressionException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
@@ -21,7 +20,7 @@ public class AbstractComponentTest {
         assertThat("started", component.isStarted(), is(false));
         assertThat("stopped", component.isStopped(), is(false));
         assertThat("closed", component.isClosed(), is(false));
-        assertThat("state", component.getState(), is(ComponentState.Unknown));
+        assertThat("state", component.getState(), is(ComponentState.New));
 
         component.open();
         assertThat("opened", component.isOpen(), is(true));

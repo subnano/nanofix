@@ -8,5 +8,17 @@ package net.nanofix.message;
  */
 public interface FIXMessageFactory {
     FIXMessage createMessage();
+
     FIXMessage createMessage(String msgType);
+
+    FIXMessage createLogonMessage(boolean resetSeqNum);
+
+    FIXMessage createHeartbeatMessage();
+
+    FIXMessage createHeartbeatMessage(String testReqId);
+
+    FIXMessage createLogoutMessage();
+
+    FIXMessage createResendRequestMessage(long expectedSeqNum, long receivedSeqNum);
+
 }

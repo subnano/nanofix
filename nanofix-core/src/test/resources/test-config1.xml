@@ -1,13 +1,11 @@
 <Application id="NanoServer">
     <Sessions>
-        <Session version="FIX.4.4" senderCompID="BROKER" heartbeatInterval="30">
+        <Session version="FIX.4.4" senderCompID="BROKER" targetCompID="CLIENT" heartbeatInterval="5">
             <Connectors>
                 <ServerSocket port="9001"
                             tcpNoDelay="true" receiveBufferSize="-1" sendBufferSize="-1"
                             allowedAddresses="" ignoredAddresses=""/>
             </Connectors>
-            <AllowedCounterParties/>
-            <IgnoredCounterParties/>
             <MessageFactory class="net.nanofix.message.DefaultFIXMessageFactory"/>
             <MessageProcessor class="net.nanofix.processor.BaseMessageProcessor"/>
             <Schedule>

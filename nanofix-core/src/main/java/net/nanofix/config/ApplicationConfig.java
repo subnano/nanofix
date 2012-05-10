@@ -3,6 +3,7 @@ package net.nanofix.config;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import net.nanofix.netty.SocketConnector;
 import net.nanofix.session.Session;
+import net.nanofix.session.SessionFactory;
 
 import java.util.List;
 
@@ -16,7 +17,5 @@ public interface ApplicationConfig {
     SessionConfig[] getSessionConfigs();
     ConnectionConfig[] getConnectors();
 
-    List<Session> getSessions();
-
-    List<SocketConnector> getSocketConnectors();
+    SessionFactory getSessionFactory();
 }
