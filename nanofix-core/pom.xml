@@ -3,58 +3,30 @@
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <name>nanofix-core</name>
-    <description>
-        The nanofix project uses the high performance and high scalability feature of netty
-        to provide a high throughput, low latency FIX message application server.
-    </description>
-
-    <groupId>net.nanofix</groupId>
+    <name>NanoFIX/Core</name>
     <artifactId>nanofix-core</artifactId>
-    <version>1.0.0</version>
+
+    <parent>
+        <groupId>net.nanofix</groupId>
+        <artifactId>nanofix</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
 
     <properties>
-        <maven.build.timestamp.format>yyyyMMdd-HH:mm:ss</maven.build.timestamp.format>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netty.version>4.1.24.Final</netty.version>
     </properties>
 
     <prerequisites>
         <maven>2.2.1</maven>
     </prerequisites>
 
-    <profiles>
-        <profile>
-            <id>local</id>
-            <properties>
-                <filter.name>local</filter.name>
-            </properties>
-        </profile>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <filter.name>dev</filter.name>
-            </properties>
-        </profile>
-        <profile>
-            <id>uat</id>
-            <properties>
-                <filter.name>uat</filter.name>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <filter.name>prod</filter.name>
-            </properties>
-        </profile>
-    </profiles>
-
-    <dependencies>
+   <dependencies>
 
         <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty</artifactId>
-            <version>3.4.2.Final</version>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -90,6 +62,12 @@
             <version>1.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -117,85 +95,13 @@
                 <targetPath>${project.build.directory}/resources</targetPath>
             </resource>
         </resources>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <configuration>
-                    <attach>true</attach>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <escapeString>\</escapeString>
-                    <useDefaultDelimiters>false</useDefaultDelimiters>
-                    <delimiters>
-                        <delimiter>${*}</delimiter>
-                    </delimiters>
-                </configuration>
-            </plugin>
-
-            <!--
-                        <plugin>
-                            <artifactId>maven-assembly-plugin</artifactId>
-                            <version>2.3</version>
-                            <configuration>
-                                <attach>false</attach>
-                                <appendAssemblyId>false</appendAssemblyId>
-                                <descriptor>src/main/assembly/assembly.xml</descriptor>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>make-assembly</id>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>single</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-            -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>2.7.1</version>
-                <configuration>
-                    <targetJdk>1.6</targetJdk>
-                </configuration>
-            </plugin>
-
-        </plugins>
-
     </build>
 
     <reporting>
         <plugins>
             <plugin>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>2.7.1</version>
+                <version>3.9.0</version>
                 <reportSets>
                     <reportSet>
                         <reports>

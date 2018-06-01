@@ -1,5 +1,7 @@
 package net.nanofix.message;
 
+import net.nanofix.util.ByteString;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Mark Wardell
@@ -9,13 +11,13 @@ package net.nanofix.message;
 public interface FIXMessageFactory {
     FIXMessage createMessage();
 
-    FIXMessage createMessage(String msgType);
+    FIXMessage createMessage(MsgType msgType);
 
-    FIXMessage createLogonMessage(boolean resetSeqNum);
+    FIXMessage createLogonMessage();
 
     FIXMessage createHeartbeatMessage();
 
-    FIXMessage createHeartbeatMessage(String testReqId);
+    FIXMessage createHeartbeatMessage(ByteString testReqId);
 
     FIXMessage createLogoutMessage();
 

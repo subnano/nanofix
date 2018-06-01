@@ -2,7 +2,6 @@ package net.nanofix.store;
 
 import net.nanofix.message.FIXMessage;
 import net.nanofix.message.MsgTypes;
-import net.nanofix.message.StandardFIXMessage;
 import net.nanofix.message.Tags;
 import org.junit.Before;
 import org.junit.Test;
@@ -107,11 +106,12 @@ public class MemoryMessageStoreTest {
     }
 
     private FIXMessage createTestMessage(String account) {
-        FIXMessage msg = new StandardFIXMessage(MsgTypes.NewOrderSingle);
-        msg.setFieldValue(Tags.SenderCompID, "ABC");
-        msg.setFieldValue(Tags.TargetCompID, "XYZ");
-        msg.setFieldValue(Tags.Account, account);
-        return msg;
+        throw new UnsupportedOperationException();
+//        FIXMessage msg = new StandardFIXMessage(MsgTypes.NewOrderSingle);
+//        msg.setFieldValue(Tags.SenderCompID, "ABC");
+//        msg.setFieldValue(Tags.TargetCompID, "XYZ");
+//        msg.setFieldValue(Tags.Account, account);
+//        return msg;
     }
 
 }

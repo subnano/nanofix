@@ -1,7 +1,7 @@
 package net.nanofix.message;
 
-import net.nanofix.session.Session;
-import net.nanofix.session.SessionID;
+import net.nanofix.settings.SessionSettings;
+import net.nanofix.util.ByteString;
 import net.nanofix.util.DateTimeGenerator;
 import net.nanofix.util.DefaultTimeGenerator;
 
@@ -14,31 +14,49 @@ import net.nanofix.util.DefaultTimeGenerator;
 public class DefaultFIXMessageFactory implements FIXMessageFactory {
 
     private static final boolean recordTimestamps = true;
+
+    private final SessionSettings settings;
+    private final boolean resetSeqNumOnLogon;
+    private final MessageKey messageKey;
     private DateTimeGenerator timeGenerator;
-    private final Session session;
 
-    public DefaultFIXMessageFactory() {
-        this(null);
-    }
-
-    public DefaultFIXMessageFactory(Session session) {
-        this.session = session;
-        timeGenerator = new DefaultTimeGenerator();
+    public DefaultFIXMessageFactory(SessionSettings settings) {
+        this.settings = settings;
+        // TODO time generator created by a factory based on settings
+        this.messageKey = new MessageKey();
+        this.timeGenerator = new DefaultTimeGenerator();
+        this.resetSeqNumOnLogon = settings.isResetSeqNumOnLogon();
     }
 
     @Override
     public FIXMessage createMessage() {
-        FIXMessage msg = new StandardFIXMessage();
+        FIXMessage msg = new NanoFIXMessage(null, null);
         if (recordTimestamps) {
-            msg.setTimestamp(System.nanoTime());
+            //msg.header().setTimestamp(System.nanoTime());
         }
         return msg;
     }
 
     @Override
-    public FIXMessage createMessage(String msgType) {
+    public FIXMessage createMessage(MsgType msgType) {
         FIXMessage msg = createMessage();
-        msg.setMsgType(msgType);
+        //msg.setMsgType(msgType);
+        return msg;
+    }
+
+    @Override
+    public FIXMessage createLogonMessage() {
+        FIXMessage message = createMessage();
+        //message.setMessageKey();
+        FIXMessage msg = createMessage();
+        message.header().msgType(MsgTypes.Logon);
+        message.addIntField(Tags.EncryptMethod, 0);
+        message.addIntField(Tags.HeartBtInt, settings.getHeartbeatInterval());
+
+        // check for reset on logon
+        if (resetSeqNumOnLogon) {
+            message.addBooleanField(Tags.ResetSeqNumFlag, true);
+        }
         return msg;
     }
 
@@ -48,33 +66,9 @@ public class DefaultFIXMessageFactory implements FIXMessageFactory {
     }
 
     @Override
-    public FIXMessage createHeartbeatMessage(String testReqId) {
+    public FIXMessage createHeartbeatMessage(ByteString testReqId) {
         FIXMessage msg = createHeartbeatMessage();
-        msg.setFieldValue(Tags.TestReqID, testReqId);
-        return msg;
-    }
-
-    @Override
-    public FIXMessage createLogonMessage(boolean resetSeqNum) {
-        FIXMessage msg = createMessage(MsgTypes.Logon);
-        // BeginString = FIX...
-        // BodyLen = 0
-        // MsgType
-        // Sender/TargetCompID
-        // SeqNum
-        // SubIDs
-        // PosDup/Resend
-        // SendingTime
-        // app tags
-
-        addHeaderFields(msg);
-        msg.setFieldValue(Tags.EncryptMethod, 0);
-        msg.setFieldValue(Tags.HeartBtInt, session.getConfig().getHeartbeatInterval());
-
-        // check for reset on logon
-        if (resetSeqNum) {
-            msg.setFieldValue(Tags.ResetSeqNumFlag, true);
-        }
+        msg.addStringField(Tags.TestReqID, testReqId);
         return msg;
     }
 
@@ -83,12 +77,10 @@ public class DefaultFIXMessageFactory implements FIXMessageFactory {
         return createLogoutMessage(null);
     }
 
-    public FIXMessage createLogoutMessage(String text) {
+    public FIXMessage createLogoutMessage(ByteString text) {
         FIXMessage msg = createMessage(MsgTypes.Logon);
-        addHeaderFields(msg);
-        // TODO not sure what other fields to add
         if (text != null) {
-            msg.setFieldValue(Tags.Text, text);
+            msg.addStringField(Tags.Text, text);
         }
         return msg;
     }
@@ -96,42 +88,9 @@ public class DefaultFIXMessageFactory implements FIXMessageFactory {
     @Override
     public FIXMessage createResendRequestMessage(long expectedSeqNum, long receivedSeqNum) {
         FIXMessage msg = createMessage(MsgTypes.ResendRequest);
-        addHeaderFields(msg);
-        msg.setFieldValue(Tags.BeginSeqNo, expectedSeqNum);
-        msg.setFieldValue(Tags.EndSeqNo, receivedSeqNum - 1);
+        msg.addLongField(Tags.BeginSeqNo, expectedSeqNum);
+        msg.addLongField(Tags.EndSeqNo, receivedSeqNum - 1);
         return msg;
     }
-
-    protected void addHeaderFields(FIXMessage msg) {
-        addCounterParties(msg);
-        addSeqNum(msg, -1);
-        addSessionIdentifiers(msg);
-        addSendingTime(msg);
-    }
-
-    private void addCounterParties(FIXMessage msg) {
-        if (session != null) {
-            SessionID sessionID = session.getSessionID();
-            msg.setFieldValue(Tags.SenderCompID, sessionID.getSenderCompID());
-            msg.setFieldValue(Tags.TargetCompID, sessionID.getTargetCompID());
-        }
-    }
-
-    private void addSeqNum(FIXMessage msg, int seqNum) {
-        msg.setFieldValue(Tags.MsgSeqNum, seqNum);
-    }
-
-    private void addSessionIdentifiers(FIXMessage msg) {
-    }
-
-    protected void addSendingTime(FIXMessage msg) {
-        msg.setFieldValue(Tags.SendingTime, timeGenerator.getUtcTime(isUseMillisInTimeStamp()));
-    }
-
-    protected boolean isUseMillisInTimeStamp() {
-        // TODO check for FIX version 4.2+ here
-        return session != null && session.getConfig().isUseMillisInTimeStamp();
-    }
-
 
 }

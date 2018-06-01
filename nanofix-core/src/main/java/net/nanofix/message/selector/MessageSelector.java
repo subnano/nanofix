@@ -8,5 +8,11 @@ import net.nanofix.message.FIXMessage;
  * Time: 11:37
  */
 public interface MessageSelector {
-    boolean isSelected(FIXMessage msg);
+
+    /**
+     * Return true when the given message is selected
+     * @param msg given FIXMessage
+     * @return true when selected, else false
+     */
+    boolean select(FIXMessage msg);
 }

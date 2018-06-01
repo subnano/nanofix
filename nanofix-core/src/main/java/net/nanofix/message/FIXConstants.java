@@ -7,12 +7,10 @@ package net.nanofix.message;
  */
 public interface FIXConstants {
 
-    public static final byte SOH = (byte) 0x01;
-    public static final byte EQUALS = (byte) '=';
-    public static final String CHECKSUM_PREFIX = "10=";
     public static final int CHECKSUM_SIZE = 7;  // 10=nnnX
     public static final String BEGIN_STRING_PREFIX = "8=FIX.";
     public static final String BEGIN_STRING_PREFIX_FIXT = "8=FIXT.";
+
     public static final char FIX_TRUE = 'Y';
     public static final char FIX_FALSE = 'N';
 

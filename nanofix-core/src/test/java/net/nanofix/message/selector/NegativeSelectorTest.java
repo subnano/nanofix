@@ -25,7 +25,7 @@ public class NegativeSelectorTest {
     @Test
     public void testIsSelected() throws Exception {
         MessageSelector selector = mock(MessageSelector.class);
-        when(selector.isSelected(any(FIXMessage.class))).thenReturn(true);
-        assertThat(new NegativeSelector(selector).isSelected(mock(FIXMessage.class)), is(false));
+        when(selector.select(any(FIXMessage.class))).thenReturn(true);
+        assertThat(new NegativeSelector(selector).select(mock(FIXMessage.class)), is(false));
     }
 }

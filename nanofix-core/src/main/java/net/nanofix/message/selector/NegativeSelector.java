@@ -19,7 +19,7 @@ public class NegativeSelector implements MessageSelector {
     }
 
     @Override
-    public boolean isSelected(FIXMessage msg) {
-        return !selector.isSelected(msg);
+    public boolean select(FIXMessage msg) {
+        return !selector.select(msg);
     }
 }

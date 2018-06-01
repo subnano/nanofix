@@ -17,10 +17,10 @@ public class ByteArrayConverterTest {
 
     @Test
     public void testConvertToBytes() throws Exception {
-        assertThat(ByteArrayConverter.asByteArray(3), new ArrayEquals(new byte[]{'0' + 3}));
-        assertThat(ByteArrayConverter.asByteArray(34), new ArrayEquals(new byte[]{ '0'+3, '0'+4 }));
-        assertThat(ByteArrayConverter.asByteArray(345), new ArrayEquals(new byte[]{ '0'+3, '0'+4, '0'+5 }));
-        assertThat(ByteArrayConverter.asByteArray(3456), new ArrayEquals(new byte[]{ '0'+3, '0'+4, '0'+5, '0'+6 }));
+        assertThat(ByteArrayUtil.asByteArray(3), new ArrayEquals(new byte[]{'0' + 3}));
+        assertThat(ByteArrayUtil.asByteArray(34), new ArrayEquals(new byte[]{ '0'+3, '0'+4 }));
+        assertThat(ByteArrayUtil.asByteArray(345), new ArrayEquals(new byte[]{ '0'+3, '0'+4, '0'+5 }));
+        assertThat(ByteArrayUtil.asByteArray(3456), new ArrayEquals(new byte[]{ '0'+3, '0'+4, '0'+5, '0'+6 }));
     }
 
     @Test
@@ -30,22 +30,22 @@ public class ByteArrayConverterTest {
 
     @Test
     public void testConvertToBytesPerformance() {
-        ByteArrayConverter.useCachedValues = false;
+        ByteArrayUtil.useCachedValues = false;
         Stopwatch stopwatch = new Stopwatch().start();
         byte[] bytes = null;
         for (int i=0; i<=TEST_LOOPS; i++) {
-            bytes = ByteArrayConverter.asByteArray(i % 10000);
+            bytes = ByteArrayUtil.asByteArray(i % 10000);
         }
         printResults("convertToBytes", stopwatch.elapsedMillis());
     }
 
     @Test
     public void testConvertToBytesCachedPerformance() {
-        ByteArrayConverter.useCachedValues = true;
+        ByteArrayUtil.useCachedValues = true;
         Stopwatch stopwatch = new Stopwatch().start();
         byte[] bytes = null;
         for (int i=0; i<=TEST_LOOPS; i++) {
-            bytes = ByteArrayConverter.asByteArray(i % 10000);
+            bytes = ByteArrayUtil.asByteArray(i % 10000);
         }
         printResults("convertToBytesCached", stopwatch.elapsedMillis());
     }
@@ -55,9 +55,9 @@ public class ByteArrayConverterTest {
         Stopwatch stopwatch = new Stopwatch().start();
         byte[] bytes = null;
         for (int i=0; i<=TEST_LOOPS; i++) {
-            bytes = ByteArrayConverter.convertToBytesAsString(i % 10000);
+            bytes = ByteArrayUtil.intToBytesAsString(i % 10000);
         }
-        printResults("convertToBytesAsString", stopwatch.elapsedMillis());
+        printResults("intToBytesAsString", stopwatch.elapsedMillis());
     }
 
     private void printResults(String msg, long elapsed) {

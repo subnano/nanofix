@@ -22,10 +22,11 @@ public class FieldSelector implements MessageSelector {
     }
 
     @Override
-    public boolean isSelected(FIXMessage msg) {
-        Object value = msg.getFieldValue(field.getTag());
-        return ANY_FIELD_VALUE == field.getValue()
-                || value != null && field.getValue().equals(value);
+    public boolean select(FIXMessage msg) {
+        return false;
+//        Object value = msg.getFieldValue(field.getTag());
+//        return ANY_FIELD_VALUE == field.getValue()
+//                || value != null && field.getValue().equals(value);
     }
 
     public static Field getTagOnlyField(int tag) {

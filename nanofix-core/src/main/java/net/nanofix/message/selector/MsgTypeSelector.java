@@ -3,7 +3,6 @@ package net.nanofix.message.selector;
 import net.nanofix.message.FIXMessage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,7 +43,8 @@ public class MsgTypeSelector implements MessageSelector {
     }
 
     @Override
-    public boolean isSelected(FIXMessage msg) {
-        return msgTypes.contains(msg.getMsgType());
+    public boolean select(FIXMessage msg) {
+        throw new UnsupportedOperationException();
+        //return msgTypes.contains(msg.getMsgType());
     }
 }

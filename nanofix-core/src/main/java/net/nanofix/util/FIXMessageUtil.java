@@ -89,13 +89,14 @@ public class FIXMessageUtil {
      * @return The field value or default value
      */
     public static String getStringFieldValue(FIXMessage msg, int tag, String defaultValue) {
-        String value;
-        try {
-            value = msg.hasField(tag) ? msg.getStringFieldValue(tag) : defaultValue;
-        } catch (MissingFieldException e) {
-            value = defaultValue;
-        }
-        return value;
+        throw new UnsupportedOperationException();
+//        String value;
+//        try {
+//            value = msg.hasField(tag) ? msg.getStringFieldValue(tag) : defaultValue;
+//        } catch (MissingFieldException e) {
+//            value = defaultValue;
+//        }
+//        return value;
     }
 
     /**
@@ -108,12 +109,13 @@ public class FIXMessageUtil {
      * @return The field value or default value
      */
     public static boolean getBooleanFieldValue(FIXMessage msg, int tag, boolean defaultValue) {
-        boolean value;
-        try {
-            value = msg.hasField(tag) ? msg.getBooleanFieldValue(tag) : defaultValue;
-        } catch (MissingFieldException e) {
-            value = defaultValue;
-        }
-        return value;
+        throw new UnsupportedOperationException();
+//        boolean value;
+//        try {
+//            value = msg.hasField(tag) ? msg.getBooleanFieldValue(tag) : defaultValue;
+//        } catch (MissingFieldException e) {
+//            value = defaultValue;
+//        }
+//        return value;
     }
 }

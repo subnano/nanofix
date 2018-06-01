@@ -2,6 +2,7 @@ package net.nanofix.message.selector;
 
 import net.nanofix.message.DefaultFIXMessageFactory;
 import net.nanofix.message.FIXMessage;
+import net.nanofix.message.MsgType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class MsgTypeSelectorTest {
 
     @Before
     public void setup() {
-        messageFactory = new DefaultFIXMessageFactory();
+        messageFactory = new DefaultFIXMessageFactory(null);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -50,14 +51,14 @@ public class MsgTypeSelectorTest {
     }
 
     public void testIsSelected() throws Exception {
-        assertThat(new MsgTypeSelector("A").isSelected(createMessage("A")), is(true));
+        assertThat(new MsgTypeSelector("A").select(createMessage("A")), is(true));
     }
 
     public void testIsNotSelected() throws Exception {
-        assertThat(new MsgTypeSelector("A").isSelected(createMessage("B")), is(false));
+        assertThat(new MsgTypeSelector("A").select(createMessage("B")), is(false));
     }
 
     private FIXMessage createMessage(String msgType) {
-        return messageFactory.createMessage(msgType);
+        return messageFactory.createMessage(new MsgType(msgType));
     }
 }
