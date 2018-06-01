@@ -1,5 +1,5 @@
 # NanoFIX #
 
-A high throughput, low latency FIX message application server!
+A low latency FIX message library aiming for zero impact GC!
 
-Can be used with Netty as the socket reactor or an alpha version of direct socket handling.
+Still very much work in progress!
