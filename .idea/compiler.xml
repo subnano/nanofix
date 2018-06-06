@@ -24,6 +24,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="client" />
         <module name="nanofix-benchmarks" />
+        <module name="nanofix-client" />
         <module name="nanofix-core" />
       </profile>
     </annotationProcessing>
@@ -31,6 +32,7 @@
       <module name="client" target="1.8" />
       <module name="nanofix" target="1.8" />
       <module name="nanofix-benchmarks" target="1.8" />
+      <module name="nanofix-client" target="1.8" />
       <module name="nanofix-core" target="1.8" />
     </bytecodeTargetLevel>
   </component>
