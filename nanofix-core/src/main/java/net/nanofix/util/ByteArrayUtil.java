@@ -130,20 +130,20 @@ public class ByteArrayUtil {
         return longToBytesAsString(value);
     }
 
-    private static byte[] as1ByteArray(int value) {
+    public static byte[] as1ByteArray(int value) {
         byte[] bytes = new byte[1];
         bytes[0] = (byte)(value % 10 + 48);
         return bytes;
     }
 
-    private static byte[] as2ByteArray(int value) {
+    public static byte[] as2ByteArray(int value) {
         byte[] bytes = new byte[2];
         bytes[0] = (byte)((value % 100 - value % 10) / 10   + 48);
         bytes[1] = (byte)(value % 10 + 48);
         return bytes;
     }
 
-    private static byte[] as3ByteArray(int value) {
+    public static byte[] as3ByteArray(int value) {
         byte[] bytes = new byte[3];
         bytes[0] = (byte)((value % 1000 - value % 100) / 100   + 48);
         bytes[1] = (byte)((value % 100 - value % 10) / 10   + 48);
@@ -151,7 +151,7 @@ public class ByteArrayUtil {
         return bytes;
     }
 
-    private static byte[] as4ByteArray(int value) {
+    public static byte[] as4ByteArray(int value) {
         byte[] bytes = new byte[4];
         bytes[0] = (byte)((value % 10000 - value % 1000) / 1000   + 48);
         bytes[1] = (byte)((value % 1000 - value % 100) / 100   + 48);
@@ -166,5 +166,17 @@ public class ByteArrayUtil {
 
     private static byte[] longToBytesAsString(long value) {
         return Long.toString(value).getBytes();
+    }
+
+    /**
+     * Replace all occurrences of <code>find</code> in 'bytes' with replace
+     */
+    public static String replace(byte[] bytes, byte find, byte replace) {
+        if (bytes != null) {
+            for (int i=0; i<bytes.length; i++) {
+                if (bytes[i] == find) bytes[i] = replace;
+            }
+        }
+        return null;
     }
 }

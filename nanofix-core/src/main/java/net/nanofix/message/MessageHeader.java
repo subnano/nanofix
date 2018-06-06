@@ -104,11 +104,15 @@ public class MessageHeader extends FixMessageAssembler {
     }
 
     ByteBuffer beginBuffer() {
-        addLongField(Tags.BodyLength, bodyLength);
         return beginBuffer;
     }
 
     ByteBuffer headerBuffer() {
+        return buffer;
+    }
+
+    void populateBuffer() {
+
         // TODO inject a time formatter / generator that understands millis, micros etc
         // TODO transfer long directly into buffer
         if (dirty) {
@@ -118,7 +122,10 @@ public class MessageHeader extends FixMessageAssembler {
             addIntField(Tags.MsgSeqNum, msgSeqNum);
             addBytesField(Tags.SendingTime, getTimeAsBytes());
         }
-        return buffer;
+        int fixBodyLength = bodyLength + ByteBufferUtil.readableBytes(buffer);
+        addBytesWithDelimiters(
+                beginBuffer, ByteArrayUtil.asByteArray(Tags.BodyLength), ByteArrayUtil.asByteArray(fixBodyLength)
+        );
     }
 
     // TODO evil - remove this altogether

@@ -124,7 +124,7 @@ public abstract class FIXChannelHandler extends SimpleChannelHandler {
 
 //    @Override
 //    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-//        LOG.info("messageReceived: {}", e.getMessage());
+//        LOGGER.info("messageReceived: {}", e.getMessage());
 //        super.messageReceived(ctx, e);
 //    }
 

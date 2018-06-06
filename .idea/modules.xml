@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/nanofix.iml" filepath="$PROJECT_DIR$/.idea/nanofix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/benchmarks/nanofix-benchmarks.iml" filepath="$PROJECT_DIR$/benchmarks/nanofix-benchmarks.iml" />
       <module fileurl="file://$PROJECT_DIR$/nanofix-core/nanofix-core.iml" filepath="$PROJECT_DIR$/nanofix-core/nanofix-core.iml" />
     </modules>
   </component>

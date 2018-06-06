@@ -1,9 +1,9 @@
 package net.nanofix.message;
 
 import io.netty.buffer.ByteBuf;
+import net.nanofix.message.util.ChecksumCalculator;
 import net.nanofix.netty.BufferUtil;
 import net.nanofix.util.ByteScanner;
-import net.nanofix.util.FIXBytes;
 
 import java.nio.ByteBuffer;
 
@@ -20,7 +20,7 @@ public class NanoFIXMessage extends FixMessageAssembler implements FIXMessage {
     public NanoFIXMessage(MessageHeader header, ByteBuffer buffer) {
         super(buffer);
         this.header = header;
-        this.buffers = new ByteBuffer[]{null, null, buffer};
+        this.buffers = new ByteBuffer[]{header.beginBuffer(), header.headerBuffer(), buffer};
     }
 
     @Override
@@ -58,30 +58,16 @@ public class NanoFIXMessage extends FixMessageAssembler implements FIXMessage {
 
     @Override
     public ByteBuffer[] buffers() {
-        appendTrailerIfNecessary();
 
-        // set the main header buffer
-        buffers[0] = header.beginBuffer();
-        buffers[1] = header.headerBuffer();
-
-        // now calculate the combined length
-        int bodyLength = ByteBufferUtil.readableBytes(buffers[1], buffer);
+        // calculate just the length of the body - no  headers
+        int bodyLength = ByteBufferUtil.readableBytes(buffer);
         header.bodyLength(bodyLength);
-
+        header.populateBuffer();
 
         // update the checksum
-        // TODO add trailer / checksum
+        byte[] checksumBytes = ChecksumCalculator.calculateChecksum(buffers);
+        addBytesField(Tags.CheckSum, checksumBytes);
         return buffers;
-    }
-
-    /**
-     * Append the checksum field if not already present.
-     * Does not calculate the checksum at this point as body length will not have been set.
-     */
-    private void appendTrailerIfNecessary() {
-        if (!ByteBufferUtil.hasChecksum(buffer)) {
-            addBytesField(Tags.CheckSum, FIXBytes.CHECKSUM_PLACEHOLDER);
-        }
     }
 
 }
