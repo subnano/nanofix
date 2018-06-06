@@ -27,6 +27,7 @@ public class MessageHeader extends FixMessageAssembler {
     private final ByteBuffer buffer;
 
     private boolean dirty = false;
+    private ByteString beginString;
     private int bodyLength;
     private MsgType msgType;
     private ByteString senderCompId;
@@ -45,11 +46,7 @@ public class MessageHeader extends FixMessageAssembler {
 
     public void beginString(ByteString beginString) {
         this.dirty = true;
-        addBytesWithDelimiters(
-                this.beginBuffer,
-                ByteArrayUtil.asByteArray(Tags.BeginString),
-                beginString.bytes()
-        );
+        this.beginString = beginString;
     }
 
     public MsgType msgType() {
@@ -123,8 +120,17 @@ public class MessageHeader extends FixMessageAssembler {
             addBytesField(Tags.SendingTime, getTimeAsBytes());
         }
         int fixBodyLength = bodyLength + ByteBufferUtil.readableBytes(buffer);
+
+        // now that we have the length we can populated the begin buffer
         addBytesWithDelimiters(
-                beginBuffer, ByteArrayUtil.asByteArray(Tags.BodyLength), ByteArrayUtil.asByteArray(fixBodyLength)
+                beginBuffer,
+                ByteArrayUtil.asByteArray(Tags.BeginString),
+                beginString.bytes()
+        );
+        addBytesWithDelimiters(
+                beginBuffer,
+                ByteArrayUtil.asByteArray(Tags.BodyLength),
+                ByteArrayUtil.asByteArray(fixBodyLength)
         );
     }
 

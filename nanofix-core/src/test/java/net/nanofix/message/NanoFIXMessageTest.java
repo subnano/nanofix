@@ -20,7 +20,7 @@ class NanoFIXMessageTest {
     private final MessageHeader header = new MessageHeader(ByteBuffer.allocate(256));
     private final ByteBuffer buffer = ByteBuffer.allocate(256);
     private final FIXMessageDecoder decoder = new NanoFIXMessageDecoder();
-    private FIXMessageVisitor visitor = new LoggingVisitor();
+    private MessageDecodeHandler visitor = new LoggingDecodeHandler();
 
     @BeforeEach
     void setUp() {
@@ -62,7 +62,7 @@ class NanoFIXMessageTest {
 //        TagVisitor visitor = new LocalTagVisitor();
         assertByteArray(
                 "8=FIX.4.3|9=72|35=0|49=CLIENT|56=BROKER|34=11|52=19700101-00:00:00.000|" +
-                        "112=test-req-id|10=077|",
+                        "112=test-req-id|10=109|",
                 bytes);
     }
 
@@ -74,7 +74,7 @@ class NanoFIXMessageTest {
         Assertions.assertEquals(expected, actualBytesText);
     }
 
-    private class LoggingVisitor implements FIXMessageVisitor {
+    private class LoggingDecodeHandler implements MessageDecodeHandler {
         @Override
         public void onTag(ByteBuffer buffer, int tagIndex, int tagLen, int valueLen) {
             int valueIndex = tagIndex + tagLen + 1;

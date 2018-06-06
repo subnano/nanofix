@@ -9,6 +9,6 @@ import java.nio.ByteBuffer;
  */
 public interface FIXMessageDecoder {
 
-    void decode(ByteBuffer buffer, FIXMessageVisitor visitor);
+    void decode(ByteBuffer buffer, MessageDecodeHandler visitor);
 
 }

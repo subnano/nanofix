@@ -22,10 +22,7 @@ public final class ChecksumCalculator {
     public static int calculateChecksum(ByteBuffer buffer, int offset, int len) {
         int checksum = 0;
         if (buffer != null) {
-            System.out.println("calculateChecksum - " + new String(buffer.array(), offset, len, StandardCharsets.US_ASCII));
-            System.out.println("calculateChecksum - offset: " + offset + " len: " + len);
             for (int index = offset; index < len; index++) {
-                System.out.println(index + " " + String.valueOf((char)buffer.get(index)) + " " + checksum);
                 checksum += buffer.get(index);
             }
         }
@@ -37,7 +34,7 @@ public final class ChecksumCalculator {
         if (buffers != null) {
             for (ByteBuffer buffer : buffers) {
                 if (buffer != null) {
-                    for (int i = 0; i < buffer.remaining(); i++) {
+                    for (int i = 0; i < buffer.position(); i++) {
                         checksum += buffer.get(i);
                     }
                 }

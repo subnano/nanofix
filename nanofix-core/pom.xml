@@ -12,7 +12,6 @@
         <version>1.0.0</version>
     </parent>
 
-
     <properties>
         <netty.version>4.1.24.Final</netty.version>
     </properties>
@@ -21,7 +20,7 @@
         <maven>2.2.1</maven>
     </prerequisites>
 
-   <dependencies>
+    <dependencies>
 
         <dependency>
             <groupId>io.netty</groupId>
@@ -68,7 +67,10 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
