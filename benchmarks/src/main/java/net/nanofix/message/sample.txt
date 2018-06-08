@@ -1,0 +1,29 @@
+ executionReport = new ExecutionReport();
+        executionReport.set(new AvgPx(110.11));
+        executionReport.set(new CumQty(7));
+        executionReport.set(new ClientID("TEST"));
+        executionReport.set(new ExecID("tkacct.151124.e.EFX.122.6"));
+        executionReport.set(new OrderID("tkacct.151124.e.EFX.122.6"));
+        executionReport.set(new Side('1'));
+        executionReport.set(new Symbol("EFX"));
+        executionReport.set(new ExecType('2'));
+        executionReport.set(new ExecTransType('0'));
+        executionReport.set(new OrdStatus('0'));
+        executionReport.set(new LeavesQty(0));
+
+        newOrderSingle = new NewOrderSingle();
+
+        newOrderSingle.set(new OrdType('2'));
+        newOrderSingle.set(new Side('1'));
+        newOrderSingle.set(new Symbol("LCOM1"));
+        newOrderSingle.set(new HandlInst('3'));
+        newOrderSingle.set(new TransactTime(new Date()));
+        newOrderSingle.set(new OrderQty(1));
+        newOrderSingle.set(new Price(200.0));
+        newOrderSingle.set(new TimeInForce('0'));
+        newOrderSingle.set(new MaturityMonthYear("201106"));
+        newOrderSingle.set(new SecurityType("FUT"));
+        newOrderSingle.set(new IDSource("5"));
+        newOrderSingle.set(new SecurityID("LCOM1"));
+        newOrderSingle.set(new Account("ABCTEST1"));
+

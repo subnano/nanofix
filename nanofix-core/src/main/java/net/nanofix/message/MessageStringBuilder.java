@@ -21,14 +21,14 @@ public class MessageStringBuilder implements MessageDecodeHandler {
     public void onTag(ByteBuffer buffer, int tagIndex, int tagLen, int valueLen) {
         int valueIndex = tagIndex + tagLen + 1;
         sb.append(new String(ByteBufferUtil.asByteArray(buffer, tagIndex, tagLen)))
-                .append(delimiter)
+                .append('=')
                 .append(new String(ByteBufferUtil.asByteArray(buffer, valueIndex, valueLen)))
                 .append(delimiter);
     }
 
     @Override
     public void onError(int index, String message) {
-        throw new IllegalArgumentException(message);
+        throw new IllegalArgumentException(String.format("Index %d - %s", index, message));
     }
 
     public String asString() {

@@ -1,10 +1,11 @@
 package net.nanofix.util;
 
-import com.google.common.base.Stopwatch;
+import io.nano.core.clock.SystemClock;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigInteger;
+import java.time.Clock;
 
 /**
  * User: Mark
@@ -12,6 +13,8 @@ import java.math.BigInteger;
  * Time: 14:53
  */
 public class ByteArrayUtilTest {
+
+    SystemClock clock = new SystemClock();
 
     @Test
     public void testIsDigit() throws Exception {
@@ -32,17 +35,16 @@ public class ByteArrayUtilTest {
     public void testBenchmark() {
         final int TEST_LOOPS = 1000 * 1000 * 1000;
 
-        Stopwatch stopwatch = new Stopwatch().start();
+        long start = clock.currentTimeMillis();
         for (int i=0; i<=TEST_LOOPS; i++) {
             long result = 0 - 12345L;
         }
-        TestHelper.printResults("subtract", TEST_LOOPS, stopwatch.elapsedMillis());
-        stopwatch.stop();
+        TestHelper.printResults("subtract", TEST_LOOPS, clock.currentTimeMillis() - start);
 
-        stopwatch.start();
+        start = clock.currentTimeMillis();
         for (int i=0; i<=TEST_LOOPS; i++) {
             long result = 12345L * -1;
         }
-        TestHelper.printResults("multiply", TEST_LOOPS, stopwatch.elapsedMillis());
+        TestHelper.printResults("multiply", TEST_LOOPS, clock.currentTimeMillis() - start);
     }
 }

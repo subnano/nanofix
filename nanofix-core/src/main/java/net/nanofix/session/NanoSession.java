@@ -4,8 +4,8 @@ import net.nanofix.message.DefaultFIXMessageFactory;
 import net.nanofix.message.FIXMessage;
 import net.nanofix.message.FIXMessageFactory;
 import net.nanofix.message.NanoFIXMessage;
-import net.nanofix.netty.NettySocketConnector;
 import net.nanofix.settings.SessionSettings;
+import net.nanofix.socket.SocketConnector;
 import net.nanofix.socket.SocketListener;
 import net.nanofix.socket.SocketState;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class NanoSession implements Session, SocketListener {
 
     private final SessionSettings settings;
     private final SessionListener listener;
-    private final NettySocketConnector socketConnector;
+    private final SocketConnector socketConnector;
     private final FIXMessageFactory fixMessageFactory;
 
     private final FIXMessage logonMessage;
@@ -31,7 +31,7 @@ public class NanoSession implements Session, SocketListener {
         this.settings = settings;
         this.listener = listener;
         // TODO need to create socket connector in a factory from the settings
-        this.socketConnector = new NettySocketConnector(this, settings, this);
+        this.socketConnector = null; //new NettySocketConnector(this, settings, this);
         this.fixMessageFactory = new DefaultFIXMessageFactory(settings);
 
         // create messages

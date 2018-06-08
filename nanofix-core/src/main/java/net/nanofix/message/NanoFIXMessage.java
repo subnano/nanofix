@@ -1,9 +1,6 @@
 package net.nanofix.message;
 
-import io.netty.buffer.ByteBuf;
 import net.nanofix.message.util.ChecksumCalculator;
-import net.nanofix.netty.BufferUtil;
-import net.nanofix.util.ByteScanner;
 
 import java.nio.ByteBuffer;
 
@@ -26,29 +23,6 @@ public class NanoFIXMessage extends FixMessageAssembler implements FIXMessage {
     @Override
     public MessageHeader header() {
         return header;
-    }
-
-    public static FIXMessage decodeToMsgType(ByteBuf buffer, int start, int length) {
-        int tagIndex = ByteScanner.nextTagIndex(buffer, start);
-        int tagLen = ByteScanner.tagLen(buffer, start);
-        int valueIndex = ByteScanner.nextValueIndex(buffer, start);
-        int valueLen = ByteScanner.valueLen(buffer, valueIndex);
-        int tag = BufferUtil.toInteger(buffer, tagIndex, tagLen);
-        boolean foundMsgType = false;
-        do {
-            // only want as far as MsgType
-            if (tag == Tags.BeginString) {
-                // do stuff with BeginString
-            } else if (tag == Tags.BodyLength) {
-                // do stuff with BodyLength
-            } else if (tag == Tags.MsgType) {
-                // do stuff with MsgType
-                foundMsgType = true;
-            } else {
-                break;
-            }
-        } while (!foundMsgType);
-        return null;
     }
 
     @Override

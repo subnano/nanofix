@@ -13,7 +13,7 @@ public final class ByteBufferUtil {
     }
 
     public static int indexOf(ByteBuffer buffer, int startIndex, byte value) {
-        int toIndex = buffer.limit();
+        int toIndex = buffer.position();
         for (int index = startIndex; index < toIndex; index++) {
             if (buffer.get(index) == value) return index;
         }
@@ -106,5 +106,9 @@ public final class ByteBufferUtil {
             number += ((buffer.get(index) - '0') * Math.pow(10, i));
         }
         return number;
+    }
+
+    public static void putBytes(ByteBuffer buffer, byte[] bytes) {
+        buffer.put(bytes, 0, bytes.length);
     }
 }

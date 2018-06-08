@@ -5,6 +5,7 @@ import net.nanofix.util.ByteString;
 import net.nanofix.util.FIXBytes;
 
 import java.nio.ByteBuffer;
+import java.util.concurrent.TimeUnit;
 
 /**
  **/
@@ -41,6 +42,11 @@ public class FixMessageAssembler implements MessageAssembler {
     }
 
     @Override
+    public void addTimestamp(int tag, long timestamp, TimeUnit timeUnit) {
+        invokeFunctionWithDelimiters(tag, NanoTimestampWriter.getWriter(timeUnit), timestamp);
+    }
+
+    @Override
     public void addBytesField(int tag, byte[] bytes) {
         addBytesWithDelimiters(buffer, ByteArrayUtil.asByteArray(tag), bytes);
     }
@@ -49,6 +55,13 @@ public class FixMessageAssembler implements MessageAssembler {
         buffer.put(tagAsBytes);
         buffer.put(FIXBytes.EQUALS);
         buffer.put(bytes);
+        buffer.put(FIXBytes.SOH);
+    }
+
+    protected void invokeFunctionWithDelimiters(int tag, TimestampWriter writer, long timestamp) {
+        buffer.put(ByteArrayUtil.asByteArray(tag));
+        buffer.put(FIXBytes.EQUALS);
+        writer.accept(buffer, timestamp);
         buffer.put(FIXBytes.SOH);
     }
 }

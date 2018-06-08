@@ -1,6 +1,5 @@
 package net.nanofix.store;
 
-import com.google.common.collect.ImmutableList;
 import net.nanofix.message.FIXMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +53,7 @@ public class MemoryMessageStore implements MessageStore {
 
     @Override
     public List<FIXMessage> getMessages(int startSeqNum, int endSeqNum) {
-        return ImmutableList.copyOf(messages.values());
+        return new ArrayList<>(messages.values());
     }
 
     @Override

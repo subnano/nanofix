@@ -22,18 +22,23 @@ import static net.nanofix.util.FIXBytes.SOH;
  * CheckSum (10) - Always the last field and the value always contains 3 bytes. E.g. 10=093.
  * Calculated as modulo 256 of the sum of every byte in the message up to but not including the checksum field itself.
  * <p>
+ * TODO body length value validation (all integer)
+ * TODO only read as far as body length + checksum
+ * TODO complain if checksum is missing
+ *
  * User: Mark Wardell
  * Date: 10/10/16
  * Time: 14:34
  */
 public class NanoFIXMessageDecoder implements FIXMessageDecoder {
 
-    private static final String EQUAL_NOT_FOUND_ERROR_MESSAGE = "Tag value delimiter '=' not found after index.";
-    private static final String SOH_NOT_FOUND_ERROR_MESSAGE = "Field delimiter 'SOH' not found after index.";
+    private static final String EQUAL_NOT_FOUND_ERROR_MESSAGE = "Tag value delimiter '=' not found after index";
+    private static final String SOH_NOT_FOUND_ERROR_MESSAGE = "Field delimiter 'SOH' not found after index";
     private static final String BEGIN_STRING_ERROR_MESSAGE = "Message must start with with the correct begin string 8=FIX.";
-    private static final String BODY_LEN_SECOND_FIELD_ERROR_MESSAGE = "BodyLength(9) should be the second field in the message";
+    private static final String BODY_LEN_SECOND_FIELD_ERROR_MESSAGE = "BodyLength(9) must be the second field in the message";
+    private static final String MSG_TYPE_THIRD_FIELD_ERROR_MESSAGE = "MsgType(35) must be the third field in the message";
     private static final String BODY_LEN_INCORRECT_ERROR_MESSAGE = "BodyLength(9) value is incorrect";
-    private static final String BODY_LEN_INVALID_ERROR_MESSAGE = "BodyLength(9) value is invalid.";
+    private static final String BODY_LEN_INVALID_ERROR_MESSAGE = "BodyLength(9) value is invalid";
     private static final String CHECKSUM_INCORRECT_ERROR_MESSAGE = "Invalid checksum!";
 
     private static final int MIN_BODY_LEN = 5; // 8=FIX.4.x|9=NN|35=X|10=nnn|
@@ -49,7 +54,7 @@ public class NanoFIXMessageDecoder implements FIXMessageDecoder {
         int bodyStartIndex = 0;
         int tagIndex = initialOffset;
         int tagCount = 0;
-        while (tagIndex < buffer.remaining()) {
+        while (tagIndex < buffer.position()) {
             int equalIndex = ByteBufferUtil.indexOf(buffer, tagIndex, EQUALS);
             if (equalIndex == NOT_FOUND_INDEX) {
                 handler.onError(tagIndex, EQUAL_NOT_FOUND_ERROR_MESSAGE);
@@ -74,12 +79,13 @@ public class NanoFIXMessageDecoder implements FIXMessageDecoder {
             }
             // check MsgBody
             else if (tagCount == 1) {
-                if (!ByteBufferUtil.hasByte(buffer, tagIndex, FIXBytes.BODY_LEN_TAG_BYTE)) {
+                if (!ByteBufferUtil.hasByte(buffer, tagIndex, FIXBytes.BODY_LEN_TAG)) {
                     handler.onError(tagIndex, BODY_LEN_SECOND_FIELD_ERROR_MESSAGE);
                     break;
                 }
                 if (valueLen > 4) {
                     handler.onError(tagIndex, BODY_LEN_INVALID_ERROR_MESSAGE);
+                    break;
                 }
                 bodyLen = ByteBufferUtil.toInt(buffer, valueIndex, valueLen);
 
@@ -90,6 +96,14 @@ public class NanoFIXMessageDecoder implements FIXMessageDecoder {
 
                 // return and wait for more data
                 if (bodyLen > buffer.limit()) {
+                    break;
+                }
+            }
+
+            // check MsgType is the third field
+            else if (tagCount == 2) {
+                if (!ByteBufferUtil.hasBytes(buffer, tagIndex, FIXBytes.MSG_TYPE_TAG_BYTES)) {
+                    handler.onError(tagIndex, MSG_TYPE_THIRD_FIELD_ERROR_MESSAGE);
                     break;
                 }
             }

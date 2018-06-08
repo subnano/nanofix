@@ -11,6 +11,9 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
+import org.openjdk.jmh.profile.GCProfiler;
+import org.openjdk.jmh.profile.Profiler;
+import org.openjdk.jmh.profile.StackProfiler;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -29,21 +32,29 @@ public class NanoFixMessageBench {
 
     private static final ByteString SENDER_COMP_ID = ByteString.of("CLIENT");
     private static final ByteString TARGET_COMP_ID = ByteString.of("BROKER");
-
-    private final MessageHeader header = new MessageHeader(ByteBuffer.allocate(256));
-    private final ByteBuffer buffer = ByteBuffer.allocate(256);
+    private static final long SENDING_TIME = System.currentTimeMillis();
+    public static final ByteString USER = ByteString.of("user1");
 
     public static void main(String[] args) throws RunnerException {
         System.setProperty("jmh.ignoreLock", "true");
         Options options = new OptionsBuilder()
                 .include(NanoFixMessageBench.class.getSimpleName())
+                .addProfiler(StackProfiler.class)
+                .addProfiler(GCProfiler.class)
                 .build();
         new Runner(options).run();
     }
 
-    @Benchmark
-    public void encodeHeartbeat(Blackhole hole) {
+    @State(Scope.Benchmark)
+    public static class BenchmarkState {
+        MessageHeader header = new MessageHeader(ByteBuffer.allocate(256));
+        ByteBuffer buffer = ByteBuffer.allocate(256);
         FIXMessage msg = new NanoFIXMessage(header, buffer);
+    }
+
+    @Benchmark
+    public void encodeHeartbeat(BenchmarkState state, Blackhole hole) {
+        FIXMessage msg = state.msg;
         msg.header().beginString(BeginStrings.FIX_4_2);
         msg.header().msgType(MsgTypes.Logon);
         msg.header().senderCompId(SENDER_COMP_ID);
@@ -52,9 +63,24 @@ public class NanoFixMessageBench {
         msg.addIntField(Tags.EncryptMethod, 0);
         msg.addIntField(Tags.HeartBtInt, 30);
         msg.addBooleanField(Tags.ResetSeqNumFlag, true);
-        msg.addStringField(Tags.Username, ByteString.of("user1"));
+        msg.addStringField(Tags.Username, USER);
         byte[] bytes = ByteBufferUtil.asByteArray(msg.buffers());
         hole.consume(bytes);
     }
+
+    //@Benchmark
+    public void encodeNewOrderSingle(BenchmarkState state, Blackhole hole) {
+        FIXMessage msg = state.msg;
+        msg.header().beginString(BeginStrings.FIX_4_2);
+        msg.header().msgType(MsgTypes.Logon);
+        msg.header().senderCompId(SENDER_COMP_ID);
+        msg.header().targetCompId(TARGET_COMP_ID);
+        msg.header().msgSeqNum(42);
+        msg.header().sendingTime(SENDING_TIME);
+        msg.addStringField(Tags.OrdType, ByteString.of("user1"));
+        byte[] bytes = ByteBufferUtil.asByteArray(msg.buffers());
+        hole.consume(bytes);
+    }
+
 
 }
