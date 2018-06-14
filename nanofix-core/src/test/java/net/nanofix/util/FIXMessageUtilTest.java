@@ -70,7 +70,7 @@ public class FIXMessageUtilTest {
                 FIXMessageUtil.isAdminMessage(msgType);
             }
         }
-        long elapsed = TimeUtil.getNanoTimeAsMillis(System.nanoTime() - start);
+        long elapsed = TimeUtil2.getNanoTimeAsMillis(System.nanoTime() - start);
         LOG.debug("string test complete in {} millis", elapsed);
         return elapsed; 
     }
@@ -82,7 +82,7 @@ public class FIXMessageUtilTest {
                 isAdminMessageAsString(msgType);
             }
         }
-        long elapsed = TimeUtil.getNanoTimeAsMillis(System.nanoTime() - start);
+        long elapsed = TimeUtil2.getNanoTimeAsMillis(System.nanoTime() - start);
         LOG.debug("case test complete in {} millis", elapsed);
         return elapsed;
     }

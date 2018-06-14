@@ -1,5 +1,7 @@
 package net.nanofix.message;
 
+import io.nano.core.buffer.ByteBufferUtil;
+
 import java.nio.ByteBuffer;
 
 class LoggingDecodeHandler implements MessageDecodeHandler {

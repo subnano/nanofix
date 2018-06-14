@@ -20,9 +20,9 @@ public class MessageStringBuilder implements MessageDecodeHandler {
     @Override
     public void onTag(ByteBuffer buffer, int tagIndex, int tagLen, int valueLen) {
         int valueIndex = tagIndex + tagLen + 1;
-        sb.append(new String(ByteBufferUtil.asByteArray(buffer, tagIndex, tagLen)))
+        sb.append(new String(ByteBufferUtil2.asByteArray(buffer, tagIndex, tagLen)))
                 .append('=')
-                .append(new String(ByteBufferUtil.asByteArray(buffer, valueIndex, valueLen)))
+                .append(new String(ByteBufferUtil2.asByteArray(buffer, valueIndex, valueLen)))
                 .append(delimiter);
     }
 

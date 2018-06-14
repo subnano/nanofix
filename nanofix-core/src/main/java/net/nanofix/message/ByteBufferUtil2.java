@@ -3,12 +3,12 @@ package net.nanofix.message;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 
-public final class ByteBufferUtil {
+public final class ByteBufferUtil2 {
 
     private static final byte[] CHECKSUM_BYTE_SUFFIX = new byte[]{'0', '1', '0', '='};
     public static final int NOT_FOUND_INDEX = -1;
 
-    private ByteBufferUtil() {
+    private ByteBufferUtil2() {
         // can't touch this
     }
 
@@ -59,7 +59,7 @@ public final class ByteBufferUtil {
      */
     public static boolean hasChecksum(ByteBuffer buffer) {
         int offset = buffer.remaining() - 8;
-        return ByteBufferUtil.hasBytes(buffer, offset, CHECKSUM_BYTE_SUFFIX);
+        return ByteBufferUtil2.hasBytes(buffer, offset, CHECKSUM_BYTE_SUFFIX);
     }
 
     /**

@@ -5,7 +5,7 @@ import net.nanofix.util.FIXBytes;
 
 import java.nio.ByteBuffer;
 
-import static net.nanofix.message.ByteBufferUtil.NOT_FOUND_INDEX;
+import static net.nanofix.message.ByteBufferUtil2.NOT_FOUND_INDEX;
 import static net.nanofix.util.FIXBytes.EQUALS;
 import static net.nanofix.util.FIXBytes.SOH;
 
@@ -55,7 +55,7 @@ public class NanoFIXMessageDecoder implements FIXMessageDecoder {
         int tagIndex = initialOffset;
         int tagCount = 0;
         while (tagIndex < buffer.position()) {
-            int equalIndex = ByteBufferUtil.indexOf(buffer, tagIndex, EQUALS);
+            int equalIndex = ByteBufferUtil2.indexOf(buffer, tagIndex, EQUALS);
             if (equalIndex == NOT_FOUND_INDEX) {
                 handler.onError(tagIndex, EQUAL_NOT_FOUND_ERROR_MESSAGE);
                 break;
@@ -63,7 +63,7 @@ public class NanoFIXMessageDecoder implements FIXMessageDecoder {
             int tagLen = equalIndex - tagIndex;
             int valueIndex = equalIndex + 1;
 
-            int startOfHeaderIndex = ByteBufferUtil.indexOf(buffer, valueIndex, SOH);
+            int startOfHeaderIndex = ByteBufferUtil2.indexOf(buffer, valueIndex, SOH);
             if (startOfHeaderIndex == NOT_FOUND_INDEX) {
                 handler.onError(valueIndex, SOH_NOT_FOUND_ERROR_MESSAGE);
                 break;
@@ -72,14 +72,14 @@ public class NanoFIXMessageDecoder implements FIXMessageDecoder {
 
             // check first tag is the FIX BeginString
             if (tagCount == 0) {
-                if (!ByteBufferUtil.hasBytes(buffer, tagIndex, FIXBytes.BEGIN_STRING_PREFIX)) {
+                if (!ByteBufferUtil2.hasBytes(buffer, tagIndex, FIXBytes.BEGIN_STRING_PREFIX)) {
                     handler.onError(tagIndex, BEGIN_STRING_ERROR_MESSAGE);
                     break;
                 }
             }
             // check MsgBody
             else if (tagCount == 1) {
-                if (!ByteBufferUtil.hasByte(buffer, tagIndex, FIXBytes.BODY_LEN_TAG)) {
+                if (!ByteBufferUtil2.hasByte(buffer, tagIndex, FIXBytes.BODY_LEN_TAG)) {
                     handler.onError(tagIndex, BODY_LEN_SECOND_FIELD_ERROR_MESSAGE);
                     break;
                 }
@@ -87,7 +87,7 @@ public class NanoFIXMessageDecoder implements FIXMessageDecoder {
                     handler.onError(tagIndex, BODY_LEN_INVALID_ERROR_MESSAGE);
                     break;
                 }
-                bodyLen = ByteBufferUtil.toInt(buffer, valueIndex, valueLen);
+                bodyLen = ByteBufferUtil2.toInt(buffer, valueIndex, valueLen);
 
                 if (bodyLen < MIN_BODY_LEN || bodyLen > MAX_BODY_LEN) {
                     handler.onError(tagIndex, BODY_LEN_INVALID_ERROR_MESSAGE);
@@ -102,21 +102,21 @@ public class NanoFIXMessageDecoder implements FIXMessageDecoder {
 
             // check MsgType is the third field
             else if (tagCount == 2) {
-                if (!ByteBufferUtil.hasBytes(buffer, tagIndex, FIXBytes.MSG_TYPE_TAG_BYTES)) {
+                if (!ByteBufferUtil2.hasBytes(buffer, tagIndex, FIXBytes.MSG_TYPE_TAG_BYTES)) {
                     handler.onError(tagIndex, MSG_TYPE_THIRD_FIELD_ERROR_MESSAGE);
                     break;
                 }
             }
 
             // last consistency check for checksum field
-            if (ByteBufferUtil.hasBytes(buffer, tagIndex, FIXBytes.CHECKSUM_PREFIX)) {
+            if (ByteBufferUtil2.hasBytes(buffer, tagIndex, FIXBytes.CHECKSUM_PREFIX)) {
                 int actualBodyLength = tagIndex - bodyStartIndex;
                 if (bodyLen != actualBodyLength) {
                     handler.onError(tagIndex, BODY_LEN_INCORRECT_ERROR_MESSAGE);
                     break;
                 }
                 // check that checksum value is correct
-                int checksum = ByteBufferUtil.toInt(buffer, valueIndex, valueLen);
+                int checksum = ByteBufferUtil2.toInt(buffer, valueIndex, valueLen);
                 int calculatedChecksum = ChecksumCalculator.calculateChecksum(
                         buffer, initialOffset, tagIndex - initialOffset);
 

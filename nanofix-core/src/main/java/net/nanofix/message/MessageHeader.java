@@ -1,5 +1,6 @@
 package net.nanofix.message;
 
+import io.nano.core.buffer.ByteBufferUtil;
 import net.nanofix.util.ByteArrayUtil;
 import net.nanofix.util.ByteString;
 import net.nanofix.util.DefaultTimeGenerator;

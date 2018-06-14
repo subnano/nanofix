@@ -1,5 +1,6 @@
 package net.nanofix.message;
 
+import io.nano.core.buffer.ByteBufferUtil;
 import net.nanofix.message.util.ChecksumCalculator;
 
 import java.nio.ByteBuffer;
