@@ -33,7 +33,7 @@ public class NanoFixMessageBench {
     private static final ByteString SENDER_COMP_ID = ByteString.of("CLIENT");
     private static final ByteString TARGET_COMP_ID = ByteString.of("BROKER");
     private static final long SENDING_TIME = System.currentTimeMillis();
-    public static final ByteString USER = ByteString.of("user1");
+    private static final ByteString USER = ByteString.of("user1");
 
     public static void main(String[] args) throws RunnerException {
         System.setProperty("jmh.ignoreLock", "true");
@@ -53,13 +53,14 @@ public class NanoFixMessageBench {
     }
 
     @Benchmark
-    public void encodeHeartbeat(BenchmarkState state, Blackhole hole) {
+    public void encodeLogon(BenchmarkState state, Blackhole hole) {
         FIXMessage msg = state.msg;
         msg.header().beginString(BeginStrings.FIX_4_2);
         msg.header().msgType(MsgTypes.Logon);
         msg.header().senderCompId(SENDER_COMP_ID);
         msg.header().targetCompId(TARGET_COMP_ID);
         msg.header().msgSeqNum(42);
+        msg.header().sendingTime(SENDING_TIME);
         msg.addIntField(Tags.EncryptMethod, 0);
         msg.addIntField(Tags.HeartBtInt, 30);
         msg.addBooleanField(Tags.ResetSeqNumFlag, true);
@@ -72,7 +73,7 @@ public class NanoFixMessageBench {
     public void encodeNewOrderSingle(BenchmarkState state, Blackhole hole) {
         FIXMessage msg = state.msg;
         msg.header().beginString(BeginStrings.FIX_4_2);
-        msg.header().msgType(MsgTypes.Logon);
+        msg.header().msgType(MsgTypes.NewOrderSingle);
         msg.header().senderCompId(SENDER_COMP_ID);
         msg.header().targetCompId(TARGET_COMP_ID);
         msg.header().msgSeqNum(42);

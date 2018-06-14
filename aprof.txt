@@ -1,0 +1,36 @@
+########################################################################################################################
+Aprof 32, Copyright (C) 2002-2017 Devexperts LLC
+Allocation dump at 2018-06-14T16:55:56.255+0100. Uptime 756,882 ms (0h12m36s)
+Arguments config.file=aprof.config:file=aprof.txt:-file.append:filecount=0:threshold=0.01:level=2:time=1m:-verbose:-verbose.redefinition:-verbose.tracked:-verbose.eliminate.allocation:-check.eliminate.allocation:log.file=:dump.classes.dir=:-skipdebug:-noframes:+reflect:-unknown:+size:exclude=:signature=java.lang.String.<init>:aggregate=sun.reflect.GeneratedSerializationConstructorAccessor,sun.reflect.GeneratedConstructorAccessor,sun.reflect.GeneratedMethodAccessor:track=:track.file=:-track.file.replace:histogram=:histogram.file=:port=0
+Transformed 924 classes and registered 4,759 locations in 7,036 (0.92%) ms
+Snapshot of counters was made 14 times to write file and 0 times to prevent overflow
+########################################################################################################################
+
+========================================================================================================================
+TOTAL allocation dump for 756,882 ms (0h12m36s)
+Allocated 218,403,741,192 bytes in 4,963,501,954 objects of 309 classes in 1,152 locations
+========================================================================================================================
+
+Top allocation-inducing locations with data types allocated from them
+------------------------------------------------------------------------------------------------------------------------
+io.nano.core.buffer.ByteBufferUtil.asByteArray: 129,030,278,000 (59.07%) bytes in 1,240,675,750 (24.99%) objects (avg size 104 bytes)
+	byte[]: 129,030,278,000 (59.07%) bytes in 1,240,675,750 (24.99%) objects (avg size 104 bytes)
+
+net.nanofix.util.ByteArrayUtil.as1ByteArray: 89,328,653,592 (40.90%) bytes in 3,722,027,233 (74.98%) objects (avg size 24 bytes)
+	byte[]: 89,328,653,592 (40.90%) bytes in 3,722,027,233 (74.98%) objects (avg size 24 bytes)
+
+com.devexperts.aprof.transformer.AProfTransformer.transform: 40,483,944 (0.01%) bytes in 735,436 (0.01%) objects (avg size 55 bytes)
+	char[]: 7,752,376 (0.00%) bytes in 112,860 (0.00%) objects (avg size 69 bytes)
+	... 91 more below threshold: 32,731,568 (0.01%) bytes in 622,576 (0.01%) objects (avg size 53 bytes)
+
+... 230 more below threshold: 4,325,656 (0.00%) bytes in 63,535 (0.00%) objects (avg size 68 bytes)
+
+Top allocated data types with reverse location traces
+------------------------------------------------------------------------------------------------------------------------
+byte[]: 218,362,691,456 (99.98%) bytes in 4,962,722,147 (99.98%) objects (avg size 44 bytes)
+	io.nano.core.buffer.ByteBufferUtil.asByteArray: 129,030,278,000 (59.07%) bytes in 1,240,675,750 (24.99%) objects (avg size 104 bytes)
+	net.nanofix.util.ByteArrayUtil.as1ByteArray: 89,328,653,592 (40.90%) bytes in 3,722,027,233 (74.98%) objects (avg size 24 bytes)
+	... 27 more below threshold: 3,759,864 (0.00%) bytes in 19,164 (0.00%) objects (avg size 196 bytes)
+
+... 308 more below threshold: 41,049,736 (0.01%) bytes in 779,807 (0.01%) objects (avg size 53 bytes)
+

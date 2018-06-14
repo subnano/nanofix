@@ -1,13 +1,16 @@
 package net.nanofix.message;
 
 import io.nano.core.buffer.ByteBufferUtil;
+import net.nanofix.time.UtcDateTimeEncoder;
 import net.nanofix.util.ByteArrayUtil;
 import net.nanofix.util.ByteString;
 import net.nanofix.util.DefaultTimeGenerator;
+import net.nanofix.util.FIXBytes;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Header
@@ -23,6 +26,7 @@ public class MessageHeader extends FixMessageAssembler {
 
     private static final int MAX_FIXED_BUFFER_CAPACITY = 19;
 
+    private final UtcDateTimeEncoder timeEncoder = new UtcDateTimeEncoder();
     private final DefaultTimeGenerator timeGenerator = new DefaultTimeGenerator();
     private final ByteBuffer beginBuffer = ByteBuffer.allocate(MAX_FIXED_BUFFER_CAPACITY);
     private final ByteBuffer buffer;
@@ -118,7 +122,7 @@ public class MessageHeader extends FixMessageAssembler {
             addStringField(Tags.SenderCompID, senderCompId);
             addStringField(Tags.TargetCompID, targetCompId);
             addIntField(Tags.MsgSeqNum, msgSeqNum);
-            addBytesField(Tags.SendingTime, getTimeAsBytes());
+            addTimestamp(Tags.SendingTime, sendingTime);
         }
         int fixBodyLength = bodyLength + ByteBufferUtil.readableBytes(buffer);
 
@@ -135,9 +139,11 @@ public class MessageHeader extends FixMessageAssembler {
         );
     }
 
-    // TODO evil - remove this altogether
-    private byte[] getTimeAsBytes() {
-        return timeGenerator.getUtcTime(new Date(sendingTime), true)
-                .getBytes(StandardCharsets.US_ASCII);
+    private void addTimestamp(int tag, long epochMillis) {
+        buffer.put(ByteArrayUtil.asByteArray(tag));
+        buffer.put(FIXBytes.EQUALS);
+        timeEncoder.encode(epochMillis, buffer);
+        buffer.put(FIXBytes.SOH);
     }
+
 }
