@@ -5,7 +5,8 @@ import net.nanofix.util.FIXBytes;
 import java.nio.ByteBuffer;
 
 /**
- * Creates a string representation of  FIX message from decoding a ByteBuffer
+ * Creates a string representation of FIX message from decoding a ByteBuffer.
+ * Not to be used in critical sections of code as allocation is poor.
  */
 public class MessageStringBuilder implements MessageDecodeHandler {
 

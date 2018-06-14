@@ -119,7 +119,6 @@
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
-            <scope>provided</scope>
             <version>${jmh.version}</version>
         </dependency>
         <dependency>
