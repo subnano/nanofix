@@ -7,14 +7,20 @@ package net.nanofix.util;
  */
 public class ByteArrayUtil {
 
+    private static final byte[][] BYTE_ARRAY_1 = new byte[10][1];
     private static final byte[][] BYTE_ARRAY_2 = new byte[100][2];
     private static final byte[][] BYTE_ARRAY_3 = new byte[1000][3];
     private static final byte[][] BYTE_ARRAY_4 = new byte[10000][4];
-    public static boolean useCachedValues = true;
+
+    private static final boolean INTEGER_CACHE_DISABLED = Boolean.getBoolean("io.nano.integer.cache.disabled");
 
     private static final byte ZERO = (byte) '0';
 
     static {
+        // populate the 1 byte array
+        for (int i=0;i<10;i++) {
+            BYTE_ARRAY_1[i] = ByteArrayUtil.as1ByteArray(i);
+        }
         // populate the 2 bytes array
         for (int i=0;i<100;i++) {
             BYTE_ARRAY_2[i] = ByteArrayUtil.as2ByteArray(i);
@@ -107,16 +113,16 @@ public class ByteArrayUtil {
             return intToBytesAsString(value);
         }
         if (value <= 9) {
-            return as1ByteArray(value);
+            return INTEGER_CACHE_DISABLED ? as1ByteArray(value) : BYTE_ARRAY_1[value];
         }
         if (value <= 99) {
-            return useCachedValues ? BYTE_ARRAY_2[value] : as2ByteArray(value);
+            return INTEGER_CACHE_DISABLED ? as2ByteArray(value) : BYTE_ARRAY_2[value];
         }
         if (value <= 999) {
-            return useCachedValues ? BYTE_ARRAY_3[value] : as3ByteArray(value);
+            return INTEGER_CACHE_DISABLED ? as3ByteArray(value) : BYTE_ARRAY_3[value];
         }
         if (value <= 9999) {
-            return useCachedValues ? BYTE_ARRAY_4[value] : as4ByteArray(value);
+            return INTEGER_CACHE_DISABLED ? as4ByteArray(value) : BYTE_ARRAY_4[value];
         }
         else {
             return intToBytesAsString(value);

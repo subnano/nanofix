@@ -1,36 +1,963 @@
 ########################################################################################################################
 Aprof 32, Copyright (C) 2002-2017 Devexperts LLC
-Allocation dump at 2018-06-14T16:55:56.255+0100. Uptime 756,882 ms (0h12m36s)
+Allocation dump at 2018-06-15T06:12:39.840+0100. Uptime 85,945 ms (0h01m25s)
 Arguments config.file=aprof.config:file=aprof.txt:-file.append:filecount=0:threshold=0.01:level=2:time=1m:-verbose:-verbose.redefinition:-verbose.tracked:-verbose.eliminate.allocation:-check.eliminate.allocation:log.file=:dump.classes.dir=:-skipdebug:-noframes:+reflect:-unknown:+size:exclude=:signature=java.lang.String.<init>:aggregate=sun.reflect.GeneratedSerializationConstructorAccessor,sun.reflect.GeneratedConstructorAccessor,sun.reflect.GeneratedMethodAccessor:track=:track.file=:-track.file.replace:histogram=:histogram.file=:port=0
-Transformed 924 classes and registered 4,759 locations in 7,036 (0.92%) ms
-Snapshot of counters was made 14 times to write file and 0 times to prevent overflow
+Transformed 924 classes and registered 4,759 locations in 6,584 (7.66%) ms
+Snapshot of counters was made 3 times to write file and 0 times to prevent overflow
 ########################################################################################################################
 
 ========================================================================================================================
-TOTAL allocation dump for 756,882 ms (0h12m36s)
-Allocated 218,403,741,192 bytes in 4,963,501,954 objects of 309 classes in 1,152 locations
+TOTAL allocation dump for 85,945 ms (0h01m25s)
+Allocated 44,756,392 bytes in 799,354 objects of 310 classes in 1,160 locations
 ========================================================================================================================
 
 Top allocation-inducing locations with data types allocated from them
 ------------------------------------------------------------------------------------------------------------------------
-io.nano.core.buffer.ByteBufferUtil.asByteArray: 129,030,278,000 (59.07%) bytes in 1,240,675,750 (24.99%) objects (avg size 104 bytes)
-	byte[]: 129,030,278,000 (59.07%) bytes in 1,240,675,750 (24.99%) objects (avg size 104 bytes)
+com.devexperts.aprof.transformer.AProfTransformer.transform: 40,503,872 (90.49%) bytes in 735,848 (92.05%) objects (avg size 55 bytes)
+	char[]: 7,755,208 (17.32%) bytes in 112,909 (14.12%) objects (avg size 69 bytes)
+	int[]: 6,344,728 (14.17%) bytes in 110,617 (13.83%) objects (avg size 57 bytes)
+	org.objectweb.asm.Label: 4,912,064 (10.97%) bytes in 76,751 (9.60%) objects (avg size 64 bytes)
+	byte[]: 2,819,264 (6.29%) bytes in 6,171 (0.77%) objects (avg size 457 bytes)
+	org.objectweb.asm.Item: 1,706,320 (3.81%) bytes in 30,470 (3.81%) objects (avg size 56 bytes)
+	org.objectweb.asm.tree.VarInsnNode: 1,560,000 (3.48%) bytes in 39,000 (4.87%) objects (avg size 40 bytes)
+	org.objectweb.asm.Frame: 1,549,920 (3.46%) bytes in 32,290 (4.03%) objects (avg size 48 bytes)
+	java.lang.String: 1,421,016 (3.17%) bytes in 59,209 (7.40%) objects (avg size 24 bytes)
+	org.objectweb.asm.tree.InsnNode: 1,412,120 (3.15%) bytes in 35,303 (4.41%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodInsnNode: 1,250,256 (2.79%) bytes in 22,326 (2.79%) objects (avg size 56 bytes)
+	org.objectweb.asm.tree.LabelNode: 1,181,280 (2.63%) bytes in 29,532 (3.69%) objects (avg size 40 bytes)
+	org.objectweb.asm.Edge: 870,264 (1.94%) bytes in 36,261 (4.53%) objects (avg size 24 bytes)
+	org.objectweb.asm.tree.LineNumberNode: 855,168 (1.91%) bytes in 17,816 (2.22%) objects (avg size 48 bytes)
+	org.objectweb.asm.Label[]: 704,680 (1.57%) bytes in 2,708 (0.33%) objects (avg size 260 bytes)
+	java.lang.Object[]: 650,960 (1.45%) bytes in 10,540 (1.31%) objects (avg size 62 bytes)
+	org.objectweb.asm.tree.JumpInsnNode: 531,560 (1.18%) bytes in 13,289 (1.66%) objects (avg size 40 bytes)
+	org.objectweb.asm.MethodWriter: 450,016 (1.00%) bytes in 2,009 (0.25%) objects (avg size 224 bytes)
+	org.objectweb.asm.Item[]: 448,632 (1.00%) bytes in 510 (0.06%) objects (avg size 880 bytes)
+	org.objectweb.asm.Type: 315,776 (0.70%) bytes in 9,868 (1.23%) objects (avg size 32 bytes)
+	org.objectweb.asm.tree.AbstractInsnNode[]: 310,264 (0.69%) bytes in 224 (0.02%) objects (avg size 1,385 bytes)
+	org.objectweb.asm.tree.FieldInsnNode: 285,504 (0.63%) bytes in 5,948 (0.74%) objects (avg size 48 bytes)
+	java.util.ArrayList: 250,920 (0.56%) bytes in 10,455 (1.30%) objects (avg size 24 bytes)
+	org.objectweb.asm.commons.GeneratorAdapter: 244,272 (0.54%) bytes in 4,362 (0.54%) objects (avg size 56 bytes)
+	org.objectweb.asm.commons.JSRInlinerAdapter: 241,080 (0.53%) bytes in 2,009 (0.25%) objects (avg size 120 bytes)
+	org.objectweb.asm.commons.TryCatchBlockSorter: 225,008 (0.50%) bytes in 2,009 (0.25%) objects (avg size 112 bytes)
+	org.objectweb.asm.tree.IntInsnNode: 198,440 (0.44%) bytes in 4,961 (0.62%) objects (avg size 40 bytes)
+	org.objectweb.asm.Type[]: 149,336 (0.33%) bytes in 6,624 (0.82%) objects (avg size 23 bytes)
+	org.objectweb.asm.tree.LdcInsnNode: 148,080 (0.33%) bytes in 3,702 (0.46%) objects (avg size 40 bytes)
+	java.lang.StringBuffer: 141,768 (0.31%) bytes in 5,907 (0.73%) objects (avg size 24 bytes)
+	java.lang.String[]: 140,456 (0.31%) bytes in 1,886 (0.23%) objects (avg size 74 bytes)
+	com.devexperts.aprof.transformer.Context: 131,768 (0.29%) bytes in 2,353 (0.29%) objects (avg size 56 bytes)
+	org.objectweb.asm.tree.TypeInsnNode: 125,280 (0.27%) bytes in 3,132 (0.39%) objects (avg size 40 bytes)
+	long[]: 96,432 (0.21%) bytes in 4,018 (0.50%) objects (avg size 24 bytes)
+	org.objectweb.asm.ByteVector: 87,864 (0.19%) bytes in 3,661 (0.45%) objects (avg size 24 bytes)
+	org.objectweb.asm.FieldWriter: 81,472 (0.18%) bytes in 1,273 (0.15%) objects (avg size 64 bytes)
+	com.devexperts.aprof.transformer.MethodTransformer: 80,360 (0.17%) bytes in 2,009 (0.25%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.InsnList: 79,424 (0.17%) bytes in 2,482 (0.31%) objects (avg size 32 bytes)
+	com.devexperts.aprof.transformer.MethodAnalyzer: 75,296 (0.16%) bytes in 2,353 (0.29%) objects (avg size 32 bytes)
+	org.objectweb.asm.tree.TryCatchBlockNode: 73,440 (0.16%) bytes in 1,836 (0.22%) objects (avg size 40 bytes)
+	java.util.HashMap: 62,208 (0.13%) bytes in 1,296 (0.16%) objects (avg size 48 bytes)
+	org.objectweb.asm.Handler: 61,680 (0.13%) bytes in 1,542 (0.19%) objects (avg size 40 bytes)
+	java.util.BitSet: 59,568 (0.13%) bytes in 2,482 (0.31%) objects (avg size 24 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$EmptyMethodVisitor: 56,472 (0.12%) bytes in 2,353 (0.29%) objects (avg size 24 bytes)
+	java.lang.StringBuilder: 31,824 (0.07%) bytes in 1,326 (0.16%) objects (avg size 24 bytes)
+	org.objectweb.asm.Context: 27,552 (0.06%) bytes in 287 (0.03%) objects (avg size 96 bytes)
+	org.objectweb.asm.tree.IincInsnNode: 24,672 (0.05%) bytes in 514 (0.06%) objects (avg size 48 bytes)
+	org.objectweb.asm.commons.TryCatchBlockSorter$1: 19,856 (0.04%) bytes in 1,241 (0.15%) objects (avg size 16 bytes)
+	org.objectweb.asm.tree.LocalVariableNode: 17,600 (0.03%) bytes in 440 (0.05%) objects (avg size 40 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$FrameClassWriter: 16,192 (0.03%) bytes in 92 (0.01%) objects (avg size 176 bytes)
+	sun.net.www.protocol.file.FileURLConnection: 15,912 (0.03%) bytes in 153 (0.01%) objects (avg size 104 bytes)
+	java.util.Arrays$ArrayList: 15,888 (0.03%) bytes in 662 (0.08%) objects (avg size 24 bytes)
+	com.devexperts.aprof.IndexMap: 14,640 (0.03%) bytes in 305 (0.03%) objects (avg size 48 bytes)
+	com.devexperts.aprof.transformer.ClassInfo: 14,224 (0.03%) bytes in 254 (0.03%) objects (avg size 56 bytes)
+	org.objectweb.asm.tree.LabelNode[]: 14,128 (0.03%) bytes in 222 (0.02%) objects (avg size 64 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassAnalyzer: 12,824 (0.02%) bytes in 229 (0.02%) objects (avg size 56 bytes)
+	java.util.ArrayList$Itr: 12,096 (0.02%) bytes in 378 (0.04%) objects (avg size 32 bytes)
+	java.util.jar.JarFile$JarFileEntry: 9,792 (0.02%) bytes in 102 (0.01%) objects (avg size 96 bytes)
+	org.objectweb.asm.ClassWriter: 9,576 (0.02%) bytes in 57 (0.00%) objects (avg size 168 bytes)
+	org.objectweb.asm.ClassReader: 8,960 (0.02%) bytes in 280 (0.03%) objects (avg size 32 bytes)
+	java.lang.Integer: 8,448 (0.01%) bytes in 528 (0.06%) objects (avg size 16 bytes)
+	java.util.HashMap$Node: 8,320 (0.01%) bytes in 260 (0.03%) objects (avg size 32 bytes)
+	java.util.zip.ZipEntry: 8,160 (0.01%) bytes in 102 (0.01%) objects (avg size 80 bytes)
+	com.devexperts.aprof.transformer.ClassInfoVisitor: 8,128 (0.01%) bytes in 254 (0.03%) objects (avg size 32 bytes)
+	java.io.File: 6,528 (0.01%) bytes in 204 (0.02%) objects (avg size 32 bytes)
+	java.net.URL: 6,528 (0.01%) bytes in 102 (0.01%) objects (avg size 64 bytes)
+	sun.net.www.protocol.jar.URLJarFile$URLJarFileEntry: 4,896 (0.01%) bytes in 51 (0.00%) objects (avg size 96 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassTransformer: 4,768 (0.01%) bytes in 149 (0.01%) objects (avg size 32 bytes)
+	org.objectweb.asm.Attribute[]: 4,592 (0.01%) bytes in 287 (0.03%) objects (avg size 16 bytes)
+	sun.net.www.protocol.jar.JarURLConnection: 4,488 (0.01%) bytes in 51 (0.00%) objects (avg size 88 bytes)
+	java.lang.Long: 4,008 (0.00%) bytes in 167 (0.02%) objects (avg size 24 bytes)
+	sun.net.www.MessageHeader: 3,672 (0.00%) bytes in 153 (0.01%) objects (avg size 24 bytes)
+	... 21 more below threshold: 19,976 (0.04%) bytes in 542 (0.06%) objects (avg size 37 bytes)
 
-net.nanofix.util.ByteArrayUtil.as1ByteArray: 89,328,653,592 (40.90%) bytes in 3,722,027,233 (74.98%) objects (avg size 24 bytes)
-	byte[]: 89,328,653,592 (40.90%) bytes in 3,722,027,233 (74.98%) objects (avg size 24 bytes)
+com.devexperts.aprof.dump.Dumper.makeDump: 1,588,872 (3.55%) bytes in 24,154 (3.02%) objects (avg size 66 bytes)
+	com.devexperts.aprof.dump.SnapshotDeep: 1,133,632 (2.53%) bytes in 17,713 (2.21%) objects (avg size 64 bytes)
+	com.devexperts.aprof.dump.SnapshotDeep[]: 247,880 (0.55%) bytes in 6,350 (0.79%) objects (avg size 39 bytes)
+	int[]: 98,480 (0.22%) bytes in 19 (0.00%) objects (avg size 5,183 bytes)
+	java.lang.Object[]: 98,480 (0.22%) bytes in 19 (0.00%) objects (avg size 5,183 bytes)
+	byte[]: 8,288 (0.01%) bytes in 3 (0.00%) objects (avg size 2,763 bytes)
+	... 14 more below threshold: 2,112 (0.00%) bytes in 50 (0.00%) objects (avg size 42 bytes)
 
-com.devexperts.aprof.transformer.AProfTransformer.transform: 40,483,944 (0.01%) bytes in 735,436 (0.01%) objects (avg size 55 bytes)
-	char[]: 7,752,376 (0.00%) bytes in 112,860 (0.00%) objects (avg size 69 bytes)
-	... 91 more below threshold: 32,731,568 (0.01%) bytes in 622,576 (0.01%) objects (avg size 53 bytes)
+com.devexperts.aprof.dump.DumpPeriodicThread.run: 525,224 (1.17%) bytes in 9,043 (1.13%) objects (avg size 58 bytes)
+	com.devexperts.aprof.dump.SnapshotDeep: 370,176 (0.82%) bytes in 5,784 (0.72%) objects (avg size 64 bytes)
+	com.devexperts.aprof.dump.SnapshotDeep[]: 134,328 (0.30%) bytes in 3,020 (0.37%) objects (avg size 44 bytes)
+	byte[]: 8,336 (0.01%) bytes in 5 (0.00%) objects (avg size 1,667 bytes)
+	char[]: 6,552 (0.01%) bytes in 105 (0.01%) objects (avg size 62 bytes)
+	... 30 more below threshold: 5,832 (0.01%) bytes in 129 (0.01%) objects (avg size 45 bytes)
 
-... 230 more below threshold: 4,325,656 (0.00%) bytes in 63,535 (0.00%) objects (avg size 68 bytes)
+net.nanofix.util.ByteArrayUtil.<clinit>: 311,144 (0.69%) bytes in 4 (0.00%) objects (avg size 77,786 bytes)
+	byte[][]: 311,144 (0.69%) bytes in 4 (0.00%) objects (avg size 77,786 bytes)
+
+com.devexperts.aprof.util.FastByteBuffer.getBytes: 247,848 (0.55%) bytes in 79 (0.00%) objects (avg size 3,137 bytes)
+	byte[]: 247,848 (0.55%) bytes in 79 (0.00%) objects (avg size 3,137 bytes)
+
+net.nanofix.util.ByteArrayUtil.as4ByteArray: 240,000 (0.53%) bytes in 10,000 (1.25%) objects (avg size 24 bytes)
+	byte[]: 240,000 (0.53%) bytes in 10,000 (1.25%) objects (avg size 24 bytes)
+
+java.util.zip.ZipCoder.getBytes: 164,952 (0.36%) bytes in 1,551 (0.19%) objects (avg size 106 bytes)
+	byte[]: 110,112 (0.24%) bytes in 1,034 (0.12%) objects (avg size 106 bytes)
+	char[]: 54,840 (0.12%) bytes in 517 (0.06%) objects (avg size 106 bytes)
+
+java.lang.Class.getResourceAsStream: 154,592 (0.34%) bytes in 2,056 (0.25%) objects (avg size 75 bytes)
+	char[]: 75,752 (0.16%) bytes in 699 (0.08%) objects (avg size 108 bytes)
+	byte[]: 30,464 (0.06%) bytes in 155 (0.01%) objects (avg size 197 bytes)
+	java.lang.String: 8,760 (0.01%) bytes in 365 (0.04%) objects (avg size 24 bytes)
+	sun.net.www.protocol.file.FileURLConnection: 6,864 (0.01%) bytes in 66 (0.00%) objects (avg size 104 bytes)
+	java.lang.String[]: 4,224 (0.00%) bytes in 132 (0.01%) objects (avg size 32 bytes)
+	java.io.File: 2,816 (0.00%) bytes in 88 (0.01%) objects (avg size 32 bytes)
+	... 17 more below threshold: 25,712 (0.05%) bytes in 551 (0.06%) objects (avg size 47 bytes)
+
+com.devexperts.aprof.AProfRegistry.resolveClassName: 139,704 (0.31%) bytes in 5,821 (0.72%) objects (avg size 24 bytes)
+	java.lang.StringBuilder: 139,704 (0.31%) bytes in 5,821 (0.72%) objects (avg size 24 bytes)
+
+sun.misc.Resource.getBytes: 73,352 (0.16%) bytes in 55 (0.00%) objects (avg size 1,334 bytes)
+	byte[]: 73,352 (0.16%) bytes in 55 (0.00%) objects (avg size 1,334 bytes)
+
+com.devexperts.aprof.AProfRegistry.registerRootIndexSlowPath: 64,120 (0.14%) bytes in 1,145 (0.14%) objects (avg size 56 bytes)
+	com.devexperts.aprof.RootIndexMap: 64,120 (0.14%) bytes in 1,145 (0.14%) objects (avg size 56 bytes)
+
+com.devexperts.aprof.IndexMap.registerChildSlowPath: 56,640 (0.12%) bytes in 1,180 (0.14%) objects (avg size 48 bytes)
+	com.devexperts.aprof.IndexMap: 56,640 (0.12%) bytes in 1,180 (0.14%) objects (avg size 48 bytes)
+
+java.net.URLStreamHandler.parseURL: 51,568 (0.11%) bytes in 420 (0.05%) objects (avg size 123 bytes)
+	char[]: 47,368 (0.10%) bytes in 245 (0.03%) objects (avg size 193 bytes)
+	java.lang.String: 2,520 (0.00%) bytes in 105 (0.01%) objects (avg size 24 bytes)
+	java.lang.StringBuilder: 1,680 (0.00%) bytes in 70 (0.00%) objects (avg size 24 bytes)
+
+com.devexperts.aprof.IndexMap.rehashChildren: 35,312 (0.07%) bytes in 187 (0.02%) objects (avg size 189 bytes)
+	com.devexperts.aprof.IndexMap[]: 35,312 (0.07%) bytes in 187 (0.02%) objects (avg size 189 bytes)
+
+com.devexperts.aprof.util.FastArrayList.putUnsync: 32,784 (0.07%) bytes in 1 (0.00%) objects (avg size 32,784 bytes)
+	java.lang.Object[]: 32,784 (0.07%) bytes in 1 (0.00%) objects (avg size 32,784 bytes)
+
+com.devexperts.aprof.IndexMap.putNewChildUnsync: 31,328 (0.06%) bytes in 979 (0.12%) objects (avg size 32 bytes)
+	com.devexperts.aprof.IndexMap[]: 31,328 (0.06%) bytes in 979 (0.12%) objects (avg size 32 bytes)
+
+net.nanofix.util.ByteArrayUtil.as3ByteArray: 30,144 (0.06%) bytes in 1,256 (0.15%) objects (avg size 24 bytes)
+	byte[]: 30,144 (0.06%) bytes in 1,256 (0.15%) objects (avg size 24 bytes)
+
+java.lang.String.getBytes: 29,416 (0.06%) bytes in 143 (0.01%) objects (avg size 206 bytes)
+	byte[]: 29,288 (0.06%) bytes in 140 (0.01%) objects (avg size 209 bytes)
+	... 3 more below threshold: 128 (0.00%) bytes in 3 (0.00%) objects (avg size 43 bytes)
+
+net.nanofix.message.util.ChecksumCalculator.<clinit>: 28,016 (0.06%) bytes in 1 (0.00%) objects (avg size 28,016 bytes)
+	byte[][]: 28,016 (0.06%) bytes in 1 (0.00%) objects (avg size 28,016 bytes)
+
+java.io.UnixFileSystem.resolve: 24,968 (0.05%) bytes in 185 (0.02%) objects (avg size 135 bytes)
+	char[]: 23,192 (0.05%) bytes in 111 (0.01%) objects (avg size 209 bytes)
+	java.lang.String: 888 (0.00%) bytes in 37 (0.00%) objects (avg size 24 bytes)
+	java.lang.StringBuilder: 888 (0.00%) bytes in 37 (0.00%) objects (avg size 24 bytes)
+
+java.lang.Class.forName: 24,520 (0.05%) bytes in 76 (0.00%) objects (avg size 323 bytes)
+	byte[]: 16,672 (0.03%) bytes in 4 (0.00%) objects (avg size 4,168 bytes)
+	char[]: 6,560 (0.01%) bytes in 28 (0.00%) objects (avg size 234 bytes)
+	... 19 more below threshold: 1,288 (0.00%) bytes in 44 (0.00%) objects (avg size 29 bytes)
+
+sun.launcher.LauncherHelper.validateMainClass: 19,792 (0.04%) bytes in 244 (0.03%) objects (avg size 81 bytes)
+	char[]: 9,960 (0.02%) bytes in 84 (0.01%) objects (avg size 119 bytes)
+	byte[]: 6,736 (0.01%) bytes in 60 (0.00%) objects (avg size 112 bytes)
+	... 40 more below threshold: 3,096 (0.00%) bytes in 100 (0.01%) objects (avg size 31 bytes)
+
+java.text.SimpleDateFormat.<init>: 19,288 (0.04%) bytes in 446 (0.05%) objects (avg size 43 bytes)
+	char[]: 8,176 (0.01%) bytes in 131 (0.01%) objects (avg size 62 bytes)
+	... 57 more below threshold: 11,112 (0.02%) bytes in 315 (0.03%) objects (avg size 35 bytes)
+
+java.lang.StringBuilder.append: 19,280 (0.04%) bytes in 144 (0.01%) objects (avg size 134 bytes)
+	char[]: 19,280 (0.04%) bytes in 144 (0.01%) objects (avg size 134 bytes)
+
+java.lang.Class.getMethod: 17,880 (0.03%) bytes in 189 (0.02%) objects (avg size 95 bytes)
+	char[]: 8,896 (0.01%) bytes in 72 (0.00%) objects (avg size 124 bytes)
+	byte[]: 7,224 (0.01%) bytes in 58 (0.00%) objects (avg size 125 bytes)
+	... 20 more below threshold: 1,760 (0.00%) bytes in 59 (0.00%) objects (avg size 30 bytes)
+
+java.util.jar.Manifest$FastInputStream.<init>: 16,416 (0.03%) bytes in 2 (0.00%) objects (avg size 8,208 bytes)
+	byte[]: 16,416 (0.03%) bytes in 2 (0.00%) objects (avg size 8,208 bytes)
+
+java.io.BufferedReader.<init>: 16,400 (0.03%) bytes in 1 (0.00%) objects (avg size 16,400 bytes)
+	char[]: 16,400 (0.03%) bytes in 1 (0.00%) objects (avg size 16,400 bytes)
+
+java.lang.String.<init>(char[],int,int): 15,264 (0.03%) bytes in 116 (0.01%) objects (avg size 132 bytes)
+	char[]: 15,264 (0.03%) bytes in 116 (0.01%) objects (avg size 132 bytes)
+
+sun.net.www.ParseUtil.encodePath: 14,096 (0.03%) bytes in 123 (0.01%) objects (avg size 115 bytes)
+	char[]: 13,112 (0.02%) bytes in 82 (0.01%) objects (avg size 160 bytes)
+	java.lang.String: 984 (0.00%) bytes in 41 (0.00%) objects (avg size 24 bytes)
+
+com.devexperts.aprof.dump.DumpShutdownThread.run: 13,576 (0.03%) bytes in 255 (0.03%) objects (avg size 53 bytes)
+	char[]: 5,616 (0.01%) bytes in 93 (0.01%) objects (avg size 60 bytes)
+	... 19 more below threshold: 7,960 (0.01%) bytes in 162 (0.02%) objects (avg size 49 bytes)
+
+java.util.ArrayList.addAll: 12,320 (0.02%) bytes in 15 (0.00%) objects (avg size 821 bytes)
+	java.lang.Class[]: 6,976 (0.01%) bytes in 2 (0.00%) objects (avg size 3,488 bytes)
+	java.lang.Object[]: 4,696 (0.01%) bytes in 1 (0.00%) objects (avg size 4,696 bytes)
+	char[]: 576 (0.00%) bytes in 9 (0.00%) objects (avg size 64 bytes)
+	java.lang.String: 72 (0.00%) bytes in 3 (0.00%) objects (avg size 24 bytes)
+
+java.util.Properties.loadConvert: 11,616 (0.02%) bytes in 70 (0.00%) objects (avg size 166 bytes)
+	char[]: 9,984 (0.02%) bytes in 2 (0.00%) objects (avg size 4,992 bytes)
+	java.lang.String: 1,632 (0.00%) bytes in 68 (0.00%) objects (avg size 24 bytes)
+
+java.lang.StringBuilder.<init>: 10,992 (0.02%) bytes in 229 (0.02%) objects (avg size 48 bytes)
+	char[]: 10,992 (0.02%) bytes in 229 (0.02%) objects (avg size 48 bytes)
+
+java.util.HashSet.add: 10,736 (0.02%) bytes in 80 (0.01%) objects (avg size 134 bytes)
+	java.util.HashMap$Node[]: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+	java.util.HashMap$Node: 2,528 (0.00%) bytes in 79 (0.00%) objects (avg size 32 bytes)
+
+java.util.Properties$LineReader.<init>: 10,272 (0.02%) bytes in 2 (0.00%) objects (avg size 5,136 bytes)
+	byte[]: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+	char[]: 2,064 (0.00%) bytes in 1 (0.00%) objects (avg size 2,064 bytes)
+
+java.lang.StringBuilder.toString: 10,200 (0.02%) bytes in 160 (0.02%) objects (avg size 64 bytes)
+	char[]: 8,280 (0.01%) bytes in 80 (0.01%) objects (avg size 104 bytes)
+	java.lang.String: 1,920 (0.00%) bytes in 80 (0.01%) objects (avg size 24 bytes)
+
+com.devexperts.aprof.AProfRegistry.createDatatypeInfo: 9,760 (0.02%) bytes in 305 (0.03%) objects (avg size 32 bytes)
+	com.devexperts.aprof.DatatypeInfo: 9,760 (0.02%) bytes in 305 (0.03%) objects (avg size 32 bytes)
+
+java.lang.String.replace: 9,168 (0.02%) bytes in 163 (0.02%) objects (avg size 56 bytes)
+	char[]: 7,048 (0.01%) bytes in 79 (0.00%) objects (avg size 89 bytes)
+	... 5 more below threshold: 2,120 (0.00%) bytes in 84 (0.01%) objects (avg size 25 bytes)
+
+java.util.zip.InflaterInputStream.<init>: 9,096 (0.02%) bytes in 12 (0.00%) objects (avg size 758 bytes)
+	byte[]: 9,096 (0.02%) bytes in 12 (0.00%) objects (avg size 758 bytes)
+
+java.net.URLClassLoader$1.run: 8,704 (0.01%) bytes in 144 (0.01%) objects (avg size 60 bytes)
+	char[]: 6,976 (0.01%) bytes in 72 (0.00%) objects (avg size 97 bytes)
+	java.lang.String: 1,728 (0.00%) bytes in 72 (0.00%) objects (avg size 24 bytes)
+
+sun.nio.cs.StreamDecoder.<init>: 8,256 (0.01%) bytes in 2 (0.00%) objects (avg size 4,128 bytes)
+	byte[]: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+	java.nio.HeapByteBuffer: 48 (0.00%) bytes in 1 (0.00%) objects (avg size 48 bytes)
+
+java.io.BufferedInputStream.<init>: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+	byte[]: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+
+com.devexperts.aprof.AProfRegistry.takeSnapshotInternalSync: 7,520 (0.01%) bytes in 1 (0.00%) objects (avg size 7,520 bytes)
+	com.devexperts.aprof.DatatypeInfo[]: 7,520 (0.01%) bytes in 1 (0.00%) objects (avg size 7,520 bytes)
+
+java.util.ArrayList.<init>: 7,096 (0.01%) bytes in 7 (0.00%) objects (avg size 1,014 bytes)
+	java.lang.Object[]: 7,096 (0.01%) bytes in 7 (0.00%) objects (avg size 1,014 bytes)
+
+sun.misc.URLClassPath$FileLoader.getResource: 6,016 (0.01%) bytes in 118 (0.01%) objects (avg size 51 bytes)
+	java.net.URL: 4,480 (0.01%) bytes in 70 (0.00%) objects (avg size 64 bytes)
+	java.io.File: 1,120 (0.00%) bytes in 35 (0.00%) objects (avg size 32 bytes)
+	sun.misc.URLClassPath$FileLoader$1: 416 (0.00%) bytes in 13 (0.00%) objects (avg size 32 bytes)
+
+sun.net.www.protocol.jar.Handler.parseURL: 5,576 (0.01%) bytes in 60 (0.00%) objects (avg size 93 bytes)
+	char[]: 4,896 (0.01%) bytes in 30 (0.00%) objects (avg size 163 bytes)
+	... 3 more below threshold: 680 (0.00%) bytes in 30 (0.00%) objects (avg size 23 bytes)
+
+com.devexperts.aprof.LocationStack.pushStackForTransform: 4,800 (0.01%) bytes in 150 (0.01%) objects (avg size 32 bytes)
+	com.devexperts.aprof.LocationStack: 4,800 (0.01%) bytes in 150 (0.01%) objects (avg size 32 bytes)
+
+sun.misc.JarIndex.get: 4,584 (0.01%) bytes in 108 (0.01%) objects (avg size 42 bytes)
+	char[]: 3,288 (0.00%) bytes in 54 (0.00%) objects (avg size 61 bytes)
+	java.lang.String: 1,296 (0.00%) bytes in 54 (0.00%) objects (avg size 24 bytes)
+
+java.io.ObjectStreamField.getClassSignature: 3,360 (0.00%) bytes in 84 (0.01%) objects (avg size 40 bytes)
+	char[]: 2,256 (0.00%) bytes in 38 (0.00%) objects (avg size 59 bytes)
+	java.lang.String: 624 (0.00%) bytes in 26 (0.00%) objects (avg size 24 bytes)
+	java.lang.StringBuilder: 480 (0.00%) bytes in 20 (0.00%) objects (avg size 24 bytes)
+
+java.io.File.getName: 3,184 (0.00%) bytes in 80 (0.01%) objects (avg size 40 bytes)
+	char[]: 2,224 (0.00%) bytes in 40 (0.00%) objects (avg size 56 bytes)
+	java.lang.String: 960 (0.00%) bytes in 40 (0.00%) objects (avg size 24 bytes)
+
+net.nanofix.util.ByteArrayUtil.as2ByteArray: 2,400 (0.00%) bytes in 100 (0.01%) objects (avg size 24 bytes)
+	byte[]: 2,400 (0.00%) bytes in 100 (0.01%) objects (avg size 24 bytes)
+
+net.nanofix.util.ByteArrayUtil.asByteArray: 2,352 (0.00%) bytes in 98 (0.01%) objects (avg size 24 bytes)
+	byte[]: 2,352 (0.00%) bytes in 98 (0.01%) objects (avg size 24 bytes)
+
+net.nanofix.message.MsgTypes.<clinit>: 2,208 (0.00%) bytes in 92 (0.01%) objects (avg size 24 bytes)
+	net.nanofix.message.MsgType: 2,208 (0.00%) bytes in 92 (0.01%) objects (avg size 24 bytes)
+
+java.lang.ClassLoader.getClassLoadingLock: 1,280 (0.00%) bytes in 80 (0.01%) objects (avg size 16 bytes)
+	java.lang.Object: 1,280 (0.00%) bytes in 80 (0.01%) objects (avg size 16 bytes)
+
+... 182 more below threshold: 76,320 (0.17%) bytes in 1,489 (0.18%) objects (avg size 51 bytes)
 
 Top allocated data types with reverse location traces
 ------------------------------------------------------------------------------------------------------------------------
-byte[]: 218,362,691,456 (99.98%) bytes in 4,962,722,147 (99.98%) objects (avg size 44 bytes)
-	io.nano.core.buffer.ByteBufferUtil.asByteArray: 129,030,278,000 (59.07%) bytes in 1,240,675,750 (24.99%) objects (avg size 104 bytes)
-	net.nanofix.util.ByteArrayUtil.as1ByteArray: 89,328,653,592 (40.90%) bytes in 3,722,027,233 (74.98%) objects (avg size 24 bytes)
-	... 27 more below threshold: 3,759,864 (0.00%) bytes in 19,164 (0.00%) objects (avg size 196 bytes)
+char[]: 8,155,664 (18.22%) bytes in 116,247 (14.54%) objects (avg size 70 bytes)
+	java.util.Arrays.copyOfRange: 2,989,048 (6.67%) bytes in 46,333 (5.79%) objects (avg size 65 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 2,868,464 (6.40%) bytes in 45,190 (5.65%) objects (avg size 63 bytes)
+		java.lang.Class.getResourceAsStream: 37,800 (0.08%) bytes in 365 (0.04%) objects (avg size 104 bytes)
+		java.lang.StringBuilder.toString: 34,096 (0.07%) bytes in 228 (0.02%) objects (avg size 150 bytes)
+			java.net.URLStreamHandler.parseURL: 13,168 (0.02%) bytes in 70 (0.00%) objects (avg size 188 bytes)
+			<unknown>: 8,280 (0.01%) bytes in 80 (0.01%) objects (avg size 104 bytes)
+			java.io.UnixFileSystem.resolve: 8,256 (0.01%) bytes in 37 (0.00%) objects (avg size 223 bytes)
+			... 13 more below threshold: 4,392 (0.00%) bytes in 41 (0.00%) objects (avg size 107 bytes)
+		java.lang.String.substring: 15,512 (0.03%) bytes in 206 (0.02%) objects (avg size 75 bytes)
+			java.net.URLStreamHandler.parseURL: 5,048 (0.01%) bytes in 35 (0.00%) objects (avg size 144 bytes)
+			... 13 more below threshold: 10,464 (0.02%) bytes in 171 (0.02%) objects (avg size 61 bytes)
+		java.lang.String.<init>(char[],int,int): 15,264 (0.03%) bytes in 116 (0.01%) objects (avg size 132 bytes)
+		java.lang.Class.getMethod: 5,352 (0.01%) bytes in 44 (0.00%) objects (avg size 122 bytes)
+			sun.launcher.LauncherHelper.validateMainClass: 3,032 (0.00%) bytes in 25 (0.00%) objects (avg size 121 bytes)
+			java.lang.Class.getMethod: 2,320 (0.00%) bytes in 19 (0.00%) objects (avg size 122 bytes)
+		... 15 more below threshold: 12,560 (0.02%) bytes in 184 (0.02%) objects (avg size 68 bytes)
+	java.lang.String.toCharArray: 1,508,856 (3.37%) bytes in 20,223 (2.52%) objects (avg size 75 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,436,216 (3.20%) bytes in 19,521 (2.44%) objects (avg size 74 bytes)
+		java.util.zip.ZipCoder.getBytes: 54,840 (0.12%) bytes in 517 (0.06%) objects (avg size 106 bytes)
+		java.lang.Class.getResourceAsStream: 8,608 (0.01%) bytes in 92 (0.01%) objects (avg size 94 bytes)
+		java.lang.Class.getMethod: 4,992 (0.01%) bytes in 52 (0.00%) objects (avg size 96 bytes)
+			java.lang.Class.getMethod: 2,704 (0.00%) bytes in 26 (0.00%) objects (avg size 104 bytes)
+			sun.launcher.LauncherHelper.validateMainClass: 2,288 (0.00%) bytes in 26 (0.00%) objects (avg size 88 bytes)
+		sun.net.www.ParseUtil.encodePath: 4,200 (0.00%) bytes in 41 (0.00%) objects (avg size 102 bytes)
+	java.util.Arrays.copyOf: 1,376,408 (3.07%) bytes in 13,825 (1.72%) objects (avg size 100 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,266,856 (2.83%) bytes in 13,115 (1.64%) objects (avg size 97 bytes)
+		java.lang.StringBuilder.append: 70,704 (0.15%) bytes in 403 (0.05%) objects (avg size 175 bytes)
+			java.net.URLStreamHandler.parseURL: 29,152 (0.06%) bytes in 140 (0.01%) objects (avg size 208 bytes)
+			<unknown>: 19,280 (0.04%) bytes in 144 (0.01%) objects (avg size 134 bytes)
+			java.io.UnixFileSystem.resolve: 14,936 (0.03%) bytes in 74 (0.00%) objects (avg size 202 bytes)
+			... 10 more below threshold: 7,336 (0.01%) bytes in 45 (0.00%) objects (avg size 163 bytes)
+		java.lang.Class.getResourceAsStream: 17,672 (0.03%) bytes in 110 (0.01%) objects (avg size 161 bytes)
+		java.lang.Class.getMethod: 5,920 (0.01%) bytes in 32 (0.00%) objects (avg size 185 bytes)
+			sun.launcher.LauncherHelper.validateMainClass: 3,144 (0.00%) bytes in 17 (0.00%) objects (avg size 185 bytes)
+			java.lang.Class.getMethod: 2,776 (0.00%) bytes in 15 (0.00%) objects (avg size 185 bytes)
+		java.lang.String.concat: 4,992 (0.01%) bytes in 55 (0.00%) objects (avg size 91 bytes)
+			java.net.URLClassLoader$1.run: 3,696 (0.00%) bytes in 36 (0.00%) objects (avg size 103 bytes)
+			... 3 more below threshold: 1,296 (0.00%) bytes in 19 (0.00%) objects (avg size 68 bytes)
+		... 11 more below threshold: 10,264 (0.02%) bytes in 110 (0.01%) objects (avg size 93 bytes)
+	java.lang.String.replace: 1,371,432 (3.06%) bytes in 20,090 (2.51%) objects (avg size 68 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,359,216 (3.03%) bytes in 19,946 (2.49%) objects (avg size 68 bytes)
+		<unknown>: 7,048 (0.01%) bytes in 79 (0.00%) objects (avg size 89 bytes)
+		... 6 more below threshold: 5,168 (0.01%) bytes in 65 (0.00%) objects (avg size 80 bytes)
+	java.lang.AbstractStringBuilder.<init>: 769,680 (1.71%) bytes in 15,078 (1.88%) objects (avg size 51 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 744,720 (1.66%) bytes in 14,614 (1.82%) objects (avg size 51 bytes)
+		java.lang.StringBuilder.<init>: 10,992 (0.02%) bytes in 229 (0.02%) objects (avg size 48 bytes)
+		... 14 more below threshold: 13,968 (0.03%) bytes in 235 (0.02%) objects (avg size 59 bytes)
+	org.objectweb.asm.ClassReader.accept: 45,304 (0.10%) bytes in 287 (0.03%) objects (avg size 158 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 45,304 (0.10%) bytes in 287 (0.03%) objects (avg size 158 bytes)
+	sun.net.www.ParseUtil.encodePath: 24,448 (0.05%) bytes in 118 (0.01%) objects (avg size 207 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 10,328 (0.02%) bytes in 51 (0.00%) objects (avg size 203 bytes)
+		<unknown>: 8,912 (0.01%) bytes in 41 (0.00%) objects (avg size 217 bytes)
+		java.lang.Class.getResourceAsStream: 4,392 (0.00%) bytes in 22 (0.00%) objects (avg size 200 bytes)
+		java.lang.Class.getMethod: 816 (0.00%) bytes in 4 (0.00%) objects (avg size 204 bytes)
+			java.lang.Class.getMethod: 432 (0.00%) bytes in 2 (0.00%) objects (avg size 216 bytes)
+			sun.launcher.LauncherHelper.validateMainClass: 384 (0.00%) bytes in 2 (0.00%) objects (avg size 192 bytes)
+	java.io.BufferedReader.<init>: 16,400 (0.03%) bytes in 1 (0.00%) objects (avg size 16,400 bytes)
+	java.util.zip.ZipCoder.toString: 14,488 (0.03%) bytes in 153 (0.01%) objects (avg size 95 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 9,696 (0.02%) bytes in 102 (0.01%) objects (avg size 95 bytes)
+		java.lang.Class.getResourceAsStream: 4,112 (0.00%) bytes in 44 (0.00%) objects (avg size 93 bytes)
+		<unknown>: 680 (0.00%) bytes in 7 (0.00%) objects (avg size 97 bytes)
+	org.objectweb.asm.ClassReader.a: 14,408 (0.03%) bytes in 83 (0.01%) objects (avg size 174 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 14,408 (0.03%) bytes in 83 (0.01%) objects (avg size 174 bytes)
+	java.util.Properties.loadConvert: 9,984 (0.02%) bytes in 2 (0.00%) objects (avg size 4,992 bytes)
+	... 14 more below threshold: 15,208 (0.03%) bytes in 54 (0.00%) objects (avg size 282 bytes)
 
-... 308 more below threshold: 41,049,736 (0.01%) bytes in 779,807 (0.01%) objects (avg size 53 bytes)
+int[]: 6,447,160 (14.40%) bytes in 110,692 (13.84%) objects (avg size 58 bytes)
+	org.objectweb.asm.Frame.a: 3,377,080 (7.54%) bytes in 63,632 (7.96%) objects (avg size 53 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 3,377,080 (7.54%) bytes in 63,632 (7.96%) objects (avg size 53 bytes)
+	org.objectweb.asm.Frame.b: 1,240,440 (2.77%) bytes in 22,150 (2.77%) objects (avg size 56 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,240,440 (2.77%) bytes in 22,150 (2.77%) objects (avg size 56 bytes)
+	org.objectweb.asm.MethodWriter.a: 745,640 (1.66%) bytes in 11,390 (1.42%) objects (avg size 65 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 745,640 (1.66%) bytes in 11,390 (1.42%) objects (avg size 65 bytes)
+	org.objectweb.asm.commons.LocalVariablesSorter.<init>: 479,776 (1.07%) bytes in 2,726 (0.34%) objects (avg size 176 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 479,776 (1.07%) bytes in 2,726 (0.34%) objects (avg size 176 bytes)
+	org.objectweb.asm.Label.a: 362,184 (0.80%) bytes in 8,964 (1.12%) objects (avg size 40 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 362,184 (0.80%) bytes in 8,964 (1.12%) objects (avg size 40 bytes)
+	org.objectweb.asm.ClassReader.<init>: 99,144 (0.22%) bytes in 200 (0.02%) objects (avg size 496 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 99,144 (0.22%) bytes in 200 (0.02%) objects (avg size 496 bytes)
+	com.devexperts.aprof.util.FastObjIntMap$Core.<init>: 98,480 (0.22%) bytes in 19 (0.00%) objects (avg size 5,183 bytes)
+		com.devexperts.aprof.dump.Dumper.makeDump: 98,480 (0.22%) bytes in 19 (0.00%) objects (avg size 5,183 bytes)
+			com.devexperts.aprof.dump.Dumper.makeDump: 98,480 (0.22%) bytes in 19 (0.00%) objects (avg size 5,183 bytes)
+	org.objectweb.asm.Frame.d: 29,184 (0.06%) bytes in 1,216 (0.15%) objects (avg size 24 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 29,184 (0.06%) bytes in 1,216 (0.15%) objects (avg size 24 bytes)
+	org.objectweb.asm.MethodWriter.<init>: 5,784 (0.01%) bytes in 239 (0.02%) objects (avg size 24 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 5,784 (0.01%) bytes in 239 (0.02%) objects (avg size 24 bytes)
+	... 16 more below threshold: 9,448 (0.02%) bytes in 156 (0.01%) objects (avg size 61 bytes)
+
+org.objectweb.asm.Label: 4,912,064 (10.97%) bytes in 76,751 (9.60%) objects (avg size 64 bytes)
+	org.objectweb.asm.tree.LabelNode.getLabel: 1,890,048 (4.22%) bytes in 29,532 (3.69%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,890,048 (4.22%) bytes in 29,532 (3.69%) objects
+	org.objectweb.asm.ClassReader.readLabel: 1,019,136 (2.27%) bytes in 15,924 (1.99%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,019,136 (2.27%) bytes in 15,924 (1.99%) objects
+	org.objectweb.asm.MethodWriter.visitVarInsn: 467,008 (1.04%) bytes in 7,297 (0.91%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 467,008 (1.04%) bytes in 7,297 (0.91%) objects
+	org.objectweb.asm.MethodWriter.visitJumpInsn: 465,664 (1.04%) bytes in 7,276 (0.91%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 465,664 (1.04%) bytes in 7,276 (0.91%) objects
+	org.objectweb.asm.MethodWriter.e: 354,112 (0.79%) bytes in 5,533 (0.69%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 354,112 (0.79%) bytes in 5,533 (0.69%) objects
+	com.devexperts.aprof.transformer.MethodTransformer.pushLocationStack: 318,336 (0.71%) bytes in 4,974 (0.62%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 318,336 (0.71%) bytes in 4,974 (0.62%) objects
+	com.devexperts.aprof.transformer.MethodTransformer.visitTrackedMethodInsn: 317,184 (0.70%) bytes in 4,956 (0.62%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 317,184 (0.70%) bytes in 4,956 (0.62%) objects
+	org.objectweb.asm.MethodWriter.<init>: 79,424 (0.17%) bytes in 1,241 (0.15%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 79,424 (0.17%) bytes in 1,241 (0.15%) objects
+	com.devexperts.aprof.transformer.MethodTransformer.visitEndInvokedMethod: 576 (0.00%) bytes in 9 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 576 (0.00%) bytes in 9 (0.00%) objects
+	com.devexperts.aprof.transformer.MethodTransformer.visitStartInvokedMethod: 576 (0.00%) bytes in 9 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 576 (0.00%) bytes in 9 (0.00%) objects
+
+byte[]: 3,685,552 (8.23%) bytes in 19,265 (2.41%) objects (avg size 191 bytes)
+	org.objectweb.asm.ByteVector.a: 1,674,040 (3.74%) bytes in 2,233 (0.27%) objects (avg size 750 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,674,040 (3.74%) bytes in 2,233 (0.27%) objects (avg size 750 bytes)
+	org.objectweb.asm.ByteVector.<init>: 1,022,928 (2.28%) bytes in 3,527 (0.44%) objects (avg size 290 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,022,928 (2.28%) bytes in 3,527 (0.44%) objects (avg size 290 bytes)
+	com.devexperts.aprof.util.FastByteBuffer.getBytes: 247,848 (0.55%) bytes in 79 (0.00%) objects (avg size 3,137 bytes)
+	net.nanofix.util.ByteArrayUtil.as4ByteArray: 240,000 (0.53%) bytes in 10,000 (1.25%) objects (avg size 24 bytes)
+	java.util.Arrays.copyOf: 132,120 (0.29%) bytes in 916 (0.11%) objects (avg size 144 bytes)
+		sun.misc.Resource.getBytes: 73,064 (0.16%) bytes in 37 (0.00%) objects (avg size 1,975 bytes)
+		java.util.zip.ZipCoder.getBytes: 32,544 (0.07%) bytes in 517 (0.06%) objects (avg size 63 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 9,000 (0.02%) bytes in 155 (0.01%) objects (avg size 58 bytes)
+		java.lang.String.getBytes: 8,032 (0.01%) bytes in 70 (0.00%) objects (avg size 115 bytes)
+		java.lang.Class.getMethod: 4,640 (0.01%) bytes in 59 (0.00%) objects (avg size 79 bytes)
+			java.lang.Class.getMethod: 2,424 (0.00%) bytes in 29 (0.00%) objects (avg size 84 bytes)
+			sun.launcher.LauncherHelper.validateMainClass: 2,216 (0.00%) bytes in 30 (0.00%) objects (avg size 74 bytes)
+		... 4 more below threshold: 4,840 (0.01%) bytes in 78 (0.00%) objects (avg size 62 bytes)
+	java.util.zip.ZipCoder.getBytes: 114,168 (0.25%) bytes in 790 (0.09%) objects (avg size 145 bytes)
+		<unknown>: 77,568 (0.17%) bytes in 517 (0.06%) objects (avg size 150 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 20,808 (0.04%) bytes in 155 (0.01%) objects (avg size 134 bytes)
+		java.lang.Class.getResourceAsStream: 9,264 (0.02%) bytes in 70 (0.00%) objects (avg size 132 bytes)
+		java.lang.Class.getMethod: 6,528 (0.01%) bytes in 48 (0.00%) objects (avg size 136 bytes)
+			java.lang.Class.getMethod: 3,456 (0.00%) bytes in 24 (0.00%) objects (avg size 144 bytes)
+			sun.launcher.LauncherHelper.validateMainClass: 3,072 (0.00%) bytes in 24 (0.00%) objects (avg size 128 bytes)
+	org.objectweb.asm.ClassReader.a: 91,264 (0.20%) bytes in 50 (0.00%) objects (avg size 1,825 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 91,264 (0.20%) bytes in 50 (0.00%) objects (avg size 1,825 bytes)
+	net.nanofix.util.ByteArrayUtil.as3ByteArray: 30,144 (0.06%) bytes in 1,256 (0.15%) objects (avg size 24 bytes)
+	java.util.zip.InflaterInputStream.<init>: 26,320 (0.05%) bytes in 27 (0.00%) objects (avg size 975 bytes)
+		java.lang.Class.getResourceAsStream: 17,224 (0.03%) bytes in 15 (0.00%) objects (avg size 1,148 bytes)
+		<unknown>: 9,096 (0.02%) bytes in 12 (0.00%) objects (avg size 758 bytes)
+	java.lang.StringCoding$StringEncoder.encode: 24,272 (0.05%) bytes in 81 (0.01%) objects (avg size 300 bytes)
+		java.lang.String.getBytes: 21,232 (0.04%) bytes in 69 (0.00%) objects (avg size 308 bytes)
+		... 3 more below threshold: 3,040 (0.00%) bytes in 12 (0.00%) objects (avg size 253 bytes)
+	java.io.BufferedInputStream.<init>: 16,416 (0.03%) bytes in 2 (0.00%) objects (avg size 8,208 bytes)
+		<unknown>: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+		java.lang.Class.forName: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+			java.lang.Class.forName: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+	java.io.BufferedOutputStream.<init>: 16,416 (0.03%) bytes in 2 (0.00%) objects (avg size 8,208 bytes)
+		com.devexperts.aprof.dump.Dumper.makeDump: 16,416 (0.03%) bytes in 2 (0.00%) objects (avg size 8,208 bytes)
+			com.devexperts.aprof.dump.DumpPeriodicThread.run: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+			com.devexperts.aprof.dump.Dumper.makeDump: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+	java.util.Properties$LineReader.<init>: 16,416 (0.03%) bytes in 2 (0.00%) objects (avg size 8,208 bytes)
+		<unknown>: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+		java.lang.Class.forName: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+			java.lang.Class.forName: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+	java.util.jar.Manifest$FastInputStream.<init>: 16,416 (0.03%) bytes in 2 (0.00%) objects (avg size 8,208 bytes)
+	java.nio.HeapByteBuffer.<init>: 8,792 (0.01%) bytes in 4 (0.00%) objects (avg size 2,198 bytes)
+		java.nio.ByteBuffer.allocate: 8,792 (0.01%) bytes in 4 (0.00%) objects (avg size 2,198 bytes)
+			sun.nio.cs.StreamDecoder.<init>: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+			... 3 more below threshold: 584 (0.00%) bytes in 3 (0.00%) objects (avg size 195 bytes)
+	net.nanofix.util.ByteArrayUtil.as2ByteArray: 2,400 (0.00%) bytes in 100 (0.01%) objects (avg size 24 bytes)
+	net.nanofix.util.ByteArrayUtil.asByteArray: 2,352 (0.00%) bytes in 98 (0.01%) objects (avg size 24 bytes)
+	... 11 more below threshold: 3,240 (0.00%) bytes in 96 (0.01%) objects (avg size 34 bytes)
+
+org.objectweb.asm.Item: 1,706,320 (3.81%) bytes in 30,470 (3.81%) objects (avg size 56 bytes)
+	org.objectweb.asm.ClassReader.a: 923,664 (2.06%) bytes in 16,494 (2.06%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 923,664 (2.06%) bytes in 16,494 (2.06%) objects
+	org.objectweb.asm.ClassWriter.a: 313,824 (0.70%) bytes in 5,604 (0.70%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 313,824 (0.70%) bytes in 5,604 (0.70%) objects
+	org.objectweb.asm.ClassWriter.newUTF8: 296,128 (0.66%) bytes in 5,288 (0.66%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 296,128 (0.66%) bytes in 5,288 (0.66%) objects
+	org.objectweb.asm.ClassWriter.c: 124,992 (0.27%) bytes in 2,232 (0.27%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 124,992 (0.27%) bytes in 2,232 (0.27%) objects
+	org.objectweb.asm.ClassWriter.<init>: 33,376 (0.07%) bytes in 596 (0.07%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 33,376 (0.07%) bytes in 596 (0.07%) objects
+	org.objectweb.asm.ClassWriter.b: 14,336 (0.03%) bytes in 256 (0.03%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 14,336 (0.03%) bytes in 256 (0.03%) objects
+
+org.objectweb.asm.tree.VarInsnNode: 1,560,000 (3.48%) bytes in 39,000 (4.87%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.visitVarInsn: 1,560,000 (3.48%) bytes in 39,000 (4.87%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,560,000 (3.48%) bytes in 39,000 (4.87%) objects
+
+org.objectweb.asm.Frame: 1,549,920 (3.46%) bytes in 32,290 (4.03%) objects (avg size 48 bytes)
+	org.objectweb.asm.MethodWriter.visitLabel: 1,284,336 (2.86%) bytes in 26,757 (3.34%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,284,336 (2.86%) bytes in 26,757 (3.34%) objects
+	org.objectweb.asm.MethodWriter.e: 265,584 (0.59%) bytes in 5,533 (0.69%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 265,584 (0.59%) bytes in 5,533 (0.69%) objects
+
+com.devexperts.aprof.dump.SnapshotDeep: 1,505,600 (3.36%) bytes in 23,525 (2.94%) objects (avg size 64 bytes)
+	com.devexperts.aprof.dump.SnapshotDeep.findOrCreateChildAt: 1,505,600 (3.36%) bytes in 23,525 (2.94%) objects
+		com.devexperts.aprof.dump.Dumper.makeDump: 1,505,600 (3.36%) bytes in 23,525 (2.94%) objects
+			com.devexperts.aprof.dump.Dumper.makeDump: 1,133,632 (2.53%) bytes in 17,713 (2.21%) objects
+			com.devexperts.aprof.dump.DumpPeriodicThread.run: 370,176 (0.82%) bytes in 5,784 (0.72%) objects
+			com.devexperts.aprof.dump.DumpShutdownThread.run: 1,792 (0.00%) bytes in 28 (0.00%) objects
+
+java.lang.String: 1,453,824 (3.24%) bytes in 60,576 (7.57%) objects (avg size 24 bytes)
+	java.lang.String.replace: 482,160 (1.07%) bytes in 20,090 (2.51%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 478,704 (1.06%) bytes in 19,946 (2.49%) objects
+		... 7 more below threshold: 3,456 (0.00%) bytes in 144 (0.01%) objects
+	java.lang.String.substring: 265,824 (0.59%) bytes in 11,076 (1.38%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 254,184 (0.56%) bytes in 10,591 (1.32%) objects
+		java.lang.Class.getResourceAsStream: 5,592 (0.01%) bytes in 233 (0.02%) objects
+		... 20 more below threshold: 6,048 (0.01%) bytes in 252 (0.03%) objects
+	org.objectweb.asm.ClassReader.a: 263,376 (0.58%) bytes in 10,974 (1.37%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 263,376 (0.58%) bytes in 10,974 (1.37%) objects
+	java.lang.StringBuilder.toString: 191,304 (0.42%) bytes in 7,971 (0.99%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 181,224 (0.40%) bytes in 7,551 (0.94%) objects
+		<unknown>: 1,920 (0.00%) bytes in 80 (0.01%) objects
+		... 28 more below threshold: 8,160 (0.01%) bytes in 340 (0.04%) objects
+	java.lang.StringBuffer.toString: 170,424 (0.38%) bytes in 7,101 (0.88%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 169,512 (0.37%) bytes in 7,063 (0.88%) objects
+		... 6 more below threshold: 912 (0.00%) bytes in 38 (0.00%) objects
+	org.objectweb.asm.Type.getInternalName: 70,344 (0.15%) bytes in 2,931 (0.36%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 70,344 (0.15%) bytes in 2,931 (0.36%) objects
+	java.util.zip.ZipCoder.toString: 3,672 (0.00%) bytes in 153 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 2,448 (0.00%) bytes in 102 (0.01%) objects
+		java.lang.Class.getResourceAsStream: 1,056 (0.00%) bytes in 44 (0.00%) objects
+		<unknown>: 168 (0.00%) bytes in 7 (0.00%) objects
+	sun.net.www.ParseUtil.encodePath: 2,832 (0.00%) bytes in 118 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,224 (0.00%) bytes in 51 (0.00%) objects
+		... 3 more below threshold: 1,608 (0.00%) bytes in 67 (0.00%) objects
+	... 7 more below threshold: 3,888 (0.00%) bytes in 162 (0.02%) objects
+
+org.objectweb.asm.tree.InsnNode: 1,412,120 (3.15%) bytes in 35,303 (4.41%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.visitInsn: 1,412,120 (3.15%) bytes in 35,303 (4.41%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,412,120 (3.15%) bytes in 35,303 (4.41%) objects
+
+org.objectweb.asm.tree.MethodInsnNode: 1,250,256 (2.79%) bytes in 22,326 (2.79%) objects (avg size 56 bytes)
+	org.objectweb.asm.tree.MethodNode.visitMethodInsn: 1,250,256 (2.79%) bytes in 22,326 (2.79%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,250,256 (2.79%) bytes in 22,326 (2.79%) objects
+
+org.objectweb.asm.tree.LabelNode: 1,181,280 (2.63%) bytes in 29,532 (3.69%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.getLabelNode: 1,181,280 (2.63%) bytes in 29,532 (3.69%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,181,280 (2.63%) bytes in 29,532 (3.69%) objects
+
+org.objectweb.asm.Edge: 870,264 (1.94%) bytes in 36,261 (4.53%) objects (avg size 24 bytes)
+	org.objectweb.asm.MethodWriter.a: 756,480 (1.69%) bytes in 31,520 (3.94%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 756,480 (1.69%) bytes in 31,520 (3.94%) objects
+	org.objectweb.asm.MethodWriter.visitMaxs: 113,784 (0.25%) bytes in 4,741 (0.59%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 113,784 (0.25%) bytes in 4,741 (0.59%) objects
+
+org.objectweb.asm.tree.LineNumberNode: 855,168 (1.91%) bytes in 17,816 (2.22%) objects (avg size 48 bytes)
+	org.objectweb.asm.tree.MethodNode.visitLineNumber: 855,168 (1.91%) bytes in 17,816 (2.22%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 855,168 (1.91%) bytes in 17,816 (2.22%) objects
+
+java.lang.Object[]: 795,240 (1.77%) bytes in 10,596 (1.32%) objects (avg size 75 bytes)
+	org.objectweb.asm.commons.LocalVariablesSorter.<init>: 261,696 (0.58%) bytes in 2,726 (0.34%) objects (avg size 96 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 261,696 (0.58%) bytes in 2,726 (0.34%) objects (avg size 96 bytes)
+	java.util.Arrays.copyOf: 213,992 (0.47%) bytes in 3,228 (0.40%) objects (avg size 66 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 208,864 (0.46%) bytes in 3,220 (0.40%) objects (avg size 65 bytes)
+		java.util.ArrayList.addAll: 4,696 (0.01%) bytes in 1 (0.00%) objects (avg size 4,696 bytes)
+		... 4 more below threshold: 432 (0.00%) bytes in 7 (0.00%) objects (avg size 62 bytes)
+	java.util.ArrayList.<init>: 181,336 (0.40%) bytes in 4,563 (0.57%) objects (avg size 40 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 174,240 (0.38%) bytes in 4,556 (0.56%) objects (avg size 38 bytes)
+		<unknown>: 7,096 (0.01%) bytes in 7 (0.00%) objects (avg size 1,014 bytes)
+	com.devexperts.aprof.util.FastObjIntMap$Core.<init>: 98,480 (0.22%) bytes in 19 (0.00%) objects (avg size 5,183 bytes)
+		com.devexperts.aprof.dump.Dumper.makeDump: 98,480 (0.22%) bytes in 19 (0.00%) objects (avg size 5,183 bytes)
+			com.devexperts.aprof.dump.Dumper.makeDump: 98,480 (0.22%) bytes in 19 (0.00%) objects (avg size 5,183 bytes)
+	com.devexperts.aprof.util.FastArrayList.putUnsync: 32,784 (0.07%) bytes in 1 (0.00%) objects (avg size 32,784 bytes)
+	org.objectweb.asm.commons.LocalVariablesSorter.setFrameLocal: 5,776 (0.01%) bytes in 31 (0.00%) objects (avg size 186 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 5,776 (0.01%) bytes in 31 (0.00%) objects (avg size 186 bytes)
+	... 15 more below threshold: 1,176 (0.00%) bytes in 28 (0.00%) objects (avg size 42 bytes)
+
+org.objectweb.asm.Label[]: 704,680 (1.57%) bytes in 2,708 (0.33%) objects (avg size 260 bytes)
+	org.objectweb.asm.ClassReader.a: 701,512 (1.56%) bytes in 2,644 (0.33%) objects (avg size 265 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 701,512 (1.56%) bytes in 2,644 (0.33%) objects (avg size 265 bytes)
+	org.objectweb.asm.tree.TableSwitchInsnNode.accept: 1,824 (0.00%) bytes in 32 (0.00%) objects (avg size 57 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,824 (0.00%) bytes in 32 (0.00%) objects (avg size 57 bytes)
+	org.objectweb.asm.tree.LookupSwitchInsnNode.accept: 1,344 (0.00%) bytes in 32 (0.00%) objects (avg size 42 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,344 (0.00%) bytes in 32 (0.00%) objects (avg size 42 bytes)
+
+org.objectweb.asm.tree.JumpInsnNode: 531,560 (1.18%) bytes in 13,289 (1.66%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.visitJumpInsn: 531,560 (1.18%) bytes in 13,289 (1.66%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 531,560 (1.18%) bytes in 13,289 (1.66%) objects
+
+org.objectweb.asm.MethodWriter: 450,016 (1.00%) bytes in 2,009 (0.25%) objects (avg size 224 bytes)
+	org.objectweb.asm.ClassWriter.visitMethod: 450,016 (1.00%) bytes in 2,009 (0.25%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 450,016 (1.00%) bytes in 2,009 (0.25%) objects
+
+org.objectweb.asm.Item[]: 448,632 (1.00%) bytes in 510 (0.06%) objects (avg size 880 bytes)
+	org.objectweb.asm.ClassWriter.b: 201,360 (0.44%) bytes in 120 (0.01%) objects (avg size 1,678 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 201,360 (0.44%) bytes in 120 (0.01%) objects (avg size 1,678 bytes)
+	org.objectweb.asm.ClassWriter.<init>: 154,960 (0.34%) bytes in 149 (0.01%) objects (avg size 1,040 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 154,960 (0.34%) bytes in 149 (0.01%) objects (avg size 1,040 bytes)
+	org.objectweb.asm.ClassReader.a: 67,896 (0.15%) bytes in 83 (0.01%) objects (avg size 818 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 67,896 (0.15%) bytes in 83 (0.01%) objects (avg size 818 bytes)
+	org.objectweb.asm.ClassWriter.c: 24,416 (0.05%) bytes in 158 (0.01%) objects (avg size 155 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 24,416 (0.05%) bytes in 158 (0.01%) objects (avg size 155 bytes)
+
+com.devexperts.aprof.dump.SnapshotDeep[]: 383,144 (0.85%) bytes in 9,396 (1.17%) objects (avg size 41 bytes)
+	com.devexperts.aprof.dump.SnapshotDeep.ensureChildrenCapacity: 383,144 (0.85%) bytes in 9,396 (1.17%) objects (avg size 41 bytes)
+		com.devexperts.aprof.dump.Dumper.makeDump: 383,144 (0.85%) bytes in 9,396 (1.17%) objects (avg size 41 bytes)
+			com.devexperts.aprof.dump.Dumper.makeDump: 247,880 (0.55%) bytes in 6,350 (0.79%) objects (avg size 39 bytes)
+			com.devexperts.aprof.dump.DumpPeriodicThread.run: 134,328 (0.30%) bytes in 3,020 (0.37%) objects (avg size 44 bytes)
+			com.devexperts.aprof.dump.DumpShutdownThread.run: 936 (0.00%) bytes in 26 (0.00%) objects (avg size 36 bytes)
+
+byte[][]: 339,160 (0.75%) bytes in 5 (0.00%) objects (avg size 67,832 bytes)
+	net.nanofix.util.ByteArrayUtil.<clinit>: 311,144 (0.69%) bytes in 4 (0.00%) objects (avg size 77,786 bytes)
+	net.nanofix.message.util.ChecksumCalculator.<clinit>: 28,016 (0.06%) bytes in 1 (0.00%) objects (avg size 28,016 bytes)
+
+org.objectweb.asm.Type: 315,776 (0.70%) bytes in 9,868 (1.23%) objects (avg size 32 bytes)
+	org.objectweb.asm.Type.a: 276,096 (0.61%) bytes in 8,628 (1.07%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 276,096 (0.61%) bytes in 8,628 (1.07%) objects
+	org.objectweb.asm.Type.getObjectType: 39,680 (0.08%) bytes in 1,240 (0.15%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 39,680 (0.08%) bytes in 1,240 (0.15%) objects
+
+org.objectweb.asm.tree.AbstractInsnNode[]: 310,264 (0.69%) bytes in 224 (0.02%) objects (avg size 1,385 bytes)
+	org.objectweb.asm.tree.InsnList.toArray: 310,264 (0.69%) bytes in 224 (0.02%) objects (avg size 1,385 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 310,264 (0.69%) bytes in 224 (0.02%) objects (avg size 1,385 bytes)
+
+org.objectweb.asm.tree.FieldInsnNode: 285,504 (0.63%) bytes in 5,948 (0.74%) objects (avg size 48 bytes)
+	org.objectweb.asm.tree.MethodNode.visitFieldInsn: 285,504 (0.63%) bytes in 5,948 (0.74%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 285,504 (0.63%) bytes in 5,948 (0.74%) objects
+
+java.util.ArrayList: 251,496 (0.56%) bytes in 10,479 (1.31%) objects (avg size 24 bytes)
+	org.objectweb.asm.tree.MethodNode.<init>: 177,312 (0.39%) bytes in 7,388 (0.92%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 177,312 (0.39%) bytes in 7,388 (0.92%) objects
+	org.objectweb.asm.commons.GeneratorAdapter.<init>: 65,424 (0.14%) bytes in 2,726 (0.34%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 65,424 (0.14%) bytes in 2,726 (0.34%) objects
+	com.devexperts.aprof.transformer.AProfTransformer$ClassAnalyzer.<init>: 5,496 (0.01%) bytes in 229 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 5,496 (0.01%) bytes in 229 (0.02%) objects
+	... 11 more below threshold: 3,264 (0.00%) bytes in 136 (0.01%) objects
+
+org.objectweb.asm.commons.GeneratorAdapter: 244,272 (0.54%) bytes in 4,362 (0.54%) objects (avg size 56 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassAnalyzer.visitMethod: 131,768 (0.29%) bytes in 2,353 (0.29%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 131,768 (0.29%) bytes in 2,353 (0.29%) objects
+	com.devexperts.aprof.transformer.AProfTransformer$ClassTransformer.visitMethod: 112,504 (0.25%) bytes in 2,009 (0.25%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 112,504 (0.25%) bytes in 2,009 (0.25%) objects
+
+org.objectweb.asm.commons.JSRInlinerAdapter: 241,080 (0.53%) bytes in 2,009 (0.25%) objects (avg size 120 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassTransformer.visitMethod: 241,080 (0.53%) bytes in 2,009 (0.25%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 241,080 (0.53%) bytes in 2,009 (0.25%) objects
+
+org.objectweb.asm.commons.TryCatchBlockSorter: 225,008 (0.50%) bytes in 2,009 (0.25%) objects (avg size 112 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassTransformer.visitMethod: 225,008 (0.50%) bytes in 2,009 (0.25%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 225,008 (0.50%) bytes in 2,009 (0.25%) objects
+
+org.objectweb.asm.tree.IntInsnNode: 198,440 (0.44%) bytes in 4,961 (0.62%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.visitIntInsn: 198,440 (0.44%) bytes in 4,961 (0.62%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 198,440 (0.44%) bytes in 4,961 (0.62%) objects
+
+java.lang.StringBuilder: 177,984 (0.39%) bytes in 7,416 (0.92%) objects (avg size 24 bytes)
+	com.devexperts.aprof.AProfRegistry.resolveClassName: 139,704 (0.31%) bytes in 5,821 (0.72%) objects
+	com.devexperts.aprof.transformer.Context.buildLocationString: 12,552 (0.02%) bytes in 523 (0.06%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 12,552 (0.02%) bytes in 523 (0.06%) objects
+	com.devexperts.aprof.transformer.AbstractMethodVisitor.visitTypeInsn: 7,728 (0.01%) bytes in 322 (0.04%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 7,728 (0.01%) bytes in 322 (0.04%) objects
+	com.devexperts.aprof.transformer.MethodTransformer.visitAllocateArray: 5,424 (0.01%) bytes in 226 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 5,424 (0.01%) bytes in 226 (0.02%) objects
+	com.devexperts.aprof.transformer.ClassInfoCache.buildClassInfo: 2,448 (0.00%) bytes in 102 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 2,448 (0.00%) bytes in 102 (0.01%) objects
+	... 33 more below threshold: 10,128 (0.02%) bytes in 422 (0.05%) objects
+
+org.objectweb.asm.Type[]: 149,336 (0.33%) bytes in 6,624 (0.82%) objects (avg size 23 bytes)
+	org.objectweb.asm.Type.getArgumentTypes: 149,336 (0.33%) bytes in 6,624 (0.82%) objects (avg size 23 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 149,336 (0.33%) bytes in 6,624 (0.82%) objects (avg size 23 bytes)
+
+java.lang.String[]: 148,480 (0.33%) bytes in 2,105 (0.26%) objects (avg size 71 bytes)
+	org.objectweb.asm.ClassReader.<init>: 99,144 (0.22%) bytes in 200 (0.02%) objects (avg size 496 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 99,144 (0.22%) bytes in 200 (0.02%) objects (avg size 496 bytes)
+	sun.net.www.MessageHeader.grow: 14,272 (0.03%) bytes in 446 (0.05%) objects (avg size 32 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 9,792 (0.02%) bytes in 306 (0.03%) objects (avg size 32 bytes)
+		java.lang.Class.getResourceAsStream: 4,224 (0.00%) bytes in 132 (0.01%) objects (avg size 32 bytes)
+		<unknown>: 192 (0.00%) bytes in 6 (0.00%) objects (avg size 32 bytes)
+		java.lang.Class.getMethod: 64 (0.00%) bytes in 2 (0.00%) objects (avg size 32 bytes)
+			sun.launcher.LauncherHelper.validateMainClass: 64 (0.00%) bytes in 2 (0.00%) objects (avg size 32 bytes)
+	org.objectweb.asm.ClassReader.b: 14,232 (0.03%) bytes in 589 (0.07%) objects (avg size 24 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 14,232 (0.03%) bytes in 589 (0.07%) objects (avg size 24 bytes)
+	java.util.Arrays$ArrayList.toArray: 12,192 (0.02%) bytes in 504 (0.06%) objects (avg size 24 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 12,192 (0.02%) bytes in 504 (0.06%) objects (avg size 24 bytes)
+	org.objectweb.asm.ClassReader.accept: 5,096 (0.01%) bytes in 287 (0.03%) objects (avg size 18 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 5,096 (0.01%) bytes in 287 (0.03%) objects (avg size 18 bytes)
+	... 6 more below threshold: 3,544 (0.00%) bytes in 79 (0.00%) objects (avg size 45 bytes)
+
+org.objectweb.asm.tree.LdcInsnNode: 148,080 (0.33%) bytes in 3,702 (0.46%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.visitLdcInsn: 148,080 (0.33%) bytes in 3,702 (0.46%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 148,080 (0.33%) bytes in 3,702 (0.46%) objects
+
+java.lang.StringBuffer: 142,608 (0.31%) bytes in 5,942 (0.74%) objects (avg size 24 bytes)
+	org.objectweb.asm.Type.getDescriptor: 77,040 (0.17%) bytes in 3,210 (0.40%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 77,040 (0.17%) bytes in 3,210 (0.40%) objects
+	org.objectweb.asm.MethodWriter.a: 64,632 (0.14%) bytes in 2,693 (0.33%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 64,632 (0.14%) bytes in 2,693 (0.33%) objects
+	... 6 more below threshold: 936 (0.00%) bytes in 39 (0.00%) objects
+
+com.devexperts.aprof.transformer.Context: 131,768 (0.29%) bytes in 2,353 (0.29%) objects (avg size 56 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassAnalyzer.visitMethod: 131,768 (0.29%) bytes in 2,353 (0.29%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 131,768 (0.29%) bytes in 2,353 (0.29%) objects
+
+org.objectweb.asm.tree.TypeInsnNode: 125,280 (0.27%) bytes in 3,132 (0.39%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.visitTypeInsn: 125,280 (0.27%) bytes in 3,132 (0.39%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 125,280 (0.27%) bytes in 3,132 (0.39%) objects
+
+long[]: 96,464 (0.21%) bytes in 4,020 (0.50%) objects (avg size 24 bytes)
+	java.util.BitSet.initWords: 96,432 (0.21%) bytes in 4,018 (0.50%) objects (avg size 24 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 96,432 (0.21%) bytes in 4,018 (0.50%) objects (avg size 24 bytes)
+	sun.util.calendar.ZoneInfoFile.getZoneInfo: 32 (0.00%) bytes in 2 (0.00%) objects (avg size 16 bytes)
+
+org.objectweb.asm.ByteVector: 87,864 (0.19%) bytes in 3,661 (0.45%) objects (avg size 24 bytes)
+	org.objectweb.asm.MethodWriter.<init>: 29,784 (0.06%) bytes in 1,241 (0.15%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 29,784 (0.06%) bytes in 1,241 (0.15%) objects
+	org.objectweb.asm.MethodWriter.visitLineNumber: 28,464 (0.06%) bytes in 1,186 (0.14%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 28,464 (0.06%) bytes in 1,186 (0.14%) objects
+	org.objectweb.asm.MethodWriter.b: 18,504 (0.04%) bytes in 771 (0.09%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 18,504 (0.04%) bytes in 771 (0.09%) objects
+	org.objectweb.asm.ClassWriter.<init>: 3,576 (0.00%) bytes in 149 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 3,576 (0.00%) bytes in 149 (0.01%) objects
+	org.objectweb.asm.ClassWriter.toByteArray: 3,576 (0.00%) bytes in 149 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 3,576 (0.00%) bytes in 149 (0.01%) objects
+	org.objectweb.asm.MethodWriter.visitLocalVariable: 1,944 (0.00%) bytes in 81 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,944 (0.00%) bytes in 81 (0.01%) objects
+	... 4 more below threshold: 2,016 (0.00%) bytes in 84 (0.01%) objects
+
+org.objectweb.asm.FieldWriter: 81,472 (0.18%) bytes in 1,273 (0.15%) objects (avg size 64 bytes)
+	org.objectweb.asm.ClassWriter.visitField: 81,472 (0.18%) bytes in 1,273 (0.15%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 81,472 (0.18%) bytes in 1,273 (0.15%) objects
+
+com.devexperts.aprof.transformer.MethodTransformer: 80,360 (0.17%) bytes in 2,009 (0.25%) objects (avg size 40 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassTransformer.visitMethod: 80,360 (0.17%) bytes in 2,009 (0.25%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 80,360 (0.17%) bytes in 2,009 (0.25%) objects
+
+org.objectweb.asm.tree.InsnList: 79,424 (0.17%) bytes in 2,482 (0.31%) objects (avg size 32 bytes)
+	org.objectweb.asm.tree.MethodNode.<init>: 79,424 (0.17%) bytes in 2,482 (0.31%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 79,424 (0.17%) bytes in 2,482 (0.31%) objects
+
+com.devexperts.aprof.transformer.MethodAnalyzer: 75,296 (0.16%) bytes in 2,353 (0.29%) objects (avg size 32 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassAnalyzer.visitMethod: 75,296 (0.16%) bytes in 2,353 (0.29%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 75,296 (0.16%) bytes in 2,353 (0.29%) objects
+
+org.objectweb.asm.tree.TryCatchBlockNode: 73,440 (0.16%) bytes in 1,836 (0.22%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.visitTryCatchBlock: 73,440 (0.16%) bytes in 1,836 (0.22%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 73,440 (0.16%) bytes in 1,836 (0.22%) objects
+
+com.devexperts.aprof.IndexMap: 71,280 (0.15%) bytes in 1,485 (0.18%) objects (avg size 48 bytes)
+	com.devexperts.aprof.IndexMap.registerChildSlowPath: 56,640 (0.12%) bytes in 1,180 (0.14%) objects
+	com.devexperts.aprof.DatatypeInfo.<init>: 14,640 (0.03%) bytes in 305 (0.03%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 14,640 (0.03%) bytes in 305 (0.03%) objects
+
+com.devexperts.aprof.IndexMap[]: 66,640 (0.14%) bytes in 1,166 (0.14%) objects (avg size 57 bytes)
+	com.devexperts.aprof.IndexMap.rehashChildren: 35,312 (0.07%) bytes in 187 (0.02%) objects (avg size 189 bytes)
+	com.devexperts.aprof.IndexMap.putNewChildUnsync: 31,328 (0.06%) bytes in 979 (0.12%) objects (avg size 32 bytes)
+
+java.util.HashMap: 66,144 (0.14%) bytes in 1,378 (0.17%) objects (avg size 48 bytes)
+	org.objectweb.asm.commons.JSRInlinerAdapter.<init>: 59,568 (0.13%) bytes in 1,241 (0.15%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 59,568 (0.13%) bytes in 1,241 (0.15%) objects
+	... 11 more below threshold: 6,576 (0.01%) bytes in 137 (0.01%) objects
+
+com.devexperts.aprof.RootIndexMap: 64,120 (0.14%) bytes in 1,145 (0.14%) objects (avg size 56 bytes)
+	com.devexperts.aprof.AProfRegistry.registerRootIndexSlowPath: 64,120 (0.14%) bytes in 1,145 (0.14%) objects
+
+org.objectweb.asm.Handler: 61,680 (0.13%) bytes in 1,542 (0.19%) objects (avg size 40 bytes)
+	org.objectweb.asm.MethodWriter.visitTryCatchBlock: 61,680 (0.13%) bytes in 1,542 (0.19%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 61,680 (0.13%) bytes in 1,542 (0.19%) objects
+
+java.util.BitSet: 59,568 (0.13%) bytes in 2,482 (0.31%) objects (avg size 24 bytes)
+	org.objectweb.asm.commons.JSRInlinerAdapter.<init>: 59,568 (0.13%) bytes in 2,482 (0.31%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 59,568 (0.13%) bytes in 2,482 (0.31%) objects
+
+com.devexperts.aprof.transformer.AProfTransformer$EmptyMethodVisitor: 56,472 (0.12%) bytes in 2,353 (0.29%) objects (avg size 24 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer$ClassAnalyzer.visitMethod: 56,472 (0.12%) bytes in 2,353 (0.29%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 56,472 (0.12%) bytes in 2,353 (0.29%) objects
+
+org.objectweb.asm.Context: 27,552 (0.06%) bytes in 287 (0.03%) objects (avg size 96 bytes)
+	org.objectweb.asm.ClassReader.accept: 27,552 (0.06%) bytes in 287 (0.03%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 27,552 (0.06%) bytes in 287 (0.03%) objects
+
+org.objectweb.asm.tree.IincInsnNode: 24,672 (0.05%) bytes in 514 (0.06%) objects (avg size 48 bytes)
+	org.objectweb.asm.tree.MethodNode.visitIincInsn: 24,672 (0.05%) bytes in 514 (0.06%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 24,672 (0.05%) bytes in 514 (0.06%) objects
+
+sun.net.www.protocol.file.FileURLConnection: 23,192 (0.05%) bytes in 223 (0.02%) objects (avg size 104 bytes)
+	sun.net.www.protocol.file.Handler.createFileURLConnection: 23,192 (0.05%) bytes in 223 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 15,912 (0.03%) bytes in 153 (0.01%) objects
+		java.lang.Class.getResourceAsStream: 6,864 (0.01%) bytes in 66 (0.00%) objects
+		<unknown>: 312 (0.00%) bytes in 3 (0.00%) objects
+		java.lang.Class.getMethod: 104 (0.00%) bytes in 1 (0.00%) objects
+			sun.launcher.LauncherHelper.validateMainClass: 104 (0.00%) bytes in 1 (0.00%) objects
+
+org.objectweb.asm.commons.TryCatchBlockSorter$1: 19,856 (0.04%) bytes in 1,241 (0.15%) objects (avg size 16 bytes)
+	org.objectweb.asm.commons.TryCatchBlockSorter.visitEnd: 19,856 (0.04%) bytes in 1,241 (0.15%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 19,856 (0.04%) bytes in 1,241 (0.15%) objects
+
+org.objectweb.asm.tree.LocalVariableNode: 17,600 (0.03%) bytes in 440 (0.05%) objects (avg size 40 bytes)
+	org.objectweb.asm.tree.MethodNode.visitLocalVariable: 17,600 (0.03%) bytes in 440 (0.05%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 17,600 (0.03%) bytes in 440 (0.05%) objects
+
+com.devexperts.aprof.transformer.AProfTransformer$FrameClassWriter: 16,192 (0.03%) bytes in 92 (0.01%) objects (avg size 176 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer.transformImpl: 16,192 (0.03%) bytes in 92 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 16,192 (0.03%) bytes in 92 (0.01%) objects
+
+java.util.Arrays$ArrayList: 16,032 (0.03%) bytes in 668 (0.08%) objects (avg size 24 bytes)
+	java.util.Arrays.asList: 16,032 (0.03%) bytes in 668 (0.08%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 15,888 (0.03%) bytes in 662 (0.08%) objects
+		sun.security.util.AlgorithmDecomposer.getAliases: 96 (0.00%) bytes in 4 (0.00%) objects
+		<unknown>: 48 (0.00%) bytes in 2 (0.00%) objects
+
+java.util.jar.JarFile$JarFileEntry: 14,688 (0.03%) bytes in 153 (0.01%) objects (avg size 96 bytes)
+	java.util.jar.JarFile.getEntry: 14,688 (0.03%) bytes in 153 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 9,792 (0.02%) bytes in 102 (0.01%) objects
+		java.lang.Class.getResourceAsStream: 4,224 (0.00%) bytes in 44 (0.00%) objects
+		<unknown>: 672 (0.00%) bytes in 7 (0.00%) objects
+
+java.net.URL: 14,656 (0.03%) bytes in 229 (0.02%) objects (avg size 64 bytes)
+	sun.misc.URLClassPath$FileLoader.getResource: 4,992 (0.01%) bytes in 78 (0.00%) objects
+		<unknown>: 4,480 (0.01%) bytes in 70 (0.00%) objects
+		java.lang.Class.getMethod: 512 (0.00%) bytes in 8 (0.00%) objects
+			java.lang.Class.getMethod: 256 (0.00%) bytes in 4 (0.00%) objects
+			sun.launcher.LauncherHelper.validateMainClass: 256 (0.00%) bytes in 4 (0.00%) objects
+	sun.misc.URLClassPath$JarLoader.checkResource: 4,992 (0.01%) bytes in 78 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 3,264 (0.00%) bytes in 51 (0.00%) objects
+		java.lang.Class.getResourceAsStream: 1,408 (0.00%) bytes in 22 (0.00%) objects
+		<unknown>: 320 (0.00%) bytes in 5 (0.00%) objects
+	java.net.JarURLConnection.parseSpecs: 4,672 (0.01%) bytes in 73 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 3,264 (0.00%) bytes in 51 (0.00%) objects
+		java.lang.Class.getResourceAsStream: 1,408 (0.00%) bytes in 22 (0.00%) objects
+
+com.devexperts.aprof.transformer.ClassInfo: 14,224 (0.03%) bytes in 254 (0.03%) objects (avg size 56 bytes)
+	com.devexperts.aprof.transformer.ClassInfoVisitor.visit: 14,224 (0.03%) bytes in 254 (0.03%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 14,224 (0.03%) bytes in 254 (0.03%) objects
+
+org.objectweb.asm.tree.LabelNode[]: 14,128 (0.03%) bytes in 222 (0.02%) objects (avg size 64 bytes)
+	java.util.Arrays$ArrayList.toArray: 10,960 (0.02%) bytes in 158 (0.01%) objects (avg size 69 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 10,960 (0.02%) bytes in 158 (0.01%) objects (avg size 69 bytes)
+	org.objectweb.asm.tree.MethodNode.getLabelNodes: 3,168 (0.00%) bytes in 64 (0.00%) objects (avg size 50 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 3,168 (0.00%) bytes in 64 (0.00%) objects (avg size 50 bytes)
+
+com.devexperts.aprof.transformer.AProfTransformer$ClassAnalyzer: 12,824 (0.02%) bytes in 229 (0.02%) objects (avg size 56 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer.transformImpl: 12,824 (0.02%) bytes in 229 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 12,824 (0.02%) bytes in 229 (0.02%) objects
+
+java.util.ArrayList$Itr: 12,416 (0.02%) bytes in 388 (0.04%) objects (avg size 32 bytes)
+	java.util.ArrayList.iterator: 12,416 (0.02%) bytes in 388 (0.04%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 12,096 (0.02%) bytes in 378 (0.04%) objects
+		... 3 more below threshold: 320 (0.00%) bytes in 10 (0.00%) objects
+
+java.util.HashMap$Node: 12,256 (0.02%) bytes in 383 (0.04%) objects (avg size 32 bytes)
+	java.util.HashMap.newNode: 12,256 (0.02%) bytes in 383 (0.04%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 8,320 (0.01%) bytes in 260 (0.03%) objects
+		java.util.HashSet.add: 2,624 (0.00%) bytes in 82 (0.01%) objects
+			<unknown>: 2,528 (0.00%) bytes in 79 (0.00%) objects
+			java.lang.ClassLoader.checkPackageAccess: 96 (0.00%) bytes in 3 (0.00%) objects
+		... 4 more below threshold: 1,312 (0.00%) bytes in 41 (0.00%) objects
+
+java.util.zip.ZipEntry: 12,240 (0.02%) bytes in 153 (0.01%) objects (avg size 80 bytes)
+	java.util.zip.ZipFile.getZipEntry: 12,240 (0.02%) bytes in 153 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 8,160 (0.01%) bytes in 102 (0.01%) objects
+		java.lang.Class.getResourceAsStream: 3,520 (0.00%) bytes in 44 (0.00%) objects
+		<unknown>: 560 (0.00%) bytes in 7 (0.00%) objects
+
+java.io.File: 11,168 (0.02%) bytes in 349 (0.04%) objects (avg size 32 bytes)
+	sun.net.www.protocol.file.Handler.openConnection: 7,136 (0.01%) bytes in 223 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 4,896 (0.01%) bytes in 153 (0.01%) objects
+		... 3 more below threshold: 2,240 (0.00%) bytes in 70 (0.00%) objects
+	... 7 more below threshold: 4,032 (0.00%) bytes in 126 (0.01%) objects
+
+java.util.HashMap$Node[]: 10,480 (0.02%) bytes in 20 (0.00%) objects (avg size 524 bytes)
+	java.util.HashMap.resize: 10,480 (0.02%) bytes in 20 (0.00%) objects (avg size 524 bytes)
+		java.util.HashSet.add: 8,288 (0.01%) bytes in 2 (0.00%) objects (avg size 4,144 bytes)
+			<unknown>: 8,208 (0.01%) bytes in 1 (0.00%) objects (avg size 8,208 bytes)
+			java.lang.ClassLoader.checkPackageAccess: 80 (0.00%) bytes in 1 (0.00%) objects (avg size 80 bytes)
+		... 5 more below threshold: 2,192 (0.00%) bytes in 18 (0.00%) objects (avg size 122 bytes)
+
+com.devexperts.aprof.DatatypeInfo: 9,760 (0.02%) bytes in 305 (0.03%) objects (avg size 32 bytes)
+	com.devexperts.aprof.AProfRegistry.createDatatypeInfo: 9,760 (0.02%) bytes in 305 (0.03%) objects
+
+org.objectweb.asm.ClassWriter: 9,576 (0.02%) bytes in 57 (0.00%) objects (avg size 168 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer.transformImpl: 9,576 (0.02%) bytes in 57 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 9,576 (0.02%) bytes in 57 (0.00%) objects
+
+org.objectweb.asm.ClassReader: 8,960 (0.02%) bytes in 280 (0.03%) objects (avg size 32 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer.transformImpl: 7,328 (0.01%) bytes in 229 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 7,328 (0.01%) bytes in 229 (0.02%) objects
+	com.devexperts.aprof.transformer.ClassInfoCache.buildClassInfo: 1,632 (0.00%) bytes in 51 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,632 (0.00%) bytes in 51 (0.00%) objects
+
+java.lang.Integer: 8,480 (0.01%) bytes in 530 (0.06%) objects (avg size 16 bytes)
+	org.objectweb.asm.ClassReader.readConst: 5,312 (0.01%) bytes in 332 (0.04%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 5,312 (0.01%) bytes in 332 (0.04%) objects
+	org.objectweb.asm.tree.LookupSwitchInsnNode.<init>: 3,136 (0.00%) bytes in 196 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 3,136 (0.00%) bytes in 196 (0.02%) objects
+	java.lang.Integer.valueOf: 32 (0.00%) bytes in 2 (0.00%) objects
+		java.lang.Integer.getInteger: 16 (0.00%) bytes in 1 (0.00%) objects
+			java.lang.invoke.MethodHandleImpl$1.run: 16 (0.00%) bytes in 1 (0.00%) objects
+		java.lang.invoke.MethodHandleImpl.<clinit>: 16 (0.00%) bytes in 1 (0.00%) objects
+
+com.devexperts.aprof.transformer.ClassInfoVisitor: 8,128 (0.01%) bytes in 254 (0.03%) objects (avg size 32 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer.transformImpl: 6,496 (0.01%) bytes in 203 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 6,496 (0.01%) bytes in 203 (0.02%) objects
+	com.devexperts.aprof.transformer.ClassInfoCache.buildClassInfo: 1,632 (0.00%) bytes in 51 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 1,632 (0.00%) bytes in 51 (0.00%) objects
+
+com.devexperts.aprof.DatatypeInfo[]: 7,520 (0.01%) bytes in 1 (0.00%) objects (avg size 7,520 bytes)
+	com.devexperts.aprof.AProfRegistry.takeSnapshotInternalSync: 7,520 (0.01%) bytes in 1 (0.00%) objects (avg size 7,520 bytes)
+
+java.lang.Class[]: 7,232 (0.01%) bytes in 16 (0.00%) objects (avg size 452 bytes)
+	java.util.Arrays$ArrayList.toArray: 6,976 (0.01%) bytes in 2 (0.00%) objects (avg size 3,488 bytes)
+		java.util.ArrayList.addAll: 6,976 (0.01%) bytes in 2 (0.00%) objects (avg size 3,488 bytes)
+	... 5 more below threshold: 256 (0.00%) bytes in 14 (0.00%) objects (avg size 18 bytes)
+
+sun.net.www.protocol.jar.URLJarFile$URLJarFileEntry: 7,008 (0.01%) bytes in 73 (0.00%) objects (avg size 96 bytes)
+	sun.net.www.protocol.jar.URLJarFile.getEntry: 7,008 (0.01%) bytes in 73 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 4,896 (0.01%) bytes in 51 (0.00%) objects
+		java.lang.Class.getResourceAsStream: 2,112 (0.00%) bytes in 22 (0.00%) objects
+
+sun.net.www.protocol.jar.JarURLConnection: 6,424 (0.01%) bytes in 73 (0.00%) objects (avg size 88 bytes)
+	sun.net.www.protocol.jar.Handler.openConnection: 6,424 (0.01%) bytes in 73 (0.00%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 4,488 (0.01%) bytes in 51 (0.00%) objects
+		java.lang.Class.getResourceAsStream: 1,936 (0.00%) bytes in 22 (0.00%) objects
+
+sun.net.www.MessageHeader: 5,352 (0.01%) bytes in 223 (0.02%) objects (avg size 24 bytes)
+	sun.net.www.URLConnection.<init>: 5,352 (0.01%) bytes in 223 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 3,672 (0.00%) bytes in 153 (0.01%) objects
+		... 3 more below threshold: 1,680 (0.00%) bytes in 70 (0.00%) objects
+
+com.devexperts.aprof.LocationStack: 4,960 (0.01%) bytes in 155 (0.01%) objects (avg size 32 bytes)
+	com.devexperts.aprof.LocationStack.pushStackForTransform: 4,800 (0.01%) bytes in 150 (0.01%) objects
+	com.devexperts.aprof.LocationStackThreadLocal.initialValue: 160 (0.00%) bytes in 5 (0.00%) objects
+
+com.devexperts.aprof.transformer.AProfTransformer$ClassTransformer: 4,768 (0.01%) bytes in 149 (0.01%) objects (avg size 32 bytes)
+	com.devexperts.aprof.transformer.AProfTransformer.transformImpl: 4,768 (0.01%) bytes in 149 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 4,768 (0.01%) bytes in 149 (0.01%) objects
+
+java.util.zip.ZipFile$ZipFileInputStream: 4,592 (0.01%) bytes in 82 (0.01%) objects (avg size 56 bytes)
+	java.util.zip.ZipFile.getInputStream: 4,592 (0.01%) bytes in 82 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 2,856 (0.00%) bytes in 51 (0.00%) objects
+		java.lang.Class.getResourceAsStream: 1,232 (0.00%) bytes in 22 (0.00%) objects
+		<unknown>: 504 (0.00%) bytes in 9 (0.00%) objects
+
+org.objectweb.asm.Attribute[]: 4,592 (0.01%) bytes in 287 (0.03%) objects (avg size 16 bytes)
+	org.objectweb.asm.ClassReader.accept: 4,592 (0.01%) bytes in 287 (0.03%) objects (avg size 16 bytes)
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 4,592 (0.01%) bytes in 287 (0.03%) objects (avg size 16 bytes)
+
+java.lang.ref.Finalizer: 4,480 (0.01%) bytes in 112 (0.01%) objects (avg size 40 bytes)
+	java.lang.ref.Finalizer.register: 4,480 (0.01%) bytes in 112 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 2,040 (0.00%) bytes in 51 (0.00%) objects
+		... 5 more below threshold: 2,440 (0.00%) bytes in 61 (0.00%) objects
+
+java.lang.Long: 4,008 (0.00%) bytes in 167 (0.02%) objects (avg size 24 bytes)
+	org.objectweb.asm.ClassReader.readConst: 4,008 (0.00%) bytes in 167 (0.02%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 4,008 (0.00%) bytes in 167 (0.02%) objects
+
+java.util.concurrent.ConcurrentHashMap$Node: 3,936 (0.00%) bytes in 123 (0.01%) objects (avg size 32 bytes)
+	java.util.concurrent.ConcurrentHashMap.putVal: 3,360 (0.00%) bytes in 105 (0.01%) objects
+		<unknown>: 2,144 (0.00%) bytes in 67 (0.00%) objects
+		... 6 more below threshold: 1,216 (0.00%) bytes in 38 (0.00%) objects
+	java.util.concurrent.ConcurrentHashMap.transfer: 576 (0.00%) bytes in 18 (0.00%) objects
+
+java.util.WeakHashMap$Entry: 3,280 (0.00%) bytes in 82 (0.01%) objects (avg size 40 bytes)
+	java.util.WeakHashMap.put: 3,280 (0.00%) bytes in 82 (0.01%) objects
+		com.devexperts.aprof.transformer.AProfTransformer.transform: 2,040 (0.00%) bytes in 51 (0.00%) objects
+		java.lang.Class.getResourceAsStream: 880 (0.00%) bytes in 22 (0.00%) objects
+		java.util.zip.ZipFile.getInputStream: 360 (0.00%) bytes in 9 (0.00%) objects
+
+net.nanofix.message.MsgType: 2,208 (0.00%) bytes in 92 (0.01%) objects (avg size 24 bytes)
+	net.nanofix.message.MsgTypes.<clinit>: 2,208 (0.00%) bytes in 92 (0.01%) objects
+
+java.lang.Object: 2,160 (0.00%) bytes in 135 (0.01%) objects (avg size 16 bytes)
+	java.lang.ClassLoader.getClassLoadingLock: 1,584 (0.00%) bytes in 99 (0.01%) objects
+		<unknown>: 1,280 (0.00%) bytes in 80 (0.01%) objects
+		... 6 more below threshold: 304 (0.00%) bytes in 19 (0.00%) objects
+	... 8 more below threshold: 576 (0.00%) bytes in 36 (0.00%) objects
+
+... 223 more below threshold: 51,568 (0.11%) bytes in 1,427 (0.17%) objects (avg size 36 bytes)
 

@@ -114,7 +114,7 @@ public class MessageHeader extends FixMessageAssembler {
     }
 
     void populateBuffer() {
-
+        buffer.clear();
         // TODO inject a time formatter / generator that understands millis, micros etc
         // TODO transfer long directly into buffer
         if (dirty) {
@@ -127,6 +127,7 @@ public class MessageHeader extends FixMessageAssembler {
         int fixBodyLength = bodyLength + ByteBufferUtil.readableBytes(buffer);
 
         // now that we have the length we can populated the begin buffer
+        beginBuffer.clear();
         addBytesWithDelimiters(
                 beginBuffer,
                 ByteArrayUtil.asByteArray(Tags.BeginString),
@@ -142,7 +143,9 @@ public class MessageHeader extends FixMessageAssembler {
     private void addTimestamp(int tag, long epochMillis) {
         buffer.put(ByteArrayUtil.asByteArray(tag));
         buffer.put(FIXBytes.EQUALS);
-        timeEncoder.encode(epochMillis, buffer);
+        int pos = buffer.position();
+        pos += timeEncoder.encode(epochMillis, buffer, pos);
+        buffer.position(pos);
         buffer.put(FIXBytes.SOH);
     }
 

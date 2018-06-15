@@ -36,6 +36,7 @@ class NanoFIXMessageTest {
         msg.header().senderCompId(SENDER_COMP_ID);
         msg.header().targetCompId(TARGET_COMP_ID);
         msg.header().msgSeqNum(42);
+        msg.header().sendingTime(0);
         msg.addIntField(Tags.EncryptMethod, 0);
         msg.addIntField(Tags.HeartBtInt, 30);
         msg.addBooleanField(Tags.ResetSeqNumFlag, true);
@@ -44,8 +45,8 @@ class NanoFIXMessageTest {
 
 //        TagVisitor visitor = new LocalTagVisitor();
         assertByteArray(
-                "8=FIX.4.2|9=501|35=A|49=CLIENT|56=BROKER|34=42|52=19700101-00:00:00.000|98=0|" +
-                        "108=30|141=Y|553=user1|10=077|",
+                "8=FIX.4.2|9=84|35=A|49=CLIENT|56=BROKER|34=42|52=19700101-00:00:00.000|98=0|" +
+                        "108=30|141=Y|553=user1|10=148|",
                 bytes);
     }
 

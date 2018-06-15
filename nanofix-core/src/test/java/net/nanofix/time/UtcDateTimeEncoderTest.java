@@ -43,7 +43,7 @@ class UtcDateTimeEncoderTest {
 
     private void assertEncode(String expected) throws Exception {
         long timeAsMillis = formatter.parse(expected).getTime();
-        encoder.encode(timeAsMillis, buffer);
+        encoder.encode(timeAsMillis, buffer, 0);
         String actualString = new String(buffer.array(), 0, TIMESTAMP_LENGTH, StandardCharsets.US_ASCII);
         Assertions.assertThat(actualString).isEqualTo(expected);
     }

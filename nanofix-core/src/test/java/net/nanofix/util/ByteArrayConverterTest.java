@@ -31,7 +31,6 @@ public class ByteArrayConverterTest {
 
     @Test
     public void testConvertToBytesPerformance() {
-        ByteArrayUtil.useCachedValues = false;
         long start = clock.currentTimeMillis();
         byte[] bytes = null;
         for (int i = 0; i <= TEST_LOOPS; i++) {
@@ -42,7 +41,6 @@ public class ByteArrayConverterTest {
 
     @Test
     public void testConvertToBytesCachedPerformance() {
-        ByteArrayUtil.useCachedValues = true;
         long start = clock.currentTimeMillis();
         byte[] bytes = null;
         for (int i = 0; i <= TEST_LOOPS; i++) {

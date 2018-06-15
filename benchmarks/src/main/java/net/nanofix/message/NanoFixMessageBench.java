@@ -54,6 +54,7 @@ public class NanoFixMessageBench {
 
     @Benchmark
     public void encodeLogon(BenchmarkState state, Blackhole hole) {
+        state.buffer.clear();
         FIXMessage msg = state.msg;
         msg.header().beginString(BeginStrings.FIX_4_2);
         msg.header().msgType(MsgTypes.Logon);
@@ -65,8 +66,7 @@ public class NanoFixMessageBench {
         msg.addIntField(Tags.HeartBtInt, 30);
         msg.addBooleanField(Tags.ResetSeqNumFlag, true);
         msg.addStringField(Tags.Username, USER);
-        byte[] bytes = ByteBufferUtil.asByteArray(msg.buffers());
-        hole.consume(bytes);
+        hole.consume(msg.buffers());
     }
 
     //@Benchmark
@@ -79,8 +79,7 @@ public class NanoFixMessageBench {
         msg.header().msgSeqNum(42);
         msg.header().sendingTime(SENDING_TIME);
         msg.addStringField(Tags.OrdType, ByteString.of("user1"));
-        byte[] bytes = ByteBufferUtil.asByteArray(msg.buffers());
-        hole.consume(bytes);
+        hole.consume(msg.buffers());
     }
 
 

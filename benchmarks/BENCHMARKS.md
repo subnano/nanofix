@@ -28,7 +28,6 @@ NanoFixMessageBench.encodeHeartbeat:·gc.churn.PS_Survivor_Space       avgt    9
 NanoFixMessageBench.encodeHeartbeat:·gc.churn.PS_Survivor_Space.norm  avgt    9     0.091 ±   0.091    B/op
 NanoFixMessageBench.encodeHeartbeat:·gc.count                         avgt    9    68.000            counts
 NanoFixMessageBench.encodeHeartbeat:·gc.time                          avgt    9    66.000                ms
-NanoFixMessageBench.encodeHeartbeat:·stack                            avgt            NaN               ---
 ```
 
 ### Started using DateTimeEncoder
@@ -56,5 +55,22 @@ NanoFixMessageBench.encodeHeartbeat:·gc.churn.PS_Survivor_Space       avgt    9
 NanoFixMessageBench.encodeHeartbeat:·gc.churn.PS_Survivor_Space.norm  avgt    9    0.077 ±  0.085    B/op
 NanoFixMessageBench.encodeHeartbeat:·gc.count                         avgt    9   35.000           counts
 NanoFixMessageBench.encodeHeartbeat:·gc.time                          avgt    9   31.000               ms
-NanoFixMessageBench.encodeHeartbeat:·stack                            avgt           NaN              ---
+```
+
+### Started using DateTimeEncoder
+```
+
+....[Thread state: RUNNABLE]........................................................................
+ 50.0%  59.9% java.net.SocketInputStream.socketRead0
+ 30.3%  36.3% net.nanofix.time.UtcDateTimeEncoder.encodeTime
+  3.2%   3.8% net.nanofix.message.NanoFixMessageBench.encodeLogon
+  0.0%   0.0% net.nanofix.message.generated.NanoFixMessageBench_encodeLogon_jmhTest.encodeLogon_avgt_jmhStub
+
+# Run complete. Total time: 00:00:38
+
+Benchmark                                            Mode  Cnt    Score    Error   Units
+NanoFixMessageBench.encodeLogon                      avgt    9  875.527 ± 57.133   ns/op
+NanoFixMessageBench.encodeLogon:·gc.alloc.rate       avgt    9    0.533 ±  0.008  MB/sec
+NanoFixMessageBench.encodeLogon:·gc.alloc.rate.norm  avgt    9    0.734 ±  0.049    B/op
+NanoFixMessageBench.encodeLogon:·gc.count            avgt    9      ≈ 0           counts
 ```

@@ -12,6 +12,7 @@ public class UtcDateTimeEncoder {
 
     private static final int DAYS_IN_400_YEAR_CYCLE = 146097;
     private static final int DAYS_UNTIL_START_OF_UNIX_EPOCH = 719528;
+    private static final int LENGTH_OF_DATE_AND_TIME = 21;
 
     private static final byte HYPHEN = '-';
     private static final byte COLON = ':';
@@ -20,17 +21,17 @@ public class UtcDateTimeEncoder {
     private long midnightMillis = 0L;
     private long nextMidnightMillis = 0L;
 
-    public long encode(long epochMillis, ByteBuffer buffer) {
+    public int encode(final long epochMillis, final ByteBuffer buffer, final int offset) {
 
         final boolean differentDay = isDifferentDat(epochMillis);
         if (differentDay) {
             long epochDays = TimeUtil.epochDays(epochMillis, TimeUnit.MILLISECONDS);
-            encodeDate(epochDays, buffer, 0);
+            encodeDate(epochDays, buffer, offset);
         }
         // encode the time
         long millisSinceMidnight = TimeUtil.millisInDay(epochMillis);
-        encodeTime(millisSinceMidnight, buffer, 9);
-        return -1;
+        encodeTime(millisSinceMidnight, buffer, offset + 9);
+        return LENGTH_OF_DATE_AND_TIME;
     }
 
     private boolean isDifferentDat(long epochMillis) {
